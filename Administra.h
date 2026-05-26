@@ -2,6 +2,7 @@
 #define ADMINISTRA_H
 
 #include "ICollecitble.h"
+#include "fecha.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -16,7 +17,7 @@ private:
     Inmueble *inmueble;
     ICollection *publicaciones;
 
-    Fecha : fecha;
+    fecha : fecha;
 
 public:
     Administra(Inmobiliaria *inmo, Inmueble *inm);
