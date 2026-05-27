@@ -27,7 +27,7 @@ class Inmobiliaria : public Usuario{
         string getTelefono();
         string getUrl();
         void asociarPropietario(Propietario* propietario);
-        Status crearAdministra(Int); //para chequear en el diagrama de comunicacion si devuelve status
+        Status crearAdministra(int); //para chequear en el diagrama de comunicacion si devuelve status
         void removerInmobiliaria(Inmueble*); //ESTA BIEN USAR * ?? O DEBO USAR & ??
 
 };

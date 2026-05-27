@@ -15,7 +15,7 @@ class ColUsuario {
         bool member(Usuario* i);
         bool isEmpty();
         
-        UsuarioIterator* getIterator(); 
+        IIterator* getIterator(); 
     
 };
 

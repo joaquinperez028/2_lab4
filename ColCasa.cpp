@@ -1,5 +1,5 @@
 #include "ColCasa.h"
-#include 
+//#include aca va el tipo de dato para guardar
 ColCasa::ColCasa() {
     this->col = new //DE LISTA O ARBOL O ETC, LO QUE HAYAMOS ELEGIDO();
 }
@@ -20,6 +20,6 @@ bool ColCasa::isEmpty(){
  
 }
  
-CasaIterator* ColCasa::getIterator() {
-    return new CasaIterator(this->col->getIterator()); // ITERADOR GENERICO QUE DEVUELVE AL OBJETO CONCRETO
+IIterator* ColCasa::getIterator() {
+    return this->col->getIterator(); // ITERADOR GENERICO QUE DEVUELVE AL OBJETO CONCRETO
 }

@@ -1,7 +1,8 @@
 #ifndef ADMINISTRA_H
 #define ADMINISTRA_H
 
-#include "ICollecitble.h"
+#include "ICollectible.h"
+#include "datatypes/fecha.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -15,8 +16,7 @@ private:
     Inmobiliaria *inmobiliaria;
     Inmueble *inmueble;
     ICollection *publicaciones;
-
-    Fecha : fecha;
+    fecha Fecha;
 
 public:
     Administra(Inmobiliaria *inmo, Inmueble *inm);
@@ -26,6 +26,6 @@ public:
     void agregarPublicacion(Publicacion *pub);
 
     virtual ~Administra();
-}
+};
 
 #endif

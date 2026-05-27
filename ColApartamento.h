@@ -14,7 +14,7 @@ class ColApartamento {
         bool member(Apartamento* i);
         bool isEmpty();
  
-        ApartamentoIterator* getIterator();
+        IIterator* getIterator();
 };
  
 #endif

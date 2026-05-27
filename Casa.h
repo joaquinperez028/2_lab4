@@ -2,20 +2,21 @@
 #define CASA_H
  
 #include "Inmueble.h"
-#include "datatypes.h"
+#include "datatypes/direccion.h"
+#include "datatypes/tipoTecho.h"
  
 class Casa : public Inmueble {
 private:
-    TipoTecho tipoTecho;
+    tipoTecho tipoTecho;
     bool      propHorizontal;
  
 public:
-    Casa(direccion dir, float superficie, int identificador,TipoTecho tipoTecho, bool propHorizontal);
+    Casa(direccion dir, float superficie, int identificador,tipoTecho tipoTecho, bool propHorizontal);
     
     bool getPropHorizontal() const;
-    TipoTecho getTipoTecho() const;
+    tipoTecho gettipoTecho() const;
  
-    void crearCasa(direccion dir, float superficie, int identificador, TipoTecho tipoTecho, bool propHorizontal);
+    void crearCasa(direccion dir, float superficie, int identificador, tipoTecho tipoTecho, bool propHorizontal);
     void mostrarDetalle(int id) override;
 };
  

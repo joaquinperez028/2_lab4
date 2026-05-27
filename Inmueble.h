@@ -2,11 +2,13 @@
 #define INMUEBLE_H
  
 #include <string>
-#include "datatypes.h"
- 
+#include "interfaces/ICollectible.h"
+#include "datatypes/direccion.h"
+using namespace std;
+
 class Propietario;
  
-class Inmueble {
+class Inmueble : public ICollectible {
 protected:
     direccion  direccion_;
     float      superficie;

@@ -1,8 +1,9 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-#include //aca tendria que hacer un include de sistema??
-#include "ICollection/interfaces/ICollectible.h"
+#include "ICollection.h"
+#include "ICollectible.h"
+#include "string"
 
 using namespace std;
 
@@ -22,8 +23,8 @@ class Usuario : public ICollectible {
         string getContrasenia();
         string getEmail();
         Status revisarNickname(string);
-        DTinmobiliaria listarInmobiliarias();
-        DTProp listarPropietarios();
+        DTInmobiliaria listarInmobiliarias();
+        DTprop listarPropietarios();
         DTInmuebles seleccionarInmobiliaria(string);
 
 };

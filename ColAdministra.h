@@ -15,7 +15,7 @@ class ColAdministra {
         bool member(Administra* i);
         bool isEmpty();
         
-        AdministraIterator* getIterator(); 
+        IIterator* getIterator(); 
     
 };
 

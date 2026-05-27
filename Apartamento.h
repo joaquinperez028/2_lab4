@@ -2,7 +2,7 @@
 #define APARTAMENTO_H
  
 #include "Inmueble.h"
-#include "datatypes.h"
+#include "datatypes/direccion.h"
  
 class Apartamento : public Inmueble {
 private:

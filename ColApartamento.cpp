@@ -21,5 +21,6 @@ bool ColApartamento::isEmpty(){
  
 }
  
-ApartamentoIterator* ColApartamento::getIterator() { 
-    return new ApartamentoIterator(this->col->getIterator()); 
+IIterator* ColApartamento::getIterator() { 
+    return this->col->getIterator(); 
+}

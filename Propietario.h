@@ -4,7 +4,8 @@
 #include "Usuario.h"
 #include "Inmueble.h"
 #include "ColInmueble.h"
-#include "ICollection/interfaces/ICollectible.h"
+#include "ICollection.h"
+#include "ICollectible.h"
 
 using namespace std;
 

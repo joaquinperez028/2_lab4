@@ -7,7 +7,6 @@
 #include "ColUsuario.h"
 #include "ColInmobiliaria.h"
 #include "ColPublicacion.h"
-#include //clases??
 
 using namespace std;
 
@@ -31,15 +30,15 @@ public:
     Status altaCasa(direccion, float, int, tipoTecho, bool) override;
     Status altaApto(direccion, float, int, int, bool, float) override;
     Status altaInmobiliaria(string, string, string, direccion, string, string) override;
-    DTProp listarPropietarios() override;
+    DTprop listarPropietarios() override;
     void asociarPropietario(string) override;
-    DTinmobiliaria listarInmobiliarias() override;
-    DTInmuebles seleccionarInmobiliaria(string) override;
-    Status altaPublicacion(int, TipoPublicacion, string, float) override;
+    DTInmobiliaria listarInmobiliarias() override;
+    DTInmueble seleccionarInmobiliaria(string) override;
+    Status altaPublicacion(int, tipoPublicacion, string, float) override;
     DTPublicacion listarPublicaciones(string, float, float, opciones) override;
-    DTespecifica listarEspecifica(int) override;
+    DTEspecifica listarEspecifica(int) override;
     DTprop listarPropiedades() override;
-    DTinmueble mostrarDetalle(int) override;
+    DTInmueble mostrarDetalle(int) override;
     Status eliminarInmueble(int) override;
     DTInmueblesRep listarInmueblesRepresentados(string) override;
     Status altaAdministracion(int) override;

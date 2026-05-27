@@ -15,7 +15,7 @@ class ColInmueble {
         bool member(Inmueble* i);
         bool isEmpty();
         
-        InmuebleIterator* getIterator(); 
+        IIterator* getIterator(); 
     
 };
 

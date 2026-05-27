@@ -3,7 +3,7 @@
 #define COLPUBLICACION_H
 
 #include "ICollection.h"
-#include "Publicacion.h"
+#include "Publicaciones.h"
 
 class ColPublicacion {
     private:
@@ -15,7 +15,7 @@ class ColPublicacion {
         bool member(Publicacion* i);
         bool isEmpty();
         
-        PublicacionIterator* getIterator(); 
+        IIterator* getIterator(); 
     
 };
 
