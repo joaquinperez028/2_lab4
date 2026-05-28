@@ -1,6 +1,7 @@
 #include "Sistema.h"
 #include "Cliente.h"
 #include "Propietario.h"
+#include "Inmobiliaria.h"
 
 Sistema *Sistema::instance = nullptr;
 
@@ -81,8 +82,19 @@ Status Sistema::altaApto(direccion, float, int, int, bool, float)
     return Status::OK;
 }
 
-Status Sistema::altaInmobiliaria(string, string, string, direccion, string, string)
+Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrasenia,
+                                 direccion dir, string telefono, string url)
 {
+    Status st = this->revisarNickname(nickname);
+    if (st != Status::OK)
+    {
+        return st;
+    }
+
+    Inmobiliaria *inmobiliaria = new Inmobiliaria(nickname, nombre, contrasenia, "",
+                                                    dir, telefono, url);
+    this->colUsuarios->add(inmobiliaria);
+
     return Status::OK;
 }
 

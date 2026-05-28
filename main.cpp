@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Factory.h"
 #include "Datatypes/Status.h"
+#include "Datatypes/Direccion.h"
 
 using namespace std;
 
@@ -56,6 +57,27 @@ int main()
     else
     {
         cout << "Nickname duplicado propietario: fallo la validacion" << endl;
+    }
+
+    direccion dirInmo(100, "Av. Italia", "Montevideo", "Montevideo");
+    st = sistema->altaInmobiliaria("inmo_central", "Inmo Central", "passInmo", dirInmo, "24001234", "http://inmo.com");
+    if (st == Status::OK)
+    {
+        cout << "Alta inmobiliaria: OK" << endl;
+    }
+    else
+    {
+        cout << "Alta inmobiliaria: ERROR" << endl;
+    }
+
+    st = sistema->altaInmobiliaria("juan123", "Otra Inmo", "pass", dirInmo, "24009999", "http://otra.com");
+    if (st == Status::ERROR)
+    {
+        cout << "Nickname duplicado (inmobiliaria vs cliente): OK" << endl;
+    }
+    else
+    {
+        cout << "Nickname duplicado inmobiliaria: fallo la validacion" << endl;
     }
 
     return 0;

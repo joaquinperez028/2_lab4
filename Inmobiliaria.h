@@ -2,34 +2,36 @@
 #define INMOBILIARIA_H
 
 #include "Usuario.h"
-#include "Inmueble.h"
-#include "ColInmueble.h"
-#include "Administra.h"
-#include "ColAdministra.h"
+#include "Datatypes/Direccion.h"
+#include "Datatypes/Status.h"
 
-class Usuario;
+using namespace std;
+
 class Propietario;
 class Inmueble;
-class Administra;
+class ColInmueble;
+class ColAdministra;
+class ColUsuario;
 
-class Inmobiliaria : public Usuario{
-    protected:
-        direccion direccion;
-        string telefono;
-        string URL;
-        ColInmueble* inmuebles;
-        ColAdministra* administraciones;
+class Inmobiliaria : public Usuario {
+protected:
+    direccion direccion_;
+    string telefono;
+    string URL;
+    ColInmueble* inmuebles;
+    ColAdministra* administraciones;
+    ColUsuario* propietarios; // propietarios con los que trabaja (son Usuario)
 
-    public:
-        Inmobiliaria(direccion direccion, string telefono, string URL);
-        ~Inmobiliaria();
-        direccion getDireccion();
-        string getTelefono();
-        string getUrl();
-        void asociarPropietario(Propietario* propietario);
-        Status crearAdministra(Int); //para chequear en el diagrama de comunicacion si devuelve status
-        void removerInmobiliaria(Inmueble*); //ESTA BIEN USAR * ?? O DEBO USAR & ??
-
+public:
+    Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
+                 direccion direccion, string telefono, string URL);
+    ~Inmobiliaria();
+    direccion getDireccion();
+    string getTelefono();
+    string getUrl();
+    void asociarPropietario(Propietario* propietario);
+    Status crearAdministra(int);
+    void removerInmobiliaria(Inmueble*);
 };
 
 #endif
