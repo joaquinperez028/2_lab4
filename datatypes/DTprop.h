@@ -15,9 +15,9 @@ private:
 
 public:
     DTprop();
-    DTprop(string cod, direccion direccion, string nombreProp);
+    DTprop(string cod, ::direccion direccion, string nombreProp);
     string getCod();
-    direccion getDireccion();
+    ::direccion getDireccion();
     string getNombreProp();
 };
 

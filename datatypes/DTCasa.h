@@ -12,7 +12,7 @@ private:
 
 public:
     DTCasa();
-    DTCasa(float Superficie, direccion direccion, fecha anioConstruc, tipoInmueble tipo, tipoTecho tipoTecho, bool horizontal);
+    DTCasa(float Superficie, ::direccion direccion, fecha anioConstruc, tipoInmueble tipo, ::tipoTecho tipoTecho, bool horizontal);
     bool getHorizontal();
 };
 

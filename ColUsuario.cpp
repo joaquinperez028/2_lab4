@@ -1,11 +1,10 @@
-
-IMPLEMENTACION DEL WRAPPER DE LA COLECCION DE USUARIOS
+#include "ICollection/collections/List.h"
+//IMPLEMENTACION DEL WRAPPER DE LA COLECCION DE USUARIOS
 
 #include "ColUsuario.h"
-#include // ACA HAY QUE INCLUIR EL TIPO DE ESTRUCTURA QUE VAMOS A USAR, LISTA O ARBOL, ETC .H
 
-ColUsuario::ColUsuario() {
-    this->col = new //DE LISTA O ARBOL O ETC, LO QUE HAYAMOS ELEGIDO(); 
+ColUsuario::ColUsuario(){
+    this->col = new List();
 }
 
 void ColUsuario::add(Usuario* i) {
@@ -13,15 +12,15 @@ void ColUsuario::add(Usuario* i) {
 }
 
 void ColUsuario::remove(Usuario* i){
-
+    this->col->remove(i);
 }
 
 bool ColUsuario::member(Usuario* i){
-
+    return this->col->member(i);
 }
 
 bool ColUsuario::isEmpty(){
-
+    return this->col->isEmpty();
 }
 
 UsuarioIterator* ColUsuario::getIterator() { // CASTEO DEL OBJETO 

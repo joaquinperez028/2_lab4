@@ -3,7 +3,7 @@
 DTPublicaciones::DTPublicaciones()
     : activa(false), codigoPubli(0), fechaPubli(), textoDescriptivo(""), precio(0), nomInmo(""), tipoPublicacion(tipoPublicacion::Venta), tipoInmueble(tipoInmueble::Casa) {}
 
-DTPublicaciones::DTPublicaciones(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, tipoPublicacion tipoPublicacion, tipoInmueble tipoInmueble)
+DTPublicaciones::DTPublicaciones(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPublicacion, ::tipoInmueble tipoInmueble)
     : activa(activa), codigoPubli(codigoPubli), fechaPubli(fechaPubli), textoDescriptivo(textoDescriptivo), precio(precio), nomInmo(nomInmo), tipoPublicacion(tipoPublicacion), tipoInmueble(tipoInmueble) {}
 
 bool DTPublicaciones::getActiva()
@@ -36,12 +36,12 @@ string DTPublicaciones::getNomInmo()
     return nomInmo;
 }
 
-tipoPublicacion DTPublicaciones::getTipoPublicacion()
+::tipoPublicacion DTPublicaciones::getTipoPublicacion()
 {
     return tipoPublicacion;
 }
 
-tipoInmueble DTPublicaciones::getTipoInmueble()
+::tipoInmueble DTPublicaciones::getTipoInmueble()
 {
     return tipoInmueble;
 }

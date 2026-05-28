@@ -3,6 +3,7 @@
 #define COLUSUARIO_H
 
 #include "ICollection.h"
+#include "UsuarioIterator.h"
 #include "Usuario.h"
 
 class ColUsuario {

@@ -3,21 +3,21 @@
 
 #include "Usuario.h"
 #include <string>
+
 using namespace std;
 
-class AgendaVisita;
+class Cliente : public Usuario
+{
+private:
+    string apellido;
+    string documento;
 
-class Cliente : public Usuario {
-    private:
-        string apellido;
-        string documento;
+public:
+    Cliente(string nickname, string nombre, string contrasenia, string email, string apellido, string documento);
+    ~Cliente();
 
-    public:
-        Cliente(string nickname, string nombre, string contrasenia, string email, string apellido, string documento);
-        ~Cliente();
-
-        string getApellido();
-        string getDocumento();
+    string getApellido();
+    string getDocumento();
 };
 
 #endif

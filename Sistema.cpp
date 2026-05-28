@@ -1,13 +1,16 @@
 #include "Sistema.h"
+#include "Cliente.h"
 
 Sistema *Sistema::instance = nullptr;
 
 Sistema::Sistema()
 {
+    this->colUsuarios = new ColUsuario();
 }
 
 Sistema::~Sistema()
 {
+    delete this->colUsuarios;
 }
 
 Sistema *Sistema::getInstance()
@@ -19,68 +22,90 @@ Sistema *Sistema::getInstance()
     return instance;
 }
 
-Status Sistema::revisarNickname(string)
+Status Sistema::revisarNickname(string nickname)
 {
-    return {};
+    UsuarioIterator *it = this->colUsuarios->getIterator();
+    while (it->hasCurrent())
+    {
+        Usuario *u = it->getCurrent();
+        if (u->getNickName() == nickname)
+        {
+            delete it;
+            return Status::ERROR;
+        }
+        it->next();
+    }
+    delete it;
+    return Status::OK;
 }
 
-Status Sistema::altaCliente(string, string, string, string, string)
+Status Sistema::altaCliente(string nickname, string nombre, string contrasenia,
+                            string email, string apellido, string documento)
 {
-    return {};
+    Status st = this->revisarNickname(nickname);
+    if (st != Status::OK)
+    {
+        return st;
+    }
+
+    Cliente *cliente = new Cliente(nickname, nombre, contrasenia, email, apellido, documento);
+    this->colUsuarios->add(cliente);
+
+    return Status::OK;
 }
 
 Status Sistema::altaPropietario(string, string, string, string, string, string)
 {
-    return {};
+    return Status::OK;
 }
 
 Status Sistema::altaCasa(direccion, float, int, tipoTecho, bool)
 {
-    return {};
+    return Status::OK;
 }
 
 Status Sistema::altaApto(direccion, float, int, int, bool, float)
 {
-    return {};
+    return Status::OK;
 }
 
 Status Sistema::altaInmobiliaria(string, string, string, direccion, string, string)
 {
-    return {};
+    return Status::OK;
 }
 
-DTProp Sistema::listarPropietarios()
+DTprop Sistema::listarPropietarios()
 {
-    return {};
+    return DTprop();
 }
 
 void Sistema::asociarPropietario(string)
 {
 }
 
-DTinmobiliaria Sistema::listarInmobiliarias()
+DTInmobiliaria Sistema::listarInmobiliarias()
 {
-    return {};
+    return DTInmobiliaria();
 }
 
 DTInmuebles Sistema::seleccionarInmobiliaria(string)
 {
-    return {};
+    return DTInmuebles();
 }
 
-Status Sistema::altaPublicacion(int, TipoPublicacion, string, float)
+Status Sistema::altaPublicacion(int, tipoPublicacion, string, float)
 {
-    return {};
+    return Status::OK;
 }
 
 DTPublicacion Sistema::listarPublicaciones(string, float, float, opciones)
 {
-    return {};
+    return DTPublicacion();
 }
 
-DTespecifica Sistema::listarEspecifica(int)
+DTEspecifica Sistema::listarEspecifica(int)
 {
-    return {};
+    return DTEspecifica();
 }
 
 DTprop Sistema::listarPropiedades()
@@ -88,22 +113,22 @@ DTprop Sistema::listarPropiedades()
     return DTprop();
 }
 
-DTinmueble Sistema::mostrarDetalle(int)
+DTInmueble Sistema::mostrarDetalle(int)
 {
-    return {};
+    return DTInmueble();
 }
 
 Status Sistema::eliminarInmueble(int)
 {
-    return {};
+    return Status::OK;
 }
 
 DTInmueblesRep Sistema::listarInmueblesRepresentados(string)
 {
-    return {};
+    return DTInmueblesRep();
 }
 
 Status Sistema::altaAdministracion(int)
 {
-    return {};
+    return Status::OK;
 }

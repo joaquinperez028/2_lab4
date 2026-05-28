@@ -2,7 +2,7 @@
 
 DTprop::DTprop() : cod(""), direccion(), nombreProp("") {}
 
-DTprop::DTprop(string cod, direccion direccion, string nombreProp)
+DTprop::DTprop(string cod, ::direccion direccion, string nombreProp)
     : cod(cod), direccion(direccion), nombreProp(nombreProp) {}
 
 string DTprop::getCod()
@@ -10,7 +10,7 @@ string DTprop::getCod()
     return cod;
 }
 
-direccion DTprop::getDireccion()
+::direccion DTprop::getDireccion()
 {
     return direccion;
 }

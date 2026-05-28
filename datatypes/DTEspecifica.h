@@ -19,13 +19,13 @@ protected:
 
 public:
     DTEspecifica();
-    DTEspecifica(float Superficie, direccion direccion, fecha anioConstruc, tipoInmueble tipo, tipoTecho tipoTecho);
+    DTEspecifica(float Superficie, ::direccion direccion, fecha anioConstruc, tipoInmueble tipo, ::tipoTecho tipoTecho);
     virtual ~DTEspecifica();
     float getSuperficie();
-    direccion getDireccion();
+    ::direccion getDireccion();
     fecha getAnioConstruc();
     tipoInmueble getTipo();
-    tipoTecho getTipoTecho();
+    ::tipoTecho getTipoTecho();
 };
 
 #endif
