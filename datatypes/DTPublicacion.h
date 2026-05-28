@@ -1,5 +1,5 @@
-#ifndef DTPUBLICACIONES_H
-#define DTPUBLICACIONES_H
+#ifndef DTPUBLICACION_H
+#define DTPUBLICACION_H
 
 #include <string>
 #include "Fecha.h"
@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class DTPublicaciones
+class DTPublicacion
 {
 private:
     bool activa;
@@ -21,8 +21,8 @@ private:
     tipoInmueble tipoInmueble;
 
 public:
-    DTPublicaciones();
-    DTPublicaciones(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPublicacion, ::tipoInmueble tipoInmueble);
+    DTPublicacion();
+    DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPublicacion, ::tipoInmueble tipoInmueble);
     bool getActiva();
     int getCodigoPubli();
     fecha getFechaPubli();

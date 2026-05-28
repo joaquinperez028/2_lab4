@@ -28,5 +28,35 @@ int main()
         cout << "Nickname duplicado: fallo la validacion" << endl;
     }
 
+    st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander");
+    if (st == Status::OK)
+    {
+        cout << "Alta propietario: OK" << endl;
+    }
+    else
+    {
+        cout << "Alta propietario: ERROR" << endl;
+    }
+
+    st = sistema->altaPropietario("juan123", "Otro", "pass", "otro@mail.com", "999", "Itau");
+    if (st == Status::ERROR)
+    {
+        cout << "Nickname duplicado (propietario vs cliente): OK" << endl;
+    }
+    else
+    {
+        cout << "Nickname duplicado propietario: fallo la validacion" << endl;
+    }
+
+    st = sistema->altaPropietario("ana_prop", "Ana2", "pass2", "ana2@mail.com", "444", "BBVA");
+    if (st == Status::ERROR)
+    {
+        cout << "Nickname duplicado (propietario): OK" << endl;
+    }
+    else
+    {
+        cout << "Nickname duplicado propietario: fallo la validacion" << endl;
+    }
+
     return 0;
 }

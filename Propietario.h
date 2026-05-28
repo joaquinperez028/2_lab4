@@ -2,25 +2,27 @@
 #define PROPIETARIO_H
 
 #include "Usuario.h"
-#include "Inmueble.h"
-#include "ColInmueble.h"
-#include "ICollection/interfaces/ICollectible.h"
+#include "Datatypes/Direccion.h"
+#include "Datatypes/TipoTecho.h"
+#include "Datatypes/Status.h"
 
 using namespace std;
 
-class Inmueble; 
+class Inmueble;
 class Inmobiliaria;
+class ColInmueble;
 
 class Propietario : public Usuario {
     protected:
         string numCuenta;
         string banco;
         string telefono;
-        ColInmueble* inmuebles; //UTILIZO EL WRAPPER CREADO EN SISTEMA PARA LA COLECCION DE INMUEBLES, ESTO ES PARA NAVEGAR A INMUEBLE
-        Inmobiliaria* inmo; //PUNTERO A LA INMOBILIARIA CONCRETA, PARA PODER COMUNICARME
+        ColInmueble* inmuebles;
+        Inmobiliaria* inmo;
 
     public:
-        Propietario(string numCuenta, string banco, string telefono);
+        Propietario(string nickname, string nombre, string contrasenia, string email,
+                    string numCuenta, string banco, string telefono);
         ~Propietario();
         string getNumCuenta();
         string getBanco();

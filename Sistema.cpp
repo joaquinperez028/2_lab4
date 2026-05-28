@@ -1,5 +1,6 @@
 #include "Sistema.h"
 #include "Cliente.h"
+#include "Propietario.h"
 
 Sistema *Sistema::instance = nullptr;
 
@@ -54,8 +55,19 @@ Status Sistema::altaCliente(string nickname, string nombre, string contrasenia,
     return Status::OK;
 }
 
-Status Sistema::altaPropietario(string, string, string, string, string, string)
+Status Sistema::altaPropietario(string nickname, string nombre, string contrasenia,
+                                string email, string numCuenta, string banco)
 {
+    Status st = this->revisarNickname(nickname);
+    if (st != Status::OK)
+    {
+        return st;
+    }
+
+    Propietario *propietario = new Propietario(nickname, nombre, contrasenia, email,
+                                               numCuenta, banco, "");
+    this->colUsuarios->add(propietario);
+
     return Status::OK;
 }
 
