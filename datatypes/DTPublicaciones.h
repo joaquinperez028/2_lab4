@@ -2,9 +2,9 @@
 #define DTPUBLICACIONES_H
 
 #include <string>
-#include "fecha.h"
-#include "tipoPublicacion.h"
-#include "tipoInmueble.h"
+#include "Fecha.h"
+#include "TipoPublicacion.h"
+#include "TipoInmueble.h"
 
 using namespace std;
 

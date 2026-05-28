@@ -1,4 +1,4 @@
-#include "direccion.h"
+#include "Direccion.h"
 
 direccion::direccion() : numPuerta(0), calle(""), localidad(""), departamento("") {}
 

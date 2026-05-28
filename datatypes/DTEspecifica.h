@@ -1,10 +1,10 @@
 #ifndef DTESPECIFICA_H
 #define DTESPECIFICA_H
 
-#include "direccion.h"
-#include "fecha.h"
-#include "tipoInmueble.h"
-#include "tipoTecho.h"
+#include "Direccion.h"
+#include "Fecha.h"
+#include "TipoInmueble.h"
+#include "TipoTecho.h"
 
 using namespace std;
 

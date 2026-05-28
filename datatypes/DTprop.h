@@ -2,7 +2,7 @@
 #define DTPROP_H
 
 #include <string>
-#include "direccion.h"
+#include "Direccion.h"
 
 using namespace std;
 
