@@ -41,6 +41,23 @@ Status Sistema::revisarNickname(string nickname)
     return Status::OK;
 }
 
+Usuario *Sistema::buscarPorNickname(string nickname)
+{
+    UsuarioIterator *it = this->colUsuarios->getIterator();
+    while (it->hasCurrent())
+    {
+        Usuario *u = it->getCurrent();
+        if (u->getNickName() == nickname)
+        {
+            delete it;
+            return u;
+        }
+        it->next();
+    }
+    delete it;
+    return nullptr;
+}
+
 Status Sistema::altaCliente(string nickname, string nombre, string contrasenia,
                             string email, string apellido, string documento)
 {
@@ -105,6 +122,23 @@ DTprop Sistema::listarPropietarios()
 
 void Sistema::asociarPropietario(string)
 {
+    // hardcoded hasta implementar listarPropietarios / listarInmobiliarias
+    string nicknameProp = "ana_prop";
+    string nicknameInmo = "inmo_central";
+
+    Usuario *uProp = this->buscarPorNickname(nicknameProp);
+    Usuario *uInmo = this->buscarPorNickname(nicknameInmo);
+
+    Propietario *propietario = dynamic_cast<Propietario *>(uProp);
+    Inmobiliaria *inmobiliaria = dynamic_cast<Inmobiliaria *>(uInmo);
+
+    if (propietario == nullptr || inmobiliaria == nullptr)
+    {
+        return;
+    }
+
+    inmobiliaria->asociarPropietario(propietario);
+    propietario->asociarInmobiliaria(inmobiliaria);
 }
 
 DTInmobiliaria Sistema::listarInmobiliarias()

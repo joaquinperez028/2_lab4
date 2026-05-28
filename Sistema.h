@@ -12,6 +12,7 @@ private:
     Sistema();
     static Sistema *instance;
     ColUsuario *colUsuarios;
+    Usuario *buscarPorNickname(string nickname);
 
 public:
     ~Sistema();

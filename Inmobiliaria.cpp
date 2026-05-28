@@ -1,4 +1,6 @@
 #include "Inmobiliaria.h"
+#include "ColUsuario.h"
+#include "Propietario.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
                            direccion direccion, string telefono, string URL)
@@ -8,12 +10,13 @@ Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, s
       URL(URL),
       inmuebles(nullptr),
       administraciones(nullptr),
-      propietarios(nullptr)
+      propietarios(new ColUsuario())
 {
 }
 
 Inmobiliaria::~Inmobiliaria()
 {
+    delete propietarios;
 }
 
 direccion Inmobiliaria::getDireccion()
@@ -31,9 +34,13 @@ string Inmobiliaria::getUrl()
     return this->URL;
 }
 
-void Inmobiliaria::asociarPropietario(Propietario*)
+void Inmobiliaria::asociarPropietario(Propietario* propietario)
 {
-    // pendiente: propietarios->add(prop) cuando propietarios != nullptr
+    if (this->propietarios == nullptr || propietario == nullptr)
+    {
+        return;
+    }
+    this->propietarios->add(propietario);
 }
 
 Status Inmobiliaria::crearAdministra(int)

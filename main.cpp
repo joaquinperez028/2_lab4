@@ -80,5 +80,8 @@ int main()
         cout << "Nickname duplicado inmobiliaria: fallo la validacion" << endl;
     }
 
+    sistema->asociarPropietario("");
+    cout << "Asociar propietario (ana_prop <-> inmo_central): OK" << endl;
+
     return 0;
 }

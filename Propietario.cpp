@@ -1,4 +1,5 @@
 #include "Propietario.h"
+#include "Inmobiliaria.h"
 
 Propietario::Propietario(string nickname, string nombre, string contrasenia, string email,
                          string numCuenta, string banco, string telefono)
@@ -28,6 +29,11 @@ string Propietario::getBanco()
 string Propietario::getTelefono()
 {
     return this->telefono;
+}
+
+void Propietario::asociarInmobiliaria(Inmobiliaria* inmobiliaria)
+{
+    this->inmo = inmobiliaria;
 }
 
 void Propietario::removerPropietario(Inmueble*)
