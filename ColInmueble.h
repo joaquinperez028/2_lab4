@@ -3,6 +3,7 @@
 #define COLINMUEBLE_H
 
 #include "ICollection.h"
+#include "InmuebleIterator.h"
 #include "Inmueble.h"
 
 class ColInmueble {

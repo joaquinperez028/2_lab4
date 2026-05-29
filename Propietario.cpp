@@ -45,7 +45,7 @@ void Propietario::removerPropietario(Inmueble*)
 Status Propietario::altaCasa(direccion direccion_, float superficie, int identificador,
                               TipoTecho tipoTecho, bool propHorizontal)
 {
-    Casa *casa = new Casa(direccion_, superficie, identificador, techo, propHorizontal);
+    Casa *casa = new Casa(direccion_, superficie, identificador, tipoTecho, propHorizontal);
 
     casa->asociarPropietario(this);
     this->inmuebles->add(casa);

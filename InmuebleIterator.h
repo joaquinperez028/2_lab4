@@ -17,4 +17,4 @@ public:
     void next();
 };
 
-#endif;
+#endif
