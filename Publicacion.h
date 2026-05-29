@@ -4,10 +4,10 @@
 class Administra;
 
 #include <string>
-#include "tipoPublicacion.h"
-#include "opciones.h"
-#include "fecha.h"
-#include "ICollectible"
+#include "datatypes/tipoPublicacion.h"
+#include "datatypes/opciones.h"
+#include "datatypes/fecha.h"
+#include "ICollection/interfaces/ICollectible.h"
 
 class Publicacion : public ICollectible
 {
@@ -15,7 +15,7 @@ private:
     int codigo;
     std::string texto;
     float precio;
-    fecha fecha;
+    fecha fechaPublicacion;
     bool activa;
     tipoPublicacion tipo;
     Administra *administra;

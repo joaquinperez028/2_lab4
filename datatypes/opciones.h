@@ -3,8 +3,9 @@
 
 enum class opciones
 {
-    Apto,
-    Casa,
+    Apto, // InteresApto(posible) porq tengo que usar en la misma operacion tipoInmueble y hay nombres
+          // iguales que pueden dar problemas
+    Casa, // InteresCasa(posible)
     Todos
 };
 
