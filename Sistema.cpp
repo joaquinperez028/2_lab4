@@ -2,12 +2,15 @@
 #include "Cliente.h"
 #include "Propietario.h"
 #include "Inmobiliaria.h"
+#include "datatypes/tipoTecho.h"
 
 Sistema *Sistema::instance = nullptr;
 
 Sistema::Sistema()
 {
     this->colUsuarios = new ColUsuario();
+    this->propRecordado = nullptr;
+    this->ultimoCodigoInmueble = 0;
 }
 
 Sistema::~Sistema()
@@ -89,9 +92,18 @@ Status Sistema::altaPropietario(string nickname, string nombre, string contrasen
     return Status::OK;
 }
 
-Status Sistema::altaCasa(direccion, float, int, tipoTecho, bool)
-{
-    return Status::OK;
+
+Status Sistema::altaCasa(direccion direccion, float superficie, int anoConstruc, tipoTecho TipoTecho, bool propHorizontal)
+{   
+   if (this->propRecordado == nullptr) {
+        return Status::ERROR;
+    }
+
+    this->ultimoCodigoInmueble++;
+    int codigo = this->ultimoCodigoInmueble;
+
+    return this->propRecordado->altaCasa(direccion, superficie, codigo, TipoTecho, propHorizontal);
+
 }
 
 Status Sistema::altaApto(direccion, float, int, int, bool, float)

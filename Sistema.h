@@ -12,6 +12,8 @@ private:
     Sistema();
     static Sistema *instance;
     ColUsuario *colUsuarios;
+    Propietario *propRecordado;
+    int ultimoCodigoInmueble;
     Usuario *buscarPorNickname(string nickname);
 
 public:

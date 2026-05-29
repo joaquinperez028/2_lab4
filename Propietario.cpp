@@ -1,5 +1,6 @@
 #include "Propietario.h"
 #include "Inmobiliaria.h"
+#include "ColInmueble.h"
 
 Propietario::Propietario(string nickname, string nombre, string contrasenia, string email,
                          string numCuenta, string banco, string telefono)
@@ -7,13 +8,14 @@ Propietario::Propietario(string nickname, string nombre, string contrasenia, str
       numCuenta(numCuenta),
       banco(banco),
       telefono(telefono),
-      inmuebles(nullptr),
+      inmuebles(new ColInmueble()),
       inmo(nullptr)
 {
 }
 
 Propietario::~Propietario()
 {
+    //ojo cuando se implemente el destructor, como elimina o desasocia la coleccion de inmuebles...
 }
 
 string Propietario::getNumCuenta()
@@ -40,8 +42,14 @@ void Propietario::removerPropietario(Inmueble*)
 {
 }
 
-Status Propietario::altaCasa(direccion, float, int, tipoTecho, bool)
+Status Propietario::altaCasa(direccion direccion_, float superficie, int identificador,
+                              TipoTecho tipoTecho, bool propHorizontal)
 {
+    Casa *casa = new Casa(direccion_, superficie, identificador, techo, propHorizontal);
+
+    casa->asociarPropietario(this);
+    this->inmuebles->add(casa);
+
     return Status::OK;
 }
 

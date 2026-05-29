@@ -2,10 +2,10 @@
 // IMPLEMENTACION DEL WRAPPER DE LA COLECCION DE INMUEBLES
 
 #include "ColInmueble.h"
-#include // ACA HAY QUE INCLUIR EL TIPO DE ESTRUCTURA QUE VAMOS A USAR, LISTA O ARBOL, ETC .H
+#include "ICollection/collections/List.h"
 
 ColInmueble::ColInmueble() {
-    this->col = new //DE LISTA O ARBOL O ETC, LO QUE HAYAMOS ELEGIDO(); 
+    this->col = new List();
 }
 
 void ColInmueble::add(Inmueble* i) {
@@ -13,15 +13,15 @@ void ColInmueble::add(Inmueble* i) {
 }
 
 void ColInmueble::remove(Inmueble* i){
-
+    this->col->remove(i);
 }
 
 bool ColInmueble::member(Inmueble* i){
-
+    return this->col->member(i);
 }
 
 bool ColInmueble::isEmpty(){
-
+    return this->col->isEmpty();
 }
 
 InmuebleIterator* ColInmueble::getIterator() { // CASTEO DEL OBJETO 

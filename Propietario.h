@@ -29,7 +29,7 @@ class Propietario : public Usuario {
         string getTelefono();
         void asociarInmobiliaria(Inmobiliaria* inmobiliaria);
         void removerPropietario(Inmueble*); //ESTA BIEN USAR * ?? O DEBO USAR & ??
-        Status altaCasa(direccion, float, int, tipoTecho, bool);
+        Status altaCasa(direccion, float, int, TipoTecho, bool);
         Status altaApto(direccion, float, int, int, bool, float);
 
 };
