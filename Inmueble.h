@@ -2,7 +2,6 @@
 #define INMUEBLE_H
 
 #include <string>
-#include "datatypes.h"
 
 class Propietario;
 
