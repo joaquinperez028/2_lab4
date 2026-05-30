@@ -2,8 +2,13 @@
 #define SISTEMA_H
 
 #include "ISistema.h"
+<<<<<<< HEAD
 #include "ColUsuario.h"
 #include "datatypes/Status.h" //agrego Status aca porq lo precisamos
+=======
+#include "ICollection.h"
+#include "ICollection/interfaces/IDictionary.h"   
+>>>>>>> 5ff080a1c280291fce3ac0e738da22b7dcad6d93
 
 using namespace std;
 
@@ -12,7 +17,10 @@ class Sistema : public ISistema
 private:
     Sistema();
     static Sistema *instance;
-    ColUsuario *colUsuarios;
+    ColUsuario *colUsuarios; //IDictionary* usuarios;
+    IDictionary *inmuebles;
+    Propietario *propRecordado;
+    int ultimoCodigoInmueble;
     Usuario *buscarPorNickname(string nickname);
     // Inmobiliaria* inmoSeleccionada;
     // int ultimoCodigo; (para generar el codigo incremental)
@@ -24,7 +32,7 @@ public:
     Status altaCliente(string, string, string, string, string, string) override;
     Status altaPropietario(string, string, string, string, string, string) override;
     Status altaCasa(direccion, float, int, tipoTecho, bool) override;
-    Status altaApto(direccion, float, int, int, bool, float) override;
+    Status altaApto(direccion, float, int, bool, float) override;
     Status altaInmobiliaria(string, string, string, direccion, string, string) override;
     DTprop listarPropietarios() override;
     void asociarPropietario(string) override;

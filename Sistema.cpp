@@ -2,17 +2,29 @@
 #include "Cliente.h"
 #include "Propietario.h"
 #include "Inmobiliaria.h"
+#include "ICollection/collections/List.h"
+#include "ICollection/interfaces/IIterator.h"
+#include "ICollection/collections/OrderedDictionary.h"
+#include "ICollection/Integer.h"
+#include "ICollection/String.h"
+#include "Casa.h"
+#include "Apartamento.h"
+#include "datatypes/tipoTecho.h"
 
 Sistema *Sistema::instance = nullptr;
 
 Sistema::Sistema()
 {
-    this->colUsuarios = new ColUsuario();
+    this->colUsuarios = new ColUsuario(); //this->usuarios = new OrderedDictionary();
+    this->inmuebles = new OrderedDictionary();
+    this->propRecordado = nullptr;
+    this->ultimoCodigoInmueble = 0;
 }
 
 Sistema::~Sistema()
 {
-    delete this->colUsuarios;
+    delete this->colUsuarios; //cambiar por: delete this->usuarios;
+    delete this->inmuebles;
 }
 
 Sistema *Sistema::getInstance()
@@ -24,7 +36,7 @@ Sistema *Sistema::getInstance()
     return instance;
 }
 
-Status Sistema::revisarNickname(string nickname)
+Status Sistema::revisarNickname(string nickname) //revisar porque al usar dictionary se hace diferente
 {
     UsuarioIterator *it = this->colUsuarios->getIterator();
     while (it->hasCurrent())
@@ -41,7 +53,7 @@ Status Sistema::revisarNickname(string nickname)
     return Status::OK;
 }
 
-Usuario *Sistema::buscarPorNickname(string nickname)
+Usuario *Sistema::buscarPorNickname(string nickname) //revisar porque al usar dictionary se hace diferente
 {
     UsuarioIterator *it = this->colUsuarios->getIterator();
     while (it->hasCurrent())
@@ -68,8 +80,8 @@ Status Sistema::altaCliente(string nickname, string nombre, string contrasenia,
     }
 
     Cliente *cliente = new Cliente(nickname, nombre, contrasenia, email, apellido, documento);
-    this->colUsuarios->add(cliente);
-
+    this->colUsuarios->add(cliente); //this->usuarios->add(new String(nickname.c_str()), cliente);
+                                        //como ahora usamo dictionary hay que hacer y añadir la clave
     return Status::OK;
 }
 
@@ -84,18 +96,41 @@ Status Sistema::altaPropietario(string nickname, string nombre, string contrasen
 
     Propietario *propietario = new Propietario(nickname, nombre, contrasenia, email,
                                                numCuenta, banco, "");
-    this->colUsuarios->add(propietario);
+    this->colUsuarios->add(propietario); //this->usuarios->add(new String(nickname.c_str()), propietario);
+                                            //como ahora usamo dictionary hay que hacer y añadir la clave
+    return Status::OK;
+}
+
+
+Status Sistema::altaCasa(direccion direccion, float superficie, int anoConstruc, tipoTecho TipoTecho, bool propHorizontal)
+{   
+   if (this->propRecordado == nullptr) {
+        return Status::ERROR;
+    }
+
+    this->ultimoCodigoInmueble++;
+    int codigo = this->ultimoCodigoInmueble;
+
+    Casa* casa = propRecordado->crearCasa(direccion, superficie, codigo, TipoTecho, propHorizontal);
+
+    inmuebles->add(casa);
 
     return Status::OK;
 }
 
-Status Sistema::altaCasa(direccion, float, int, tipoTecho, bool)
-{
-    return Status::OK;
-}
+Status Sistema::altaApto(direccion direccion, float superficie, int numPiso, bool ascensor, float gastosComunes)
+{   
+    if (this->propRecordado == nullptr) {
+        return Status::ERROR;
+    }
 
-Status Sistema::altaApto(direccion, float, int, int, bool, float)
-{
+    this->ultimoCodigoInmueble++;
+    int codigo = this->ultimoCodigoInmueble;
+
+    Apartamento* apartamento = propRecordado->crearApto(direccion, superficie, codigo, numPiso, ascensor, gastosComunes);
+    
+    inmuebles->add(apartamento);
+
     return Status::OK;
 }
 
@@ -109,8 +144,13 @@ Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrase
     }
 
     Inmobiliaria *inmobiliaria = new Inmobiliaria(nickname, nombre, contrasenia, "",
+<<<<<<< HEAD
                                                   dir, telefono, url);
     this->colUsuarios->add(inmobiliaria);
+=======
+                                                    dir, telefono, url);
+    this->colUsuarios->add(inmobiliaria); //cambiar lo mismo que antes, ahora ya no tenemos colUsuarios y agregar la clave
+>>>>>>> 5ff080a1c280291fce3ac0e738da22b7dcad6d93
 
     return Status::OK;
 }

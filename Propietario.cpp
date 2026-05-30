@@ -1,5 +1,8 @@
 #include "Propietario.h"
 #include "Inmobiliaria.h"
+#include "Casa.h"
+#include "Apartamento.h"
+#include "ICollection/collections/List.h"
 
 Propietario::Propietario(string nickname, string nombre, string contrasenia, string email,
                          string numCuenta, string banco, string telefono)
@@ -7,13 +10,14 @@ Propietario::Propietario(string nickname, string nombre, string contrasenia, str
       numCuenta(numCuenta),
       banco(banco),
       telefono(telefono),
-      inmuebles(nullptr),
+      inmuebles(new OrderedDictionary()),
       inmo(nullptr)
 {
 }
 
 Propietario::~Propietario()
 {
+    //ojo cuando se implemente el destructor, como elimina o desasocia la coleccion de inmuebles...
 }
 
 string Propietario::getNumCuenta()
@@ -40,12 +44,21 @@ void Propietario::removerPropietario(Inmueble*)
 {
 }
 
-Status Propietario::altaCasa(direccion, float, int, tipoTecho, bool)
+Casa* Propietario::crearCasa(direccion direccion_, float superficie, int identificador,
+                              TipoTecho tipoTecho, bool propHorizontal)
 {
-    return Status::OK;
+    Casa *casa = new Casa(direccion_, superficie, identificador, tipoTecho, propHorizontal);
+
+    this->inmuebles->add(new Integer(identificador), casa);
+
+    return casa; //cambiar en el diagrama de comunicacion que le retorna la casa
 }
 
-Status Propietario::altaApto(direccion, float, int, int, bool, float)
-{
-    return Status::OK;
+Apartamento* Propietario::crearApto(direccion direccion_, float superficie, int identificador, int numPiso, bool ascensor, float gastosComunes)
+{   
+    Apartamento *apartamento = new Apartamento(direccion_, superficie, identificador, numPiso, ascensor, gastosComunes);
+
+    this->inmuebles->add(new Integer(identificador), apartamento);
+
+    return apartamento; //cambiar en el diagrama de comunicacion que le retorna el apto
 }
