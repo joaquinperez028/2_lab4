@@ -3,6 +3,7 @@
 
 #include "ISistema.h"
 #include "ColUsuario.h"
+#include "datatypes/Status.h" //agrego Status aca porq lo precisamos
 
 using namespace std;
 
@@ -13,6 +14,8 @@ private:
     static Sistema *instance;
     ColUsuario *colUsuarios;
     Usuario *buscarPorNickname(string nickname);
+    // Inmobiliaria* inmoSeleccionada;
+    // int ultimoCodigo; (para generar el codigo incremental)
 
 public:
     ~Sistema();

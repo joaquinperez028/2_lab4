@@ -109,7 +109,7 @@ Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrase
     }
 
     Inmobiliaria *inmobiliaria = new Inmobiliaria(nickname, nombre, contrasenia, "",
-                                                    dir, telefono, url);
+                                                  dir, telefono, url);
     this->colUsuarios->add(inmobiliaria);
 
     return Status::OK;
@@ -189,4 +189,23 @@ DTInmueblesRep Sistema::listarInmueblesRepresentados(string)
 Status Sistema::altaAdministracion(int)
 {
     return Status::OK;
+}
+
+Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string texto,
+                                 float precio)
+{
+    Administra *adm = inmoSeleccionada->findAdministra(identificador);
+    if (adm == NULL)
+        return Status ::ERROR;
+
+    fecha fechaHoy = obtenerFechaActual();
+
+    if (adm->existePubActiva(tipo, fechaHoy))
+        return Status ::ERROR;
+
+    this->ultimoCodigo++;
+    int codigo = this->ultimoCodigo;
+
+    adm->crearPublicacion(codigo, tipo, texto, precio, fechaHoy);
+    return Status ::OK;
 }
