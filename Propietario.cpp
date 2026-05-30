@@ -1,6 +1,8 @@
 #include "Propietario.h"
 #include "Inmobiliaria.h"
-#include "ColInmueble.h"
+#include "Casa.h"
+#include "Apartamento.h"
+#include "ICollection/collections/List.h"
 
 Propietario::Propietario(string nickname, string nombre, string contrasenia, string email,
                          string numCuenta, string banco, string telefono)
@@ -8,7 +10,7 @@ Propietario::Propietario(string nickname, string nombre, string contrasenia, str
       numCuenta(numCuenta),
       banco(banco),
       telefono(telefono),
-      inmuebles(new ColInmueble()),
+      inmuebles(new OrderedDictionary()),
       inmo(nullptr)
 {
 }
@@ -42,18 +44,21 @@ void Propietario::removerPropietario(Inmueble*)
 {
 }
 
-Status Propietario::altaCasa(direccion direccion_, float superficie, int identificador,
+Casa* Propietario::crearCasa(direccion direccion_, float superficie, int identificador,
                               TipoTecho tipoTecho, bool propHorizontal)
 {
     Casa *casa = new Casa(direccion_, superficie, identificador, tipoTecho, propHorizontal);
 
-    casa->asociarPropietario(this);
-    this->inmuebles->add(casa);
+    this->inmuebles->add(new Integer(identificador), casa);
 
-    return Status::OK;
+    return casa; //cambiar en el diagrama de comunicacion que le retorna la casa
 }
 
-Status Propietario::altaApto(direccion, float, int, int, bool, float)
-{
-    return Status::OK;
+Apartamento* Propietario::crearApto(direccion direccion_, float superficie, int identificador, int numPiso, bool ascensor, float gastosComunes)
+{   
+    Apartamento *apartamento = new Apartamento(direccion_, superficie, identificador, numPiso, ascensor, gastosComunes);
+
+    this->inmuebles->add(new Integer(identificador), apartamento);
+
+    return apartamento; //cambiar en el diagrama de comunicacion que le retorna el apto
 }

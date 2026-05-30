@@ -2,7 +2,8 @@
 #define SISTEMA_H
 
 #include "ISistema.h"
-#include "ColUsuario.h"
+#include "ICollection.h"
+#include "ICollection/interfaces/IDictionary.h"   
 
 using namespace std;
 
@@ -11,7 +12,8 @@ class Sistema : public ISistema
 private:
     Sistema();
     static Sistema *instance;
-    ColUsuario *colUsuarios;
+    ColUsuario *colUsuarios; //IDictionary* usuarios;
+    IDictionary *inmuebles;
     Propietario *propRecordado;
     int ultimoCodigoInmueble;
     Usuario *buscarPorNickname(string nickname);
@@ -23,7 +25,7 @@ public:
     Status altaCliente(string, string, string, string, string, string) override;
     Status altaPropietario(string, string, string, string, string, string) override;
     Status altaCasa(direccion, float, int, tipoTecho, bool) override;
-    Status altaApto(direccion, float, int, int, bool, float) override;
+    Status altaApto(direccion, float, int, bool, float) override;
     Status altaInmobiliaria(string, string, string, direccion, string, string) override;
     DTprop listarPropietarios() override;
     void asociarPropietario(string) override;

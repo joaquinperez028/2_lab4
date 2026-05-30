@@ -1,5 +1,5 @@
 #include "Inmobiliaria.h"
-#include "ColUsuario.h"
+#include "ICollection/collections/List.h"
 #include "Propietario.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
@@ -10,7 +10,7 @@ Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, s
       URL(URL),
       inmuebles(nullptr),
       administraciones(nullptr),
-      propietarios(new ColUsuario())
+      propietarios(new ColUsuario()) //propietarios(new List())
 {
 }
 

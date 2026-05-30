@@ -5,19 +5,22 @@
 #include "Datatypes/Direccion.h"
 #include "Datatypes/TipoTecho.h"
 #include "Datatypes/Status.h"
+#include "ICollection.h"
+#include "ICollection/interfaces/IDictionary.h"
 
 using namespace std;
 
 class Inmueble;
 class Inmobiliaria;
-class ColInmueble;
+class Casa;
+class Apartamento;
 
 class Propietario : public Usuario {
     protected:
         string numCuenta;
         string banco;
         string telefono;
-        ColInmueble* inmuebles;
+        IDictionary* inmuebles;
         Inmobiliaria* inmo;
 
     public:
@@ -29,8 +32,8 @@ class Propietario : public Usuario {
         string getTelefono();
         void asociarInmobiliaria(Inmobiliaria* inmobiliaria);
         void removerPropietario(Inmueble*); //ESTA BIEN USAR * ?? O DEBO USAR & ??
-        Status altaCasa(direccion, float, int, TipoTecho, bool);
-        Status altaApto(direccion, float, int, int, bool, float);
+        Casa* crearCasa(direccion, float, int, TipoTecho, bool); //cambiar en diagrama de comunicacion
+        Apartamento* crearApto(direccion, float, int, int, bool, float); //cambiar en diagrama de comunicacion
 
 };
 
