@@ -2,7 +2,9 @@
 #define CASA_H
  
 #include "Inmueble.h"
-#include "datatypes.h"
+#include "Datatypes/DTEspecifica.h"  
+#include "Datatypes/DTCasa.h"        
+#include "Datatypes/TipoTecho.h"     
  
 class Casa : public Inmueble {
 private:

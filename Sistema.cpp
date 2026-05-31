@@ -181,9 +181,33 @@ void Sistema::asociarPropietario(string)
     propietario->asociarInmobiliaria(inmobiliaria);
 }
 
-DTInmobiliaria Sistema::listarInmobiliarias()
-{
-    return DTInmobiliaria();
+ICollection* Sistema::listarInmobiliarias() {
+    ICollection* resultado = new List();
+ 
+    // mensaje 1* [foreach && esInmobiliaria()] — visibilidad <<association>>
+    IIterator* it = this->usuarios->getIterator();
+ 
+    while (it->hasCurrent()) {
+        // recupera cada usuario de la coleccion generica
+        Usuario* u = dynamic_cast<Usuario*>(it->getCurrent());
+ 
+        // filtra solo los que son inmobiliarias — condicion del foreach
+        if (u->esInmobiliaria()) {
+ 
+            // casteo seguro porque ya verificamos con esInmobiliaria()
+            Inmobiliaria* i = dynamic_cast<Inmobiliaria*>(u);
+ 
+            // mensaje 2* getDTInmobiliaria() — visibilidad <<association>>
+            DTInmobiliaria* dt = i->getDTInmobiliaria();
+ 
+            resultado->add(dt);
+        }
+ 
+        it->next();
+    }
+ 
+    delete it;
+    return resultado;
 }
 
 DTInmuebles Sistema::seleccionarInmobiliaria(string)
