@@ -210,7 +210,7 @@ ICollection* Sistema::listarInmobiliarias() {
     return resultado;
 }
 
-DTInmuebles Sistema::seleccionarInmobiliaria(string)
+ICollection* Sistema::seleccionarInmobiliaria(string)
 {
     return DTInmuebles();
 }
@@ -220,7 +220,7 @@ Status Sistema::altaPublicacion(int, tipoPublicacion, string, float)
     return Status::OK;
 }
 
-DTPublicacion Sistema::listarPublicaciones(string, float, float, opciones)
+ICollection* Sistema::listarPublicaciones(string, float, float, opciones)
 {
     return DTPublicacion();
 }
