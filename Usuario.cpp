@@ -28,3 +28,9 @@ string Usuario::getEmail()
 {
     return this->email;
 }
+
+// Filtra si el usuario es una inmobiliaria usando dynamic_cast
+// Corresponde al [foreach && esInmobiliaria()] del diagrama
+bool Usuario::esInmobiliaria() {
+    return dynamic_cast<Inmobiliaria*>(this) != nullptr;
+}
