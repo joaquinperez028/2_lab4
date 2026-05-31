@@ -1,34 +1,51 @@
-#ifndef INMUEBLE_H
+##ifndef INMUEBLE_H
 #define INMUEBLE_H
-
+ 
 #include <string>
-
+#include "Datatypes/Direccion.h"
+#include "Datatypes/Fecha.h"
+#include "Datatypes/TipoInmueble.h"
+#include "Datatypes/DTProp.h"
+#include "Datatypes/DTEspecifica.h"
+#include "ICollection.h"
+ 
+using namespace std;
+ 
 class Propietario;
-
-class Inmueble
+ 
+class Inmueble : public ICollectible;
 {
 protected:
     direccion direccion_;
     float superficie;
-    string telefono;
+    fecha anoConstruc;
     int identificador;
-    // deberiamos agregar algo como tipoInmueble ("CASA", "APARTAMENTO")
-
-    Propietario *propietario;
-
+    tipoInmueble tipo;
+ 
+    Propietario* propietario;
+ 
 public:
-    Inmueble(direccion dir, float superficie, string telefono, int identificador);
-
+    Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo);
+    virtual ~Inmueble();
+ 
+    // Getters
     direccion getDireccion() const;
     float getSuperficie() const;
-    string getTelefono() const;
+    fecha getAnoConstruc() const;
     int getIdentificador() const;
-    Propietario *getPropietario() const;
-
-    void asociarPropietario(Propietario *p);
-    void listarPropiedades();
-    virtual void mostrarDetalle(int id) = 0;
-    void removerInmueble(Inmueble *inm);
+    tipoInmueble getTipo() const;
+    Propietario* getPropietario() const;
+ 
+    // Operaciones
+    void asociarPropietario(Propietario* p);
+    void removerInmueble(Inmueble* inm);
+ 
+    // Para listarPropiedades — mensaje 2* en el diagrama
+    DTProp* getDetalles();
+ 
+    // Virtual puro — cada subclase implementa con su DTEspecifica
+    // Para mostrarDetalle — mensaje del diagrama
+    virtual DTEspecifica* mostrarDetalle(int id) = 0;
 };
-
+ 
 #endif

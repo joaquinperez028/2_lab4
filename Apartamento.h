@@ -2,8 +2,10 @@
 #define APARTAMENTO_H
  
 #include "Inmueble.h"
-#include "datatypes.h"
- 
+#include "Datatypes/DTEspecifica.h"   
+#include "Datatypes/DTApartamento.h"  
+
+
 class Apartamento : public Inmueble {
 private:
     int   numPiso;
