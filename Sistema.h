@@ -2,13 +2,9 @@
 #define SISTEMA_H
 
 #include "ISistema.h"
-<<<<<<< HEAD
-#include "ColUsuario.h"
 #include "datatypes/Status.h" //agrego Status aca porq lo precisamos
-=======
 #include "ICollection.h"
-#include "ICollection/interfaces/IDictionary.h"   
->>>>>>> 5ff080a1c280291fce3ac0e738da22b7dcad6d93
+#include "ICollection/interfaces/IDictionary.h"
 
 using namespace std;
 
@@ -17,7 +13,7 @@ class Sistema : public ISistema
 private:
     Sistema();
     static Sistema *instance;
-    ColUsuario *colUsuarios; //IDictionary* usuarios;
+    ColUsuario *colUsuarios; // IDictionary* usuarios;
     IDictionary *inmuebles;
     Propietario *propRecordado;
     int ultimoCodigoInmueble;
