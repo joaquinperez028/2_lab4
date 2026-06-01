@@ -2,6 +2,7 @@
 #include "Cliente.h"
 #include "Propietario.h"
 #include "Inmobiliaria.h"
+#include "Administra.h"
 #include "ICollection/collections/List.h"
 #include "ICollection/interfaces/IIterator.h"
 #include "ICollection/collections/OrderedDictionary.h"
@@ -239,7 +240,7 @@ Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string
 
     fecha fechaHoy = obtenerFechaActual();
 
-    if (adm->existePubActiva(tipo, fechaHoy))
+    if (adm->existePubAciva(tipo, fechaHoy))
         return Status ::ERROR;
 
     this->ultimoCodigoPub++;

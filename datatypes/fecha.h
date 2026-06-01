@@ -16,6 +16,7 @@ public:
     int getDia();
     int getMes();
     int getAnio();
+    bool operator==(const fecha &otra) const;
 };
 
 #endif

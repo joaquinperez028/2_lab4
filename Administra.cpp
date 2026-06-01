@@ -45,3 +45,10 @@ bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
     }
     return false;
 }
+
+void Administra ::crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
+                                   fecha fechaHoy)
+{
+    Publicacion *pub = new Publicacion(codigo, texto, precio, fechaHoy, tipo, this);
+    agregarPublicacion(pub);
+}
