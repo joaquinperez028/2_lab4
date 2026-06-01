@@ -62,3 +62,7 @@ Apartamento* Propietario::crearApto(direccion direccion_, float superficie, int 
 
     return apartamento; //cambiar en el diagrama de comunicacion que le retorna el apto
 }
+/*DTprop* Propietario::getDTprop()
+{
+    return new DTprop(this->getNombre(), this->getNickName());
+}*/// esto hay que agregarlo (yani)
