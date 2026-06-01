@@ -31,3 +31,7 @@ void Administra ::agregarPublicacion(Publicacion *pub)
 Administra ::~Administra() {
 
 };
+
+DTEspecifica* Administra::getAdministra() {
+    return this->inmueble->getInmueble(); // mensaje 2.1.1
+}

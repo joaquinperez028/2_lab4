@@ -19,6 +19,7 @@ public:
  
     void crearCasa(direccion dir, float superficie, int identificador, TipoTecho tipoTecho, bool propHorizontal);
     void mostrarDetalle(int id) override;
+    DTEspecifica* getInmueble() override;
 };
  
 #endif 

@@ -46,6 +46,7 @@ public:
     // Virtual puro — cada subclase implementa con su DTEspecifica
     // Para mostrarDetalle — mensaje del diagrama
     virtual DTEspecifica* mostrarDetalle(int id) = 0;
+    virtual DTEspecifica* getInmueble() = 0;  // mensaje 2.1.1 del diagrama
 };
  
 #endif
