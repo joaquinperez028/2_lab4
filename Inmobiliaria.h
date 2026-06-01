@@ -19,8 +19,7 @@ protected:
     string URL;
     IDictionary* inmuebles;
     IDictionary* administraciones;
-    ColUsuario* propietarios; // propietarios con los que trabaja (son Usuario)
-                            //IDictionary* propietarios;
+    IDictionary* propietarios;
 public:
     Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
                  direccion direccion, string telefono, string URL);
