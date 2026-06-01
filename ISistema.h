@@ -9,6 +9,7 @@
 #include "Datatypes/Opciones.h"
 #include "Datatypes/DTEspecifica.h"
 #include "Datatypes/DTprop.h"
+#include "Datatypes/Fecha.h"
 #include "Datatypes/DTPublicacion.h"
 #include "Datatypes/DTInmueble.h"
 #include "Datatypes/DTInmobiliaria.h"
@@ -27,8 +28,8 @@ public:
     virtual Status revisarNickname(string) = 0;
     virtual Status altaCliente(string, string, string, string, string, string) = 0;
     virtual Status altaPropietario(string, string, string, string, string, string) = 0;
-    virtual Status altaCasa(direccion, float, int, tipoTecho, bool) = 0;
-    virtual Status altaApto(direccion, float, int, int, bool, float) = 0;
+    virtual Status altaCasa(direccion, float, fecha, tipoTecho, bool) = 0;
+    virtual Status altaApto(direccion, float, fecha, int, bool, float) = 0;
     virtual Status altaInmobiliaria(string, string, string, direccion, string, string) = 0;
     virtual ICollection* listarPropietarios() = 0;
     virtual void asociarPropietario(string) = 0;

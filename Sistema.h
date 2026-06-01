@@ -3,6 +3,7 @@
 
 #include "ISistema.h"
 #include "Datatypes/Status.h"
+#include "Datatypes/Fecha.h"
 #include "ICollection.h"
 #include "ICollection/interfaces/IDictionary.h"
 
@@ -10,6 +11,7 @@ using namespace std;
 
 class Usuario;
 class Propietario;
+class Inmobiliaria;
 
 class Sistema : public ISistema
 {
@@ -30,8 +32,8 @@ public:
     Status revisarNickname(string) override;                                             // TORTU
     Status altaCliente(string, string, string, string, string, string) override;         // TORTU
     Status altaPropietario(string, string, string, string, string, string) override;     // TORTU
-    Status altaCasa(direccion, float, int, tipoTecho, bool) override;                    // MATIAS
-    Status altaApto(direccion, float, int, int, bool, float) override;                   // MATIAS
+    Status altaCasa(direccion, float, fecha, tipoTecho, bool) override;                    // MATIAS
+    Status altaApto(direccion, float, fecha, int, bool, float) override;                   // MATIAS
     Status altaInmobiliaria(string, string, string, direccion, string, string) override; // TORTU
     ICollection *listarPropietarios() override;                                          // YANI
     void asociarPropietario(string) override;
