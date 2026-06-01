@@ -1,5 +1,6 @@
 #include "Inmueble.h"
 #include "Propietario.h"
+#include <string>
  
 // Constructor
 Inmueble::Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo) {
@@ -61,12 +62,10 @@ void Inmueble::removerInmueble(Inmueble* inm) {
 // Construye el DTProp con los datos del inmueble
 // Corresponde al mensaje 2* getDetalles() del diagrama de listarPropiedades
 // Internamente llama a getNombrePropietario() — mensaje 2.1*
-DTProp* Inmueble::getDetalles() {
-    string nombreProp = this->propietario->getNombrePropietario();
-    return new DTProp(
-        nombreProp,
-        this->identificador,
-        this->direccion_,
-        this->anoConstruc
-    );
+DTprop* Inmueble::getDetalles() {
+    string nombreProp = "";
+    if (this->propietario != nullptr) {
+        nombreProp = this->propietario->getNombre();
+    }
+    return new DTprop(std::to_string(this->identificador), this->direccion_, nombreProp);
 }
