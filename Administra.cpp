@@ -1,6 +1,7 @@
 #include "Administra.h"
 #include "ICollection/collections/List.h"
 #include "Publicacion.h"
+#include "ICollection/interfaces/IIterator.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ Administra ::~Administra() {
 
 bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
 {
-    Iterator *it = publicaciones->getIterator();
+    IIterator *it = publicaciones->getIterator();
 
     while (it->hasCurrent())
     {
@@ -46,9 +47,10 @@ bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
     return false;
 }
 
-void Administra ::crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
-                                   fecha fechaHoy)
+Publicacion *Administra ::crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
+                                           fecha fechaHoy)
 {
     Publicacion *pub = new Publicacion(codigo, texto, precio, fechaHoy, tipo, this);
     agregarPublicacion(pub);
+    return pub;
 }

@@ -11,6 +11,7 @@
 #include "Casa.h"
 #include "Apartamento.h"
 #include "Datatypes/TipoTecho.h"
+#include <ctime>
 
 Sistema *Sistema::instance = nullptr;
 
@@ -231,6 +232,17 @@ Status Sistema::altaAdministracion(int)
     return Status::OK;
 }
 
+fecha Sistema ::obtenerFechaActual()
+{
+    time_t t = time(nullptr);
+    tm *now = localtime(&t);
+
+    return fecha(
+        now->tm_mday,
+        now->tm_mon + 1,
+        now->tm_year + 1900);
+}
+
 Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string texto,
                                  float precio)
 {
@@ -246,6 +258,11 @@ Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string
     this->ultimoCodigoPub++;
     int codigo = this->ultimoCodigoPub;
 
-    adm->crearPublicacion(codigo, tipo, texto, precio, fechaHoy);
+    Publicacion *pub = adm->crearPublicacion(codigo, tipo, texto, precio, fechaHoy);
+
+    int codigo = pub->getCodigo();
+    Integer *key = new Integer(codigo);
+    publicaciones->add(key, pub);
+
     return Status ::OK;
 }
