@@ -9,13 +9,13 @@
 #include "ICollection/String.h"
 #include "Casa.h"
 #include "Apartamento.h"
-#include "datatypes/tipoTecho.h"
+#include "Datatypes/TipoTecho.h"
 
 Sistema *Sistema::instance = nullptr;
 
 Sistema::Sistema()
 {
-    this->colUsuarios = new ColUsuario(); //this->usuarios = new OrderedDictionary();
+    this->usuarios = new OrderedDictionary();
     this->inmuebles = new OrderedDictionary();
     this->propRecordado = nullptr;
     this->ultimoCodigoInmueble = 0;
@@ -23,7 +23,7 @@ Sistema::Sistema()
 
 Sistema::~Sistema()
 {
-    delete this->colUsuarios; //cambiar por: delete this->usuarios;
+    delete this->usuarios;
     delete this->inmuebles;
 }
 
@@ -36,38 +36,24 @@ Sistema *Sistema::getInstance()
     return instance;
 }
 
-Status Sistema::revisarNickname(string nickname) //revisar porque al usar dictionary se hace diferente
+Status Sistema::revisarNickname(string nickname)
 {
-    UsuarioIterator *it = this->colUsuarios->getIterator();
-    while (it->hasCurrent())
+    String *key = new String(nickname.c_str());
+    bool existe = this->usuarios->member(key);
+    delete key;
+    if (existe)
     {
-        Usuario *u = it->getCurrent();
-        if (u->getNickName() == nickname)
-        {
-            delete it;
-            return Status::ERROR;
-        }
-        it->next();
+        return Status::ERROR;
     }
-    delete it;
     return Status::OK;
 }
 
-Usuario *Sistema::buscarPorNickname(string nickname) //revisar porque al usar dictionary se hace diferente
+Usuario *Sistema::buscarPorNickname(string nickname)
 {
-    UsuarioIterator *it = this->colUsuarios->getIterator();
-    while (it->hasCurrent())
-    {
-        Usuario *u = it->getCurrent();
-        if (u->getNickName() == nickname)
-        {
-            delete it;
-            return u;
-        }
-        it->next();
-    }
-    delete it;
-    return nullptr;
+    String *key = new String(nickname.c_str());
+    ICollectible *val = this->usuarios->find(key);
+    delete key;
+    return dynamic_cast<Usuario *>(val);
 }
 
 Status Sistema::altaCliente(string nickname, string nombre, string contrasenia,
@@ -80,8 +66,8 @@ Status Sistema::altaCliente(string nickname, string nombre, string contrasenia,
     }
 
     Cliente *cliente = new Cliente(nickname, nombre, contrasenia, email, apellido, documento);
-    this->colUsuarios->add(cliente); //this->usuarios->add(new String(nickname.c_str()), cliente);
-                                        //como ahora usamo dictionary hay que hacer y añadir la clave
+    this->usuarios->add(new String(nickname.c_str()), cliente);
+
     return Status::OK;
 }
 
@@ -96,40 +82,41 @@ Status Sistema::altaPropietario(string nickname, string nombre, string contrasen
 
     Propietario *propietario = new Propietario(nickname, nombre, contrasenia, email,
                                                numCuenta, banco, "");
-    this->colUsuarios->add(propietario); //this->usuarios->add(new String(nickname.c_str()), propietario);
-                                            //como ahora usamo dictionary hay que hacer y añadir la clave
+    this->usuarios->add(new String(nickname.c_str()), propietario);
+
     return Status::OK;
 }
 
-
-Status Sistema::altaCasa(direccion direccion, float superficie, int anoConstruc, tipoTecho TipoTecho, bool propHorizontal)
-{   
-   if (this->propRecordado == nullptr) {
+Status Sistema::altaCasa(direccion direccion, float superficie, int anoConstruc, tipoTecho techo, bool propHorizontal)
+{
+    if (this->propRecordado == nullptr)
+    {
         return Status::ERROR;
     }
 
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Casa* casa = propRecordado->crearCasa(direccion, superficie, codigo, TipoTecho, propHorizontal);
+    Casa *casa = propRecordado->crearCasa(direccion, superficie, codigo, techo, propHorizontal);
 
-    inmuebles->add(casa);
+    this->inmuebles->add(new Integer(codigo), casa);
 
     return Status::OK;
 }
 
-Status Sistema::altaApto(direccion direccion, float superficie, int numPiso, bool ascensor, float gastosComunes)
-{   
-    if (this->propRecordado == nullptr) {
+Status Sistema::altaApto(direccion direccion, float superficie, int anoConstruc, int numPiso, bool ascensor, float gastosComunes)
+{
+    if (this->propRecordado == nullptr)
+    {
         return Status::ERROR;
     }
 
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Apartamento* apartamento = propRecordado->crearApto(direccion, superficie, codigo, numPiso, ascensor, gastosComunes);
-    
-    inmuebles->add(apartamento);
+    Apartamento *apartamento = propRecordado->crearApto(direccion, superficie, codigo, numPiso, ascensor, gastosComunes);
+
+    this->inmuebles->add(new Integer(codigo), apartamento);
 
     return Status::OK;
 }
@@ -144,25 +131,19 @@ Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrase
     }
 
     Inmobiliaria *inmobiliaria = new Inmobiliaria(nickname, nombre, contrasenia, "",
-<<<<<<< HEAD
                                                   dir, telefono, url);
-    this->colUsuarios->add(inmobiliaria);
-=======
-                                                    dir, telefono, url);
-    this->colUsuarios->add(inmobiliaria); //cambiar lo mismo que antes, ahora ya no tenemos colUsuarios y agregar la clave
->>>>>>> 5ff080a1c280291fce3ac0e738da22b7dcad6d93
+    this->usuarios->add(new String(nickname.c_str()), inmobiliaria);
 
     return Status::OK;
 }
 
-DTprop Sistema::listarPropietarios()
+ICollection *Sistema::listarPropietarios()
 {
-    return DTprop();
+    return new List();
 }
 
 void Sistema::asociarPropietario(string)
 {
-    // hardcoded hasta implementar listarPropietarios / listarInmobiliarias
     string nicknameProp = "ana_prop";
     string nicknameInmo = "inmo_central";
 
@@ -181,38 +162,32 @@ void Sistema::asociarPropietario(string)
     propietario->asociarInmobiliaria(inmobiliaria);
 }
 
-ICollection* Sistema::listarInmobiliarias() {
-    ICollection* resultado = new List();
- 
-    // mensaje 1* [foreach && esInmobiliaria()] — visibilidad <<association>>
-    IIterator* it = this->usuarios->getIterator();
- 
-    while (it->hasCurrent()) {
-        // recupera cada usuario de la coleccion generica
-        Usuario* u = dynamic_cast<Usuario*>(it->getCurrent());
- 
-        // filtra solo los que son inmobiliarias — condicion del foreach
-        if (u->esInmobiliaria()) {
- 
-            // casteo seguro porque ya verificamos con esInmobiliaria()
-            Inmobiliaria* i = dynamic_cast<Inmobiliaria*>(u);
- 
-            // mensaje 2* getDTInmobiliaria() — visibilidad <<association>>
-            DTInmobiliaria* dt = i->getDTInmobiliaria();
- 
-            resultado->add(dt);
+ICollection *Sistema::listarInmobiliarias()
+{
+    ICollection *resultado = new List();
+
+    IIterator *it = this->usuarios->getIterator();
+
+    while (it->hasCurrent())
+    {
+        Usuario *u = dynamic_cast<Usuario *>(it->getCurrent());
+        Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(u);
+
+        if (inmo != nullptr)
+        {
+            resultado->add(inmo);
         }
- 
+
         it->next();
     }
- 
+
     delete it;
     return resultado;
 }
 
-ICollection* Sistema::seleccionarInmobiliaria(string)
+ICollection *Sistema::seleccionarInmobiliaria(string)
 {
-    return DTInmuebles();
+    return new List();
 }
 
 Status Sistema::altaPublicacion(int, tipoPublicacion, string, float)
@@ -220,9 +195,9 @@ Status Sistema::altaPublicacion(int, tipoPublicacion, string, float)
     return Status::OK;
 }
 
-ICollection* Sistema::listarPublicaciones(string, float, float, opciones)
+ICollection *Sistema::listarPublicaciones(string, float, float, opciones)
 {
-    return DTPublicacion();
+    return new List();
 }
 
 DTEspecifica Sistema::listarEspecifica(int)
@@ -230,9 +205,9 @@ DTEspecifica Sistema::listarEspecifica(int)
     return DTEspecifica();
 }
 
-DTprop Sistema::listarPropiedades()
+ICollection *Sistema::listarPropiedades()
 {
-    return DTprop();
+    return new List();
 }
 
 DTInmueble Sistema::mostrarDetalle(int)
@@ -245,9 +220,9 @@ Status Sistema::eliminarInmueble(int)
     return Status::OK;
 }
 
-DTInmueblesRep Sistema::listarInmueblesRepresentados(string)
+ICollection *Sistema::listarInmueblesRepresentados(string)
 {
-    return DTInmueblesRep();
+    return new List();
 }
 
 Status Sistema::altaAdministracion(int)
@@ -267,8 +242,8 @@ Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string
     if (adm->existePubActiva(tipo, fechaHoy))
         return Status ::ERROR;
 
-    this->ultimoCodigo++;
-    int codigo = this->ultimoCodigo;
+    this->ultimoCodigoPub++;
+    int codigo = this->ultimoCodigoPub;
 
     adm->crearPublicacion(codigo, tipo, texto, precio, fechaHoy);
     return Status ::OK;

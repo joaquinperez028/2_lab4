@@ -2,7 +2,8 @@
 #include "Inmobiliaria.h"
 #include "Casa.h"
 #include "Apartamento.h"
-#include "ICollection/collections/List.h"
+#include "ICollection/collections/OrderedDictionary.h"
+#include "ICollection/Integer.h"
 
 Propietario::Propietario(string nickname, string nombre, string contrasenia, string email,
                          string numCuenta, string banco, string telefono)
@@ -45,7 +46,7 @@ void Propietario::removerPropietario(Inmueble*)
 }
 
 Casa* Propietario::crearCasa(direccion direccion_, float superficie, int identificador,
-                              TipoTecho tipoTecho, bool propHorizontal)
+                              tipoTecho tipoTecho, bool propHorizontal)
 {
     Casa *casa = new Casa(direccion_, superficie, identificador, tipoTecho, propHorizontal);
 

@@ -8,16 +8,16 @@
  
 class Casa : public Inmueble {
 private:
-    TipoTecho tipoTecho;
+    tipoTecho techo;
     bool      propHorizontal;
- 
+
 public:
-    Casa(direccion dir, float superficie, int identificador,TipoTecho tipoTecho, bool propHorizontal);
-    
+    Casa(direccion dir, float superficie, int identificador, tipoTecho techo, bool propHorizontal);
+
     bool getPropHorizontal() const;
-    TipoTecho getTipoTecho() const;
- 
-    void crearCasa(direccion dir, float superficie, int identificador, TipoTecho tipoTecho, bool propHorizontal);
+    tipoTecho getTipoTecho() const;
+
+    void crearCasa(direccion dir, float superficie, int identificador, tipoTecho techo, bool propHorizontal);
     void mostrarDetalle(int id) override;
 };
  

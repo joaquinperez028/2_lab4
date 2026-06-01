@@ -31,3 +31,17 @@ void Administra ::agregarPublicacion(Publicacion *pub)
 Administra ::~Administra() {
 
 };
+
+bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
+{
+    Iterator *it = publicaciones->getIterator();
+
+    while (it->hasCurrent())
+    {
+        Publicacion *pub = (Publicacion *)it->getCurrent();
+        if (pub->coincideTipo(tipo) && pub->getFecha() == fechaHoy && pub->esActiva())
+            return true;
+        it->next();
+    }
+    return false;
+}

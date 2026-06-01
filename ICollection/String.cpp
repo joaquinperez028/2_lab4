@@ -1,6 +1,6 @@
+#include <string.h>
 #include <stddef.h>
 #include <stdexcept>
-#include <string.h>
 #include "String.h"
 
 

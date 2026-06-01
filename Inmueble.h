@@ -1,11 +1,11 @@
-##ifndef INMUEBLE_H
+#ifndef INMUEBLE_H
 #define INMUEBLE_H
  
 #include <string>
 #include "Datatypes/Direccion.h"
 #include "Datatypes/Fecha.h"
 #include "Datatypes/TipoInmueble.h"
-#include "Datatypes/DTProp.h"
+#include "Datatypes/DTprop.h"
 #include "Datatypes/DTEspecifica.h"
 #include "ICollection.h"
  
@@ -13,7 +13,7 @@ using namespace std;
  
 class Propietario;
  
-class Inmueble : public ICollectible;
+class Inmueble : public ICollectible
 {
 protected:
     direccion direccion_;
@@ -41,11 +41,9 @@ public:
     void removerInmueble(Inmueble* inm);
  
     // Para listarPropiedades — mensaje 2* en el diagrama
-    DTProp* getDetalles();
- 
-    // Virtual puro — cada subclase implementa con su DTEspecifica
-    // Para mostrarDetalle — mensaje del diagrama
-    virtual DTEspecifica* mostrarDetalle(int id) = 0;
+    DTprop* getDetalles();
+
+    virtual void mostrarDetalle(int id) = 0;
 };
  
 #endif
