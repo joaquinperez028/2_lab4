@@ -1,5 +1,6 @@
 #include "Inmobiliaria.h"
-#include "ICollection/collections/List.h"
+#include "ICollection/collections/OrderedDictionary.h"
+#include "ICollection/String.h"
 #include "Propietario.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
@@ -10,13 +11,15 @@ Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, s
       URL(URL),
       inmuebles(nullptr),
       administraciones(nullptr),
-      propietarios(new ColUsuario()) //propietarios(new List())
+      propietarios(new OrderedDictionary())
 {
 }
 
 Inmobiliaria::~Inmobiliaria()
 {
     delete propietarios;
+    delete inmuebles;
+    delete administraciones;
 }
 
 direccion Inmobiliaria::getDireccion()
@@ -40,7 +43,7 @@ void Inmobiliaria::asociarPropietario(Propietario* propietario)
     {
         return;
     }
-    this->propietarios->add(propietario);
+    this->propietarios->add(new String(propietario->getNickName().c_str()), propietario);
 }
 
 Status Inmobiliaria::crearAdministra(int)
