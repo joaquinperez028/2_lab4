@@ -27,6 +27,7 @@ public:
     int getCodigo();
     std::string getTexto();
     float getPrecio();
+    fecha getFecha();
     bool esActiva();
     bool precioFranja(float min, float max);
     bool coincideTipo(tipoPublicacion tipo);

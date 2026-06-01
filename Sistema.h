@@ -13,13 +13,13 @@ class Sistema : public ISistema
 private:
     Sistema();
     static Sistema *instance;
-    ColUsuario *colUsuarios; // IDictionary* usuarios;
+    IDictionary *usuarios;
     IDictionary *inmuebles;
     Propietario *propRecordado;
     int ultimoCodigoInmueble;
+    int ultimoCodigoPub;
     Usuario *buscarPorNickname(string nickname);
-    // Inmobiliaria* inmoSeleccionada;
-    // int ultimoCodigo; (para generar el codigo incremental)
+    Inmobiliaria *inmoSeleccionada;
 
 public:
     ~Sistema();

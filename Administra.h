@@ -3,6 +3,8 @@
 
 #include "ICollection/interfaces/ICollectible.h"
 #include "datatypes/fecha.h"
+#include "datatypes/tipoPublicacion.h"
+#include "Publicacion.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -17,7 +19,7 @@ private:
     Inmueble *inmueble;
     ICollection *publicaciones;
 
-    fecha fecha;
+    fecha fechaInicio;
 
 public:
     Administra(Inmobiliaria *inmo, Inmueble *inm);
@@ -25,6 +27,9 @@ public:
     Inmueble *getInmueble();
 
     void agregarPublicacion(Publicacion *pub);
+    bool existePubAciva(tipoPublicacion tipo, fecha fechaHoy);
+    void crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
+                          fecha fechaHoy);
 
     virtual ~Administra();
 };
