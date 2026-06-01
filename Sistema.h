@@ -44,7 +44,7 @@ public:
     DTInmueble mostrarDetalle(int) override;//FRAN
     Status eliminarInmueble(int) override;//MATIAS
     ICollection* listarInmueblesRepresentados(string) override;//FRAN
-    Status altaAdministracion(int) override;//DIEGO
+    Status altaAdministracion(int) override;//DIEGo
 };
 
 #endif
