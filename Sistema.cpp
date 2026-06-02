@@ -202,48 +202,49 @@ ICollection *Sistema::listarPublicaciones(string, float, float, opciones)
     return new List();
 }
 
-DTEspecifica* Sistema::listarEspecifica(int codigoPubli) {
- 
+DTEspecifica *Sistema::listarEspecifica(int codigoPubli)
+{
+
     // mensaje 1: pub := find(codigoPubli) — visibilidad <<association>>
     // Sistema tiene IDictionary* publicaciones como atributo
-    Integer* key = new Integer(codigoPubli);
-    Publicacion* pub = dynamic_cast<Publicacion*>(this->publicaciones->find(key));
+    Integer *key = new Integer(codigoPubli);
+    Publicacion *pub = dynamic_cast<Publicacion *>(this->publicaciones->find(key));
     delete key;
- 
+
     if (pub == nullptr)
         return nullptr;
- 
+
     // mensaje 2: dt := getDTEspecifica() — visibilidad <<local>>
     // pub se obtuvo del find, por eso es local
     return pub->getDTEspecifica();
 }
-
 
 ICollection *Sistema::listarPropiedades()
 {
     return new List();
 }
 
-DTInmueble* Sistema::mostrarDetalle(int identificador) {
- 
+DTInmueble *Sistema::mostrarDetalle(int identificador)
+{
+
     // mensaje 1: inmu := find(Identificador) — visibilidad <<association>>
     // Sistema tiene IDictionary* inmuebles como atributo
-    Integer* key = new Integer(identificador);
-    Inmueble* inmu = dynamic_cast<Inmueble*>(this->inmuebles->find(key));
+    Integer *key = new Integer(identificador);
+    Inmueble *inmu = dynamic_cast<Inmueble *>(this->inmuebles->find(key));
     delete key;
 
     if (inmu == nullptr)
         return nullptr;
- 
+
     // mensajes 2 al 6 — visibilidad <<local>>
     // inmu se obtuvo del find, por eso es local
     // cada getter le pide al inmueble sus propios datos
-    direccion dir = inmu->getDireccion();    
-    float sup  = inmu->getSuperficie();    
-    fecha anio = inmu->getAnoConstruc();   
-    int codigo = inmu->getIdentificador(); 
-    tipoInmueble tipo = inmu->getTipo();      
- 
+    direccion dir = inmu->getDireccion();
+    float sup = inmu->getSuperficie();
+    fecha anio = inmu->getAnoConstruc();
+    int codigo = inmu->getIdentificador();
+    tipoInmueble tipo = inmu->getTipo();
+
     return new DTInmueble(codigo, dir, anio, tipo);
 }
 
@@ -252,20 +253,20 @@ Status Sistema::eliminarInmueble(int)
     return Status::OK;
 }
 
-ICollection* Sistema::listarInmueblesRepresentados(string nickname) {
- 
+ICollection *Sistema::listarInmueblesRepresentados(string nickname)
+{
+
     // mensaje 1: inmo := find(nickname) — visibilidad <<association>>
     // usa buscarPorNickname que ya tienen implementado en Sistema
-    Inmobiliaria* inmo = dynamic_cast<Inmobiliaria*>(
-        this->buscarPorNickname(nickname)
-    );
- 
+    Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(
+        this->buscarPorNickname(nickname));
+
     if (inmo == nullptr)
         return nullptr;
- 
+
     // sistema recuerda inmo segun la nota del diagrama
     this->inmoSeleccionada = inmo;
- 
+
     // mensaje 2: getInmueblesRepresentados() — visibilidad <<local>>
     // inmo se obtuvo del find, por eso es local
     return inmo->getInmueblesRepresentados();
@@ -290,6 +291,9 @@ fecha Sistema ::obtenerFechaActual()
 Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string texto,
                                  float precio)
 {
+    if (inmoSeleccionada == NULL)
+        return Status ::ERROR;
+
     Administra *adm = inmoSeleccionada->findAdministra(identificador);
     if (adm == NULL)
         return Status ::ERROR;
@@ -309,4 +313,17 @@ Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string
     publicaciones->add(key, pub);
 
     return Status ::OK;
+}
+
+ICollection *Sistema ::seleccionarInmobiliaria(string nickname)
+{
+
+    String *key = new String(nickname.c_str());
+    ICollectible *val = this->usuarios->find(key);
+    delete key;
+
+    Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(val);
+    this->inmoSeleccionada = inmo;
+
+    inmo->getAdministras();
 }

@@ -34,6 +34,7 @@ public:
     Status crearAdministra(int);
     void removerInmobiliaria(Inmueble *);
     Administra *findAdministra(int identificador);
+    ICollection *getAdministras();
 };
 
 #endif

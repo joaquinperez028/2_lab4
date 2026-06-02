@@ -68,3 +68,17 @@ Administra *Inmobiliaria ::findAdministra(int identificador)
 
     return dynamic_cast<Administra *>(val);
 }
+
+ICollection *Inmobiliaria ::getAdministras()
+{
+
+    ICollection *resultado = new List();
+
+    IIterator *it = administraciones->getIterator();
+
+    while (it->hasCurrent())
+    {
+        Administra *adm = (Administra *)it->getCurrent();
+        adm->DTInfoInmueble getDTInmueble();
+    }
+}

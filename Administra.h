@@ -33,7 +33,7 @@ public:
                                   fecha fechaHoy);
 
     virtual ~Administra();
-    DTEspecifica* getAdministra();
+    DTEspecifica *getAdministra();
 };
 
 #endif
