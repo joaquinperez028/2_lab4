@@ -21,6 +21,7 @@ public:
     tipoTecho getTipoTecho() const;
 
     void mostrarDetalle(int id) override;
+    DTEspecifica* getInmueble() override;
 };
 
 #endif 

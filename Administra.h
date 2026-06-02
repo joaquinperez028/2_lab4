@@ -5,6 +5,7 @@
 #include "datatypes/fecha.h"
 #include "datatypes/tipoPublicacion.h"
 #include "Publicacion.h"
+#include "datatypes/DTEspecifica.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -32,6 +33,7 @@ public:
                                   fecha fechaHoy);
 
     virtual ~Administra();
+    DTEspecifica* getAdministra();
 };
 
 #endif

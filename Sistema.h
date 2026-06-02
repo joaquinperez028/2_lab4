@@ -6,6 +6,7 @@
 #include "Datatypes/Fecha.h"
 #include "ICollection.h"
 #include "ICollection/interfaces/IDictionary.h"
+#include "Datatypes/DTInmueble.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ private:
     int ultimoCodigoPub;
     Usuario *buscarPorNickname(string nickname);
     Inmobiliaria *inmoSeleccionada;
+    IDictionary* publicaciones;
 
 public:
     ~Sistema();
@@ -42,9 +44,8 @@ public:
     ICollection *seleccionarInmobiliaria(string) override;
     Status altaPublicacion(int, tipoPublicacion, string, float) override; // DIEGO
     ICollection *listarPublicaciones(string, float, float, opciones) override;
-    DTEspecifica listarEspecifica(int) override;                // FRAN
-    ICollection *listarPropiedades() override;                  // YANI
-    DTInmueble mostrarDetalle(int) override;                    // FRAN
+    DTEspecifica* listarEspecifica(int codigoPubli) override;    ICollection *listarPropiedades() override;                  // YANI
+    DTInmueble* mostrarDetalle(int identificador) override;                  // FRAN
     Status eliminarInmueble(int) override;                      // MATIAS
     ICollection *listarInmueblesRepresentados(string) override; // FRAN
     Status altaAdministracion(int) override;

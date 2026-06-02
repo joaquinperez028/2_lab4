@@ -8,6 +8,7 @@
 #include "Datatypes/DTprop.h"
 #include "Datatypes/DTEspecifica.h"
 #include "ICollection.h"
+
  
 using namespace std;
  
@@ -44,6 +45,7 @@ public:
     DTprop* getDetalles();
 
     virtual void mostrarDetalle(int id) = 0;
+    virtual DTEspecifica* getInmueble() = 0;  // mensaje 2.1.1 del diagrama
 };
  
 #endif

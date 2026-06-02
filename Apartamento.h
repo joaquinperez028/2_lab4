@@ -22,6 +22,7 @@ public:
     float getGastosComunes() const;
 
     void mostrarDetalle(int id) override;
+    DTEspecifica* getInmueble() override;
 };
 
 #endif
