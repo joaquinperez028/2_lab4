@@ -2,6 +2,7 @@
 #include "Factory.h"
 #include "Datatypes/Status.h"
 #include "Datatypes/Direccion.h"
+#include "Datatypes/Fecha.h" 
 
 using namespace std;
 
@@ -82,6 +83,45 @@ int main()
 
     sistema->asociarPropietario("");
     cout << "Asociar propietario (ana_prop <-> inmo_central): OK" << endl;
+
+    cout << "\n=== PRUEBA ALTA CASA ===" << endl;
+
+fecha fechaCasa(1, 1, 2005);
+direccion dirCasa(123, "Av. Brasil", "Montevideo", "Montevideo");
+
+st = sistema->altaCasa(
+    dirCasa,
+    120.5,
+    fechaCasa,
+    tipoTecho::Liviano,
+    false
+);
+
+if (st == Status::OK){
+    cout << "Alta casa: OK" << endl;
+}else{
+    cout << "Alta casa: ERROR" << endl;
+}
+
+cout << "\n=== PRUEBA ALTA APARTAMENTO ===" << endl;
+
+fecha fechaApto(1, 1, 2015);
+direccion dirApto(456, "18 de Julio", "Montevideo", "Montevideo");
+
+st = sistema->altaApto(
+    dirApto,
+    65.0,
+    fechaApto,
+    4,
+    true,
+    8500
+);
+
+if (st == Status::OK){
+    cout << "Alta apartamento: OK" << endl;
+}else{
+    cout << "Alta apartamento: ERROR" << endl;
+}
 
     return 0;
 }

@@ -32,8 +32,8 @@ class Propietario : public Usuario {
         string getTelefono();
         void asociarInmobiliaria(Inmobiliaria* inmobiliaria);
         void removerPropietario(Inmueble*); //ESTA BIEN USAR * ?? O DEBO USAR & ??
-        Casa* crearCasa(direccion, float, int, tipoTecho, bool);
-        Apartamento* crearApto(direccion, float, int, int, bool, float); //cambiar en diagrama de comunicacion
+        Casa* crearCasa(direccion, float, fecha, int, tipoTecho, bool);
+        Apartamento* crearApto(direccion, float, fecha, int, int, bool, float); //cambiar en diagrama de comunicacion
 
 };
 

@@ -4,6 +4,8 @@
 #include "Apartamento.h"
 #include "ICollection/collections/OrderedDictionary.h"
 #include "ICollection/Integer.h"
+#include <iostream>
+using namespace std;
 
 Propietario::Propietario(string nickname, string nombre, string contrasenia, string email,
                          string numCuenta, string banco, string telefono)
@@ -45,21 +47,27 @@ void Propietario::removerPropietario(Inmueble*)
 {
 }
 
-Casa* Propietario::crearCasa(direccion direccion_, float superficie, int identificador,
-                              tipoTecho tipoTecho, bool propHorizontal)
-{
-    Casa *casa = new Casa(direccion_, superficie, identificador, tipoTecho, propHorizontal);
+Casa* Propietario::crearCasa(direccion direccion_, float superficie, fecha anoConstruc,
+                              int identificador, tipoTecho tipoTecho, bool propHorizontal)
+{   
+    Casa* casa = new Casa(direccion_, superficie, anoConstruc, identificador,
+                          tipoTecho, propHorizontal, this);
 
     this->inmuebles->add(new Integer(identificador), casa);
 
-    return casa; //cambiar en el diagrama de comunicacion que le retorna la casa
+    return casa; //cambiar en diagrama que esta operacion retorne el objeto casa
 }
 
-Apartamento* Propietario::crearApto(direccion direccion_, float superficie, int identificador, int numPiso, bool ascensor, float gastosComunes)
+
+Apartamento* Propietario::crearApto(direccion direccion_, float superficie, fecha anoConstruc,
+                                     int identificador, int numPiso, bool ascensor,
+                                     float gastosComunes)
 {   
-    Apartamento *apartamento = new Apartamento(direccion_, superficie, identificador, numPiso, ascensor, gastosComunes);
+    Apartamento* apartamento = new Apartamento(direccion_, superficie, anoConstruc,
+                                               identificador, numPiso, ascensor,
+                                               gastosComunes, this);
 
     this->inmuebles->add(new Integer(identificador), apartamento);
 
-    return apartamento; //cambiar en el diagrama de comunicacion que le retorna el apto
+    return apartamento; //cambiar en diagrama que esta operacion retorne el objeto apto
 }

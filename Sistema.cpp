@@ -20,6 +20,8 @@ Sistema::Sistema()
     this->usuarios = new OrderedDictionary();
     this->inmuebles = new OrderedDictionary();
     this->propRecordado = nullptr;
+    this->inmoSeleccionada = nullptr;
+    this->ultimoCodigoPub = 0;
     this->ultimoCodigoInmueble = 0;
 }
 
@@ -86,37 +88,41 @@ Status Sistema::altaPropietario(string nickname, string nombre, string contrasen
                                                numCuenta, banco, "");
     this->usuarios->add(new String(nickname.c_str()), propietario);
 
+    this->propRecordado = propietario;
+
     return Status::OK;
 }
 
-Status Sistema::altaCasa(direccion direccion, float superficie, int anoConstruc, tipoTecho techo, bool propHorizontal)
+Status Sistema::altaCasa(direccion direccion, float superficie, fecha anoConstruc,
+                         tipoTecho techo, bool propHorizontal)
 {
     if (this->propRecordado == nullptr)
-    {
         return Status::ERROR;
-    }
 
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Casa *casa = propRecordado->crearCasa(direccion, superficie, codigo, techo, propHorizontal);
+    Casa* casa = propRecordado->crearCasa(direccion, superficie, anoConstruc,
+                                          codigo, techo, propHorizontal);
 
     this->inmuebles->add(new Integer(codigo), casa);
 
     return Status::OK;
 }
 
-Status Sistema::altaApto(direccion direccion, float superficie, int anoConstruc, int numPiso, bool ascensor, float gastosComunes)
+Status Sistema::altaApto(direccion direccion, float superficie, fecha anoConstruc,
+                         int numPiso, bool ascensor, float gastosComunes)
 {
     if (this->propRecordado == nullptr)
-    {
         return Status::ERROR;
-    }
 
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Apartamento *apartamento = propRecordado->crearApto(direccion, superficie, codigo, numPiso, ascensor, gastosComunes);
+    Apartamento* apartamento = propRecordado->crearApto(direccion, superficie,
+                                                       anoConstruc, codigo,
+                                                       numPiso, ascensor,
+                                                       gastosComunes);
 
     this->inmuebles->add(new Integer(codigo), apartamento);
 
@@ -192,7 +198,7 @@ ICollection *Sistema::seleccionarInmobiliaria(string)
     return new List();
 }
 
-Status Sistema::altaPublicacion(int, tipoPublicacion, string, float)
+Status Sistema::altaPublicacion(int, tipoPublicacion, string, float)//SE IMPLEMENTO MAS ABAJO. BORRAR ESTO
 {
     return Status::OK;
 }
