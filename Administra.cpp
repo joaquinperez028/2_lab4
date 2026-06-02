@@ -46,3 +46,17 @@ bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
     }
     return false;
 }
+
+Publicacion *Administra ::crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
+                                           fecha fechaHoy)
+{
+    Publicacion *pub = new Publicacion(codigo, texto, precio, fechaHoy, tipo, this);
+    agregarPublicacion(pub);
+    return pub;
+}
+
+// Corresponde al mensaje 2.1: getAdministra():DTEspecifica
+// Delega a Inmueble para que construya su propio DTEspecifica
+DTEspecifica* Administra::getAdministra() {
+    return this->inmueble->getInmueble(); // mensaje 2.1.1
+}

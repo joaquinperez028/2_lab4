@@ -206,9 +206,9 @@ DTEspecifica* Sistema::listarEspecifica(int codigoPubli) {
  
     // mensaje 1: pub := find(codigoPubli) — visibilidad <<association>>
     // Sistema tiene IDictionary* publicaciones como atributo
-    Publicacion* pub = dynamic_cast<Publicacion*>(
-        this->publicaciones->find(new Integer(codigoPubli))
-    );
+    Integer* key = new Integer(codigoPubli);
+    Publicacion* pub = dynamic_cast<Publicacion*>(this->publicaciones->find(key));
+    delete key;
  
     if (pub == nullptr)
         return nullptr;
@@ -228,10 +228,10 @@ DTInmueble* Sistema::mostrarDetalle(int identificador) {
  
     // mensaje 1: inmu := find(Identificador) — visibilidad <<association>>
     // Sistema tiene IDictionary* inmuebles como atributo
-    Inmueble* inmu = dynamic_cast<Inmueble*>(
-        this->inmuebles->find(new Integer(identificador))
-    );
- 
+    Integer* key = new Integer(identificador);
+    Inmueble* inmu = dynamic_cast<Inmueble*>(this->inmuebles->find(key));
+    delete key;
+
     if (inmu == nullptr)
         return nullptr;
  
@@ -252,9 +252,23 @@ Status Sistema::eliminarInmueble(int)
     return Status::OK;
 }
 
-ICollection *Sistema::listarInmueblesRepresentados(string)
-{
-    return new List();
+ICollection* Sistema::listarInmueblesRepresentados(string nickname) {
+ 
+    // mensaje 1: inmo := find(nickname) — visibilidad <<association>>
+    // usa buscarPorNickname que ya tienen implementado en Sistema
+    Inmobiliaria* inmo = dynamic_cast<Inmobiliaria*>(
+        this->buscarPorNickname(nickname)
+    );
+ 
+    if (inmo == nullptr)
+        return nullptr;
+ 
+    // sistema recuerda inmo segun la nota del diagrama
+    this->inmoSeleccionada = inmo;
+ 
+    // mensaje 2: getInmueblesRepresentados() — visibilidad <<local>>
+    // inmo se obtuvo del find, por eso es local
+    return inmo->getInmueblesRepresentados();
 }
 
 Status Sistema::altaAdministracion(int)
