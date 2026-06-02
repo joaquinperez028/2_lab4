@@ -4,7 +4,7 @@
 #include "direccion.h"
 #include "fecha.h"
 
-class DTAdministrados
+class DTAdministrados : public ICollectible
 {
 
 private:

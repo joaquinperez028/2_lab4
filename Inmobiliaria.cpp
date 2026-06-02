@@ -4,6 +4,7 @@
 #include "ICollection/String.h"
 #include "Propietario.h"
 #include "ICollection/Integer.h"
+#include "ICollection/collections/List.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
                            direccion direccion, string telefono, string URL)
@@ -79,6 +80,11 @@ ICollection *Inmobiliaria ::getAdministras()
     while (it->hasCurrent())
     {
         Administra *adm = (Administra *)it->getCurrent();
-        adm->DTInfoInmueble getDTInmueble();
+        DTAdministrados *nuevo = adm->getDTAdministrados();
+        resultado->add(nuevo);
+
+        it->next();
     }
+
+    return resultado;
 }
