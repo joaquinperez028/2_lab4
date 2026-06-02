@@ -1,7 +1,9 @@
 #include "Inmobiliaria.h"
+#include "Administra.h"
 #include "ICollection/collections/OrderedDictionary.h"
 #include "ICollection/String.h"
 #include "Propietario.h"
+#include "ICollection/Integer.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
                            direccion direccion, string telefono, string URL)
@@ -37,7 +39,7 @@ string Inmobiliaria::getUrl()
     return this->URL;
 }
 
-void Inmobiliaria::asociarPropietario(Propietario* propietario)
+void Inmobiliaria::asociarPropietario(Propietario *propietario)
 {
     if (this->propietarios == nullptr || propietario == nullptr)
     {
@@ -51,6 +53,18 @@ Status Inmobiliaria::crearAdministra(int)
     return Status::OK;
 }
 
-void Inmobiliaria::removerInmobiliaria(Inmueble*)
+void Inmobiliaria::removerInmobiliaria(Inmueble *)
 {
+}
+
+Administra *Inmobiliaria ::findAdministra(int identificador)
+{
+
+    Integer *key = new Integer(identificador);
+
+    ICollectible *val = administraciones->find(key);
+
+    delete key;
+
+    return dynamic_cast<Administra *>(val);
 }

@@ -5,6 +5,7 @@
 #include "datatypes/fecha.h"
 #include "datatypes/tipoPublicacion.h"
 #include "Publicacion.h"
+#include "datatypes/DTEspecifica.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -28,10 +29,11 @@ public:
 
     void agregarPublicacion(Publicacion *pub);
     bool existePubAciva(tipoPublicacion tipo, fecha fechaHoy);
-    void crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
-                          fecha fechaHoy);
+    Publicacion *crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
+                                  fecha fechaHoy);
 
     virtual ~Administra();
+    DTEspecifica* getAdministra();
 };
 
 #endif

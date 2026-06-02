@@ -18,3 +18,10 @@ int fecha::getAnio()
 {
     return anio;
 }
+
+bool fecha ::operator==(const fecha &otra) const
+{
+    return dia == otra.dia &&
+           mes == otra.mes &&
+           anio == otra.anio;
+}
