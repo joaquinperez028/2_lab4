@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class DTprop
+class DTprop : public ICollectible
 {
 private:
     string cod;
