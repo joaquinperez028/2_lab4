@@ -37,9 +37,9 @@ public:
     virtual ICollection* seleccionarInmobiliaria(string) = 0;
     virtual Status altaPublicacion(int, tipoPublicacion, string, float) = 0;
     virtual ICollection* listarPublicaciones(string, float, float, opciones) = 0;
-    virtual DTEspecifica listarEspecifica(int) = 0;
+    virtual DTEspecifica* listarEspecifica(int) = 0;
     virtual ICollection* listarPropiedades() = 0;
-    virtual DTInmueble mostrarDetalle(int) = 0;
+    virtual DTInmueble* mostrarDetalle(int) = 0;
     virtual Status eliminarInmueble(int) = 0;
     virtual ICollection* listarInmueblesRepresentados(string) = 0;
     virtual Status altaAdministracion(int) = 0;
