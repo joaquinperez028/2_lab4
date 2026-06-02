@@ -21,6 +21,7 @@ public:
  
     void crearApto(direccion dir, float superficie, int identificador, int numPiso, bool ascensor, float gastosComunes);
     void mostrarDetalle(int id) override;
+    DTEspecifica* getInmueble() override;
 };
  
 #endif 

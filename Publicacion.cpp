@@ -78,3 +78,9 @@ Administra *Publicacion ::getAdministra()
 Publicacion ::~Publicacion()
 {
 }
+
+// Corresponde al mensaje 2: getDTEspecifica():DTEspecifica
+// Publicacion delega a Administra — mensaje 2.1
+DTEspecifica* Publicacion::getDTEspecifica() {
+    return this->administra->getAdministra();
+}

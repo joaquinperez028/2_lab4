@@ -45,3 +45,9 @@ bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
     }
     return false;
 }
+
+// Corresponde al mensaje 2.1: getAdministra():DTEspecifica
+// Delega a Inmueble para que construya su propio DTEspecifica
+DTEspecifica* Administra::getAdministra() {
+    return this->inmueble->getInmueble(); // mensaje 2.1.1
+}
