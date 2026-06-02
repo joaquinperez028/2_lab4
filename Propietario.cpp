@@ -50,7 +50,6 @@ void Propietario::removerPropietario(Inmueble*)
 Casa* Propietario::crearCasa(direccion direccion_, float superficie, fecha anoConstruc,
                               int identificador, tipoTecho tipoTecho, bool propHorizontal)
 {   
-    cout << "Creando apartamento codigo: " << identificador << endl;
     Casa* casa = new Casa(direccion_, superficie, anoConstruc, identificador,
                           tipoTecho, propHorizontal, this);
 
@@ -64,7 +63,6 @@ Apartamento* Propietario::crearApto(direccion direccion_, float superficie, fech
                                      int identificador, int numPiso, bool ascensor,
                                      float gastosComunes)
 {   
-    cout << "Creando apartamento codigo: " << identificador << endl;
     Apartamento* apartamento = new Apartamento(direccion_, superficie, anoConstruc,
                                                identificador, numPiso, ascensor,
                                                gastosComunes, this);
