@@ -19,6 +19,7 @@ private:
     static Sistema *instance;
     IDictionary *usuarios;
     IDictionary *inmuebles;
+    IDictionary *publicaciones;
     Propietario *propRecordado;
     int ultimoCodigoInmueble;
     int ultimoCodigoPub;
@@ -45,7 +46,8 @@ public:
     DTInmueble* mostrarDetalle(int identificador) override;                  // FRAN
     Status eliminarInmueble(int) override;                      // MATIAS
     ICollection *listarInmueblesRepresentados(string) override; // FRAN
-    Status altaAdministracion(int) override;                    // DIEGo
+    Status altaAdministracion(int) override;
+    fecha obtenerFechaActual(); // DIEGo
 };
 
 #endif

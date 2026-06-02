@@ -1,6 +1,7 @@
 #include "Administra.h"
 #include "ICollection/collections/List.h"
 #include "Publicacion.h"
+#include "ICollection/interfaces/IIterator.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ Administra ::~Administra() {
 
 bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
 {
-    Iterator *it = publicaciones->getIterator();
+    IIterator *it = publicaciones->getIterator();
 
     while (it->hasCurrent())
     {
@@ -44,10 +45,4 @@ bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
         it->next();
     }
     return false;
-}
-
-// Corresponde al mensaje 2.1: getAdministra():DTEspecifica
-// Delega a Inmueble para que construya su propio DTEspecifica
-DTEspecifica* Administra::getAdministra() {
-    return this->inmueble->getInmueble(); // mensaje 2.1.1
 }
