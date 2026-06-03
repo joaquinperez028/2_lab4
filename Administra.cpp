@@ -79,3 +79,7 @@ DTAdministrados *Administra ::getDTAdministrados()
     delete dtInm;
     return res;
 }
+
+string Administra::getInmo() {
+    return this->inmobiliaria->getNickName(); // mensaje 5.1.1*
+}

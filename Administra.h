@@ -35,6 +35,7 @@ public:
     DTAdministrados *getDTAdministrados();
     virtual ~Administra();
     DTEspecifica *getAdministra();
+    string getInmo();  // mensaje 5.1* del diagrama
 };
 
 #endif

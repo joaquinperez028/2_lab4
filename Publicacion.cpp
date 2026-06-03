@@ -90,3 +90,23 @@ Publicacion ::~Publicacion()
 DTEspecifica* Publicacion::getDTEspecifica() {
     return this->administra->getAdministra();
 }
+
+// Publicacion le pide a Administra el nickname de la inmobiliaria
+string Publicacion::getNickInmo() {
+    return this->administra->getInmo(); // mensaje 5.1*
+}
+
+DTPublicacion* Publicacion::getPublicacion() {
+    string nickInmo = this->getNickInmo();
+ 
+    return new DTPublicacion(
+        this->activa,
+        this->codigo,
+        this->fechaPublicacion,
+        this->texto,
+        this->precio,
+        nickInmo,
+        this->tipo,
+        this->administra->getInmueble()->getTipo()  // tipoInmueble
+    );
+}
