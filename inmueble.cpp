@@ -1,5 +1,7 @@
 #include "Inmueble.h"
 #include "Propietario.h"
+#include "Administra.h"
+#include "Inmobiliaria.h"
 #include <string>
 
 // Constructor
@@ -11,6 +13,7 @@ Inmueble::Inmueble(direccion dir, float superficie, fecha anoConstruc, int ident
     this->identificador = identificador;
     this->tipo = tipo;
     this->propietario = nullptr;
+    this->administra = nullptr;
 }
 
 // Destructor virtual — necesario para polimorfismo con punteros
@@ -59,17 +62,6 @@ void Inmueble::asociarPropietario(Propietario *p)
     this->propietario = p;
 }
 
-// Remueve el link entre este inmueble y su propietario
-// inm es el THIS que viene del diagrama de comunicacion
-void Inmueble::removerInmueble(Inmueble *inm)
-{
-    if (this->propietario != nullptr)
-    {
-        this->propietario->removerPropietario(inm);
-    }
-    this->propietario = nullptr;
-}
-
 // Corresponde al mensaje 2* getDetalles() del diagrama de listarPropiedades
 DTInmueble *Inmueble::getDetalles()
 {
@@ -82,4 +74,37 @@ DTInfoInmueble *Inmueble ::getDTInfoInmueble()
         this->getIdentificador(),
         this->getDireccion());
     return resultado;
+}
+
+void Inmueble::asociarAdministra(Administra* adm)
+{
+    this->administra = adm;
+}
+
+ICollection* Inmueble::prepararEliminacion()
+{
+    ICollection* publicaciones = nullptr;
+
+    if (this->propietario != nullptr)
+    {
+        this->propietario->removerPropietario(this);
+        this->propietario = nullptr;
+    }
+
+    if (this->administra != nullptr)
+    {
+        publicaciones = this->administra->getPublicaciones();
+
+        Inmobiliaria* inmo = this->administra->getInmobiliaria();
+
+        if (inmo != nullptr)
+        {
+            inmo->removerInmobiliaria(this);
+        }
+
+        delete this->administra;
+        this->administra = nullptr;
+    }
+
+    return publicaciones;
 }

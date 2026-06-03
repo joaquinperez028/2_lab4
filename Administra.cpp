@@ -33,6 +33,8 @@ void Administra ::agregarPublicacion(Publicacion *pub)
 
 Administra ::~Administra() {
 
+    delete this->publicaciones;
+
 };
 
 bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
@@ -78,4 +80,21 @@ DTAdministrados *Administra ::getDTAdministrados()
     );
     delete dtInm;
     return res;
+}
+
+ICollection* Administra::getPublicaciones()
+{
+    ICollection* copia = new List();
+
+    IIterator* it = publicaciones->getIterator();
+
+    while(it->hasCurrent())
+    {
+        copia->add(it->getCurrent());
+        it->next();
+    }
+
+    delete it;
+
+    return copia;
 }

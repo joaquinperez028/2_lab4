@@ -35,6 +35,7 @@ public:
     DTAdministrados *getDTAdministrados();
     virtual ~Administra();
     DTEspecifica *getAdministra();
+    ICollection* getPublicaciones();
 };
 
 #endif

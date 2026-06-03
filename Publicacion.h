@@ -9,6 +9,9 @@ class Administra;
 #include "datatypes/Fecha.h"
 #include "ICollection/interfaces/ICollectible.h"
 #include "datatypes/DTEspecifica.h"
+#include "ICollection.h"
+
+class AgendaVisita;
 
 class Publicacion : public ICollectible
 {
@@ -20,6 +23,7 @@ private:
     bool activa;
     tipoPublicacion tipo;
     Administra *administra;
+    ICollection* agendas;
 
 public:
     Publicacion(int codigo, std::string texto, float precio, fecha fecha, tipoPublicacion tipo,
@@ -38,6 +42,9 @@ public:
 
     virtual ~Publicacion();
     DTEspecifica* getDTEspecifica();
+
+    void agregarAgenda(AgendaVisita* agenda);
+    void eliminarAgendas();
 };
 
 #endif

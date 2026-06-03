@@ -273,8 +273,51 @@ DTInmueble *Sistema::mostrarDetalle(int identificador)
     return new DTInmueble(codigo, dir, anio, tipo);
 }
 
-Status Sistema::eliminarInmueble(int)
+Status Sistema::eliminarInmueble(int id)
 {
+    Integer* keyInmueble = new Integer(id);
+
+    Inmueble* inmu = dynamic_cast<Inmueble*>(this->inmuebles->find(keyInmueble));
+
+    if (inmu == nullptr)
+    {
+        delete keyInmueble;
+        return Status::ERROR;
+    }
+
+    ICollection* colPublicaciones = inmu->prepararEliminacion();
+
+    if (colPublicaciones != nullptr)
+    {
+        IIterator* it = colPublicaciones->getIterator();
+
+        while (it->hasCurrent())
+        {
+            Publicacion* pub = dynamic_cast<Publicacion*>(it->getCurrent());
+
+            it->next();
+
+            if (pub != nullptr)
+            {
+                pub->eliminarAgendas();
+
+                Integer* keyPub = new Integer(pub->getCodigo());
+                this->publicaciones->remove(keyPub);
+                delete keyPub;
+
+                delete pub;
+            }
+        }
+
+        delete it;
+        delete colPublicaciones;
+    }
+
+    this->inmuebles->remove(keyInmueble);
+
+    delete keyInmueble;
+    delete inmu;
+
     return Status::OK;
 }
 
