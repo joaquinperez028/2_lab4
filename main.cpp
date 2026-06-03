@@ -2,9 +2,7 @@
 #include "Factory.h"
 #include "Datatypes/Status.h"
 #include "Datatypes/Direccion.h"
-#include "Datatypes/Fecha.h"
-#include "Datatypes/DTpropietario.h"
-#include "ICollection/interfaces/IIterator.h"
+#include "Datatypes/Fecha.h" 
 
 using namespace std;
 
@@ -32,7 +30,7 @@ int main()
         cout << "Nickname duplicado: fallo la validacion" << endl;
     }
 
-    Status st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander");
+    st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander");
     if (st == Status::OK)
     {
         cout << "Alta propietario: OK" << endl;
