@@ -102,7 +102,7 @@ Status Sistema::altaCasa(direccion direccion, float superficie, fecha anoConstru
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Casa* casa = propRecordado->crearCasa(direccion, superficie, anoConstruc,
+    Casa *casa = propRecordado->crearCasa(direccion, superficie, anoConstruc,
                                           codigo, techo, propHorizontal);
 
     this->inmuebles->add(new Integer(codigo), casa);
@@ -119,10 +119,10 @@ Status Sistema::altaApto(direccion direccion, float superficie, fecha anoConstru
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Apartamento* apartamento = propRecordado->crearApto(direccion, superficie,
-                                                       anoConstruc, codigo,
-                                                       numPiso, ascensor,
-                                                       gastosComunes);
+    Apartamento *apartamento = propRecordado->crearApto(direccion, superficie,
+                                                        anoConstruc, codigo,
+                                                        numPiso, ascensor,
+                                                        gastosComunes);
 
     this->inmuebles->add(new Integer(codigo), apartamento);
 
@@ -196,11 +196,6 @@ ICollection *Sistema::listarInmobiliarias()
 ICollection *Sistema::seleccionarInmobiliaria(string)
 {
     return new List();
-}
-
-Status Sistema::altaPublicacion(int, tipoPublicacion, string, float)//SE IMPLEMENTO MAS ABAJO. BORRAR ESTO
-{
-    return Status::OK;
 }
 
 ICollection *Sistema::listarPublicaciones(string, float, float, opciones)
@@ -280,6 +275,7 @@ ICollection *Sistema::listarInmueblesRepresentados(string nickname)
 
 Status Sistema::altaAdministracion(int)
 {
+
     return Status::OK;
 }
 
@@ -329,7 +325,12 @@ ICollection *Sistema ::seleccionarInmobiliaria(string nickname)
     delete key;
 
     Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(val);
+    if (inmo == NULL)
+        return NULL;
+
     this->inmoSeleccionada = inmo;
 
-    inmo->getAdministras();
+    ICollection *resultado = inmo->getAdministras();
+
+    return resultado;
 }
