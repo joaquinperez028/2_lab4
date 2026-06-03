@@ -22,6 +22,7 @@ Sistema::Sistema()
     this->inmuebles = new OrderedDictionary();
     this->publicaciones = new OrderedDictionary();
     this->propRecordado = nullptr;
+    this->inmoRecordada = nullptr;
     this->inmoSeleccionada = nullptr;
     this->ultimoCodigoPub = 0;
     this->ultimoCodigoInmueble = 0;
@@ -144,6 +145,9 @@ Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrase
                                                   dir, telefono, url);
     this->usuarios->add(new String(nickname.c_str()), inmobiliaria);
 
+    // El sistema recuerda inmo (diagrama altaInmobiliaria)
+    this->inmoRecordada = inmobiliaria;
+
     return Status::OK;
 }
 
@@ -165,24 +169,23 @@ ICollection *Sistema::listarPropietarios()
     return lista;
 }
 
-void Sistema::asociarPropietario(string)
+void Sistema::asociarPropietario(string nickname)
 {
-    string nicknameProp = "ana_prop";
-    string nicknameInmo = "inmo_central";
-
-    Usuario *uProp = this->buscarPorNickname(nicknameProp);
-    Usuario *uInmo = this->buscarPorNickname(nicknameInmo);
-
-    Propietario *propietario = dynamic_cast<Propietario *>(uProp);
-    Inmobiliaria *inmobiliaria = dynamic_cast<Inmobiliaria *>(uInmo);
-
-    if (propietario == nullptr || inmobiliaria == nullptr)
+    if (this->inmoRecordada == nullptr)
     {
         return;
     }
 
-    inmobiliaria->asociarPropietario(propietario);
-    propietario->asociarInmobiliaria(inmobiliaria);
+    // mensaje 1: p := find(nickname) — visibilidad <<association>>
+    Propietario *propietario = dynamic_cast<Propietario *>(this->buscarPorNickname(nickname));
+    if (propietario == nullptr)
+    {
+        return;
+    }
+
+    // mensaje 2: inmo.asociarPropietario(p) — inmo es la recordada en altaInmobiliaria
+    this->inmoRecordada->asociarPropietario(propietario);
+    propietario->asociarInmobiliaria(this->inmoRecordada);
 }
 
 ICollection *Sistema::listarInmobiliarias()

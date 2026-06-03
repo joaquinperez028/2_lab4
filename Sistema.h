@@ -23,6 +23,7 @@ private:
     IDictionary *inmuebles;
     IDictionary *publicaciones;
     Propietario *propRecordado;
+    Inmobiliaria *inmoRecordada;
     int ultimoCodigoInmueble;
     int ultimoCodigoPub;
     Usuario *buscarPorNickname(string nickname);

@@ -24,7 +24,7 @@ SRC = \
 
 SRC += \
 	Datatypes/Direccion.cpp \
-	Datatypes/fecha.cpp \
+	Datatypes/Fecha.cpp \
 	Datatypes/DTpropietario.cpp \
 	Datatypes/DTPublicacion.cpp \
 	Datatypes/DTEspecifica.cpp \

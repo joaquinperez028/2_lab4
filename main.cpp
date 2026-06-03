@@ -2,7 +2,9 @@
 #include "Factory.h"
 #include "Datatypes/Status.h"
 #include "Datatypes/Direccion.h"
-#include "Datatypes/Fecha.h" 
+#include "Datatypes/Fecha.h"
+#include "Datatypes/DTpropietario.h"
+#include "ICollection/interfaces/IIterator.h"
 
 using namespace std;
 
@@ -81,7 +83,21 @@ int main()
         cout << "Nickname duplicado inmobiliaria: fallo la validacion" << endl;
     }
 
-    sistema->asociarPropietario("");
+    ICollection *propietarios = sistema->listarPropietarios();
+    cout << "Propietarios disponibles:" << endl;
+    IIterator *itProp = propietarios->getIterator();
+    while (itProp->hasCurrent())
+    {
+        DTPropietario *dt = dynamic_cast<DTPropietario *>(itProp->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  " << *dt << endl;
+        }
+        itProp->next();
+    }
+    delete itProp;
+
+    sistema->asociarPropietario("ana_prop");
     cout << "Asociar propietario (ana_prop <-> inmo_central): OK" << endl;
 
     cout << "\n=== PRUEBA ALTA CASA ===" << endl;
