@@ -4,9 +4,9 @@
 class Administra;
 
 #include <string>
-#include "datatypes/tipoPublicacion.h"
+#include "datatypes/TipoPublicacion.h"
 #include "datatypes/opciones.h"
-#include "datatypes/fecha.h"
+#include "datatypes/Fecha.h"
 #include "ICollection/interfaces/ICollectible.h"
 #include "datatypes/DTEspecifica.h"
 
