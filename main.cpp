@@ -32,7 +32,7 @@ int main()
         cout << "Nickname duplicado: fallo la validacion" << endl;
     }
 
-    st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander");
+    Status st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander");
     if (st == Status::OK)
     {
         cout << "Alta propietario: OK" << endl;
