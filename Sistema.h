@@ -44,7 +44,8 @@ public:
     ICollection *seleccionarInmobiliaria(string) override;
     Status altaPublicacion(int, tipoPublicacion, string, float) override; // DIEGO
     ICollection *listarPublicaciones(string, float, float, opciones) override;
-    DTEspecifica* listarEspecifica(int codigoPubli) override;    ICollection *listarPropiedades() override;                  // YANI
+    DTEspecifica* listarEspecifica(int codigoPubli) override;    
+    ICollection *listarPropiedades() override;                  // YANI
     DTInmueble* mostrarDetalle(int identificador) override;                  // FRAN
     Status eliminarInmueble(int) override;                      // MATIAS
     ICollection *listarInmueblesRepresentados(string) override; // FRAN
