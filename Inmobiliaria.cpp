@@ -4,6 +4,7 @@
 #include "ICollection/String.h"
 #include "Propietario.h"
 #include "ICollection/Integer.h"
+#include "ICollection/collections/List.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
                            direccion direccion, string telefono, string URL)
@@ -67,4 +68,23 @@ Administra *Inmobiliaria ::findAdministra(int identificador)
     delete key;
 
     return dynamic_cast<Administra *>(val);
+}
+
+ICollection *Inmobiliaria ::getAdministras()
+{
+
+    ICollection *resultado = new List();
+
+    IIterator *it = administraciones->getIterator();
+
+    while (it->hasCurrent())
+    {
+        Administra *adm = (Administra *)it->getCurrent();
+        DTAdministrados *nuevo = adm->getDTAdministrados();
+        resultado->add(nuevo);
+
+        it->next();
+    }
+
+    return resultado;
 }

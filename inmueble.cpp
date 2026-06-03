@@ -1,9 +1,10 @@
 #include "Inmueble.h"
 #include "Propietario.h"
 #include <string>
- 
+
 // Constructor
-Inmueble::Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo) {
+Inmueble::Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo)
+{
     this->direccion_ = dir;
     this->superficie = superficie;
     this->anoConstruc = anoConstruc;
@@ -11,61 +12,81 @@ Inmueble::Inmueble(direccion dir, float superficie, fecha anoConstruc, int ident
     this->tipo = tipo;
     this->propietario = nullptr;
 }
- 
+
 // Destructor virtual — necesario para polimorfismo con punteros
-Inmueble::~Inmueble() {
+Inmueble::~Inmueble()
+{
     this->propietario = nullptr;
 }
- 
+
 // --- Getters ---
- 
-direccion Inmueble::getDireccion() const {
+
+direccion Inmueble::getDireccion() const
+{
     return this->direccion_;
 }
- 
-float Inmueble::getSuperficie() const {
+
+float Inmueble::getSuperficie() const
+{
     return this->superficie;
 }
- 
-fecha Inmueble::getAnoConstruc() const {
+
+fecha Inmueble::getAnoConstruc() const
+{
     return this->anoConstruc;
 }
- 
-int Inmueble::getIdentificador() const {
+
+int Inmueble::getIdentificador() const
+{
     return this->identificador;
 }
- 
-tipoInmueble Inmueble::getTipo() const {
+
+tipoInmueble Inmueble::getTipo() const
+{
     return this->tipo;
 }
- 
-Propietario* Inmueble::getPropietario() const {
+
+Propietario *Inmueble::getPropietario() const
+{
     return this->propietario;
 }
- 
+
 // --- Operaciones ---
- 
+
 // Asocia un propietario a este inmueble
-void Inmueble::asociarPropietario(Propietario* p) {
+void Inmueble::asociarPropietario(Propietario *p)
+{
     this->propietario = p;
 }
- 
+
 // Remueve el link entre este inmueble y su propietario
 // inm es el THIS que viene del diagrama de comunicacion
-void Inmueble::removerInmueble(Inmueble* inm) {
-    if (this->propietario != nullptr) {
+void Inmueble::removerInmueble(Inmueble *inm)
+{
+    if (this->propietario != nullptr)
+    {
         this->propietario->removerPropietario(inm);
     }
     this->propietario = nullptr;
 }
- 
+
 // Construye el DTProp con los datos del inmueble
 // Corresponde al mensaje 2* getDetalles() del diagrama de listarPropiedades
 // Internamente llama a getNombrePropietario() — mensaje 2.1*
-DTprop* Inmueble::getDetalles() {
+DTprop *Inmueble::getDetalles()
+{
     string nombreProp = "";
-    if (this->propietario != nullptr) {
+    if (this->propietario != nullptr)
+    {
         nombreProp = this->propietario->getNombre();
     }
     return new DTprop(std::to_string(this->identificador), this->direccion_, nombreProp);
+}
+
+DTInfoInmueble *Inmueble ::getDTInfoInmueble()
+{
+    DTInfoInmueble *resultado = new DTInfoInmueble(
+        this->getIdentificador(),
+        this->getDireccion());
+    return resultado;
 }

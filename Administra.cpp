@@ -2,6 +2,8 @@
 #include "ICollection/collections/List.h"
 #include "Publicacion.h"
 #include "ICollection/interfaces/IIterator.h"
+#include "datatypes/DTInfoInmueble.h"
+#include "Inmueble.h"
 
 using namespace std;
 
@@ -57,6 +59,23 @@ Publicacion *Administra ::crearPublicacion(int codigo, tipoPublicacion tipo, std
 
 // Corresponde al mensaje 2.1: getAdministra():DTEspecifica
 // Delega a Inmueble para que construya su propio DTEspecifica
-DTEspecifica* Administra::getAdministra() {
+DTEspecifica *Administra::getAdministra()
+{
     return this->inmueble->getInmueble(); // mensaje 2.1.1
+}
+
+DTAdministrados *Administra ::getDTAdministrados()
+{
+
+    DTInfoInmueble *dtInm = this->inmueble->getDTInfoInmueble();
+
+    DTAdministrados *res = new DTAdministrados(
+
+        this->fechaInicio,
+        dtInm->getIdentificador(),
+        dtInm->getDir()
+
+    );
+    delete dtInm;
+    return res;
 }
