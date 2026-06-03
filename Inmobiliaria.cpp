@@ -13,7 +13,7 @@ Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, s
       telefono(telefono),
       URL(URL),
       inmuebles(nullptr),
-      administraciones(nullptr),
+      administraciones(new OrderedDictionary()),
       propietarios(new OrderedDictionary())
 {
 }
@@ -87,4 +87,9 @@ ICollection *Inmobiliaria ::getAdministras()
     }
 
     return resultado;
+}
+
+ICollection *Inmobiliaria::getInmueblesRepresentados()
+{
+    return new List();
 }

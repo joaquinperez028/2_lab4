@@ -25,3 +25,9 @@ bool fecha ::operator==(const fecha &otra) const
            mes == otra.mes &&
            anio == otra.anio;
 }
+
+ostream &operator<<(ostream &os, const fecha &f)
+{
+    os << f.dia << "/" << f.mes << "/" << f.anio;
+    return os;
+}

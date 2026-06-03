@@ -1,6 +1,7 @@
 #ifndef DIRECCION_H
 #define DIRECCION_H
 
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -20,6 +21,8 @@ public:
     string getCalle();
     string getLocalidad();
     string getDepartamento();
+
+    friend ostream &operator<<(ostream &os, const direccion &d);
 };
 
 #endif

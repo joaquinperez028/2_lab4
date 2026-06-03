@@ -24,3 +24,12 @@ fecha DTInmueble::getAnioConstrucion() {
 tipoInmueble DTInmueble::getTipo() {
     return this->tipo;
 }
+
+ostream &operator<<(ostream &os, const DTInmueble &dt)
+{
+    os << "Codigo: " << dt.codigoInmueble
+       << " | Direccion: " << dt.direccion_
+       << " | Construccion: " << dt.anioConstrucion
+       << " | Tipo: " << dt.tipo;
+    return os;
+}

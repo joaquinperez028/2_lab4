@@ -27,7 +27,6 @@ private:
     int ultimoCodigoPub;
     Usuario *buscarPorNickname(string nickname);
     Inmobiliaria *inmoSeleccionada;
-    IDictionary *publicaciones;
 
 public:
     ~Sistema();
@@ -39,20 +38,14 @@ public:
     Status altaApto(direccion, float, fecha, int, bool, float) override;                   // MATIAS
     Status altaInmobiliaria(string, string, string, direccion, string, string) override; // TORTU
     ICollection *listarPropietarios() override;                                          // YANI
-    void asociarPropietario(string) override;
+    void asociarPropietario(string) override; // TORTU
     ICollection *listarInmobiliarias() override;                          // FRAN
     ICollection *seleccionarInmobiliaria(string) override;                // DIEGO
     Status altaPublicacion(int, tipoPublicacion, string, float) override; // DIEGO
     ICollection *listarPublicaciones(string, float, float, opciones) override;
-<<<<<<< HEAD
-    DTEspecifica* listarEspecifica(int codigoPubli) override;    
-    ICollection *listarPropiedades() override;                  // YANI
-    DTInmueble* mostrarDetalle(int identificador) override;                  // FRAN
-=======
     DTEspecifica *listarEspecifica(int codigoPubli) override;
     ICollection *listarPropiedades() override;                  // YANI
     DTInmueble *mostrarDetalle(int identificador) override;     // FRAN
->>>>>>> origin
     Status eliminarInmueble(int) override;                      // MATIAS
     ICollection *listarInmueblesRepresentados(string) override; // FRAN
     Status altaAdministracion(int) override;

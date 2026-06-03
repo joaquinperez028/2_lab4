@@ -1,6 +1,7 @@
 #ifndef DTESPECIFICA_H
 #define DTESPECIFICA_H
 
+#include <iostream>
 #include "Direccion.h"
 #include "Fecha.h"
 #include "TipoInmueble.h"
@@ -26,6 +27,8 @@ public:
     fecha getAnioConstruc();
     tipoInmueble getTipo();
     ::tipoTecho getTipoTecho();
+
+    friend ostream &operator<<(ostream &os, const DTEspecifica &dt);
 };
 
 #endif

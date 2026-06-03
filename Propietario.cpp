@@ -4,6 +4,7 @@
 #include "Apartamento.h"
 #include "ICollection/collections/OrderedDictionary.h"
 #include "ICollection/Integer.h"
+#include "Datatypes/DTpropietario.h"
 #include <iostream>
 using namespace std;
 
@@ -71,7 +72,8 @@ Apartamento* Propietario::crearApto(direccion direccion_, float superficie, fech
 
     return apartamento; //cambiar en diagrama que esta operacion retorne el objeto apto
 }
-DTprop* Propietario::getDTprop()
+
+DTPropietario* Propietario::getDTPropietario()
 {
-    return new DTprop(this->getNickName(), this->getNombre());
+    return new DTPropietario(this->getNickName(), this->getNombre());
 }

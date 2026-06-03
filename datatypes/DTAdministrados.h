@@ -1,8 +1,10 @@
 #ifndef DTADMINISTRADOS_H
 #define DTADMINISTRADOS_H
 
-#include "direccion.h"
-#include "fecha.h"
+#include <iostream>
+#include "Direccion.h"
+#include "Fecha.h"
+#include "ICollection/interfaces/ICollectible.h"
 
 class DTAdministrados : public ICollectible
 {
@@ -17,6 +19,8 @@ public:
     fecha getFechaComienzo();
     int getIdentificador();
     direccion getDir();
+
+    friend std::ostream &operator<<(std::ostream &os, const DTAdministrados &dt);
 };
 
 #endif

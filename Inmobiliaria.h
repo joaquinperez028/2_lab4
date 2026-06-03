@@ -35,6 +35,7 @@ public:
     void removerInmobiliaria(Inmueble *);
     Administra *findAdministra(int identificador);
     ICollection *getAdministras();
+    ICollection *getInmueblesRepresentados();
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include "Datatypes/Direccion.h"
 #include "Datatypes/Fecha.h"
 #include "Datatypes/TipoInmueble.h"
-#include "Datatypes/DTprop.h"
+#include "Datatypes/DTInmueble.h"
 #include "Datatypes/DTEspecifica.h"
 #include "datatypes/DTInfoInmueble.h"
 #include "ICollection.h"
@@ -43,7 +43,7 @@ public:
     DTInfoInmueble *getDTInfoInmueble();
 
     // Para listarPropiedades — mensaje 2* en el diagrama
-    DTprop *getDetalles();
+    DTInmueble *getDetalles();
 
     virtual void mostrarDetalle(int id) = 0;
     virtual DTEspecifica *getInmueble() = 0; // mensaje 2.1.1 del diagrama

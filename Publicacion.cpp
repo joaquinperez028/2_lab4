@@ -2,6 +2,7 @@
 #include "Publicacion.h"
 #include "Administra.h"
 #include "Inmueble.h"
+#include "Datatypes/TipoInmueble.h"
 
 using namespace std;
 
@@ -32,6 +33,11 @@ float Publicacion ::getPrecio()
     return this->precio;
 }
 
+fecha Publicacion ::getFecha()
+{
+    return this->fechaPublicacion;
+}
+
 bool Publicacion ::esActiva()
 {
     if (this->activa == true)
@@ -53,13 +59,13 @@ bool Publicacion ::coincideTipo(tipoPublicacion tipo)
 
 bool Publicacion ::compararInteres(opciones interes)
 {
-    if (interes == Todos)
+    if (interes == opciones::Todos)
         return true;
 
-    if (interes == InteresApto && this->administra->getInmueble()->getTipo() == Apartamento)
+    if (interes == opciones::InteresApto && this->administra->getInmueble()->getTipo() == tipoInmueble::Apartamento)
         return true;
 
-    if (interes == InteresCasa && this->administra->getInmueble()->getTipo() == Casa)
+    if (interes == opciones::InteresCasa && this->administra->getInmueble()->getTipo() == tipoInmueble::Casa)
         return true;
 
     return false;

@@ -15,3 +15,9 @@ direccion DTInfoInmueble ::getDir()
 {
     return this->dir;
 }
+
+std::ostream &operator<<(std::ostream &os, const DTInfoInmueble &dt)
+{
+    os << "Id: " << dt.identificador << " | Direccion: " << dt.dir;
+    return os;
+}

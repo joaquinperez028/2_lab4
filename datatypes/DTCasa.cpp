@@ -9,3 +9,10 @@ bool DTCasa::getHorizontal()
 {
     return horizontal;
 }
+
+ostream &operator<<(ostream &os, const DTCasa &dt)
+{
+    os << static_cast<const DTEspecifica &>(dt)
+       << " | Horizontal: " << (dt.horizontal ? "Si" : "No");
+    return os;
+}

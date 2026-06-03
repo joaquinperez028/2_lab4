@@ -1,6 +1,7 @@
 #ifndef DTPUBLICACION_H
 #define DTPUBLICACION_H
 
+#include <iostream>
 #include <string>
 #include "Fecha.h"
 #include "TipoPublicacion.h"
@@ -31,6 +32,8 @@ public:
     string getNomInmo();
     ::tipoPublicacion getTipoPublicacion();
     ::tipoInmueble getTipoInmueble();
+
+    friend ostream &operator<<(ostream &os, const DTPublicacion &dt);
 };
 
 #endif

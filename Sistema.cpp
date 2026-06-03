@@ -11,6 +11,7 @@
 #include "Casa.h"
 #include "Apartamento.h"
 #include "Datatypes/TipoTecho.h"
+#include "Publicacion.h"
 #include <ctime>
 
 Sistema *Sistema::instance = nullptr;
@@ -19,6 +20,7 @@ Sistema::Sistema()
 {
     this->usuarios = new OrderedDictionary();
     this->inmuebles = new OrderedDictionary();
+    this->publicaciones = new OrderedDictionary();
     this->propRecordado = nullptr;
     this->inmoSeleccionada = nullptr;
     this->ultimoCodigoPub = 0;
@@ -155,7 +157,7 @@ ICollection *Sistema::listarPropietarios()
         Propietario *p = dynamic_cast<Propietario *>(u);
         if (p != nullptr)
         {
-            lista->add(p->getDTprop());
+            lista->add(p->getDTPropietario());
         }
         it->next();
     }
@@ -204,11 +206,6 @@ ICollection *Sistema::listarInmobiliarias()
 
     delete it;
     return resultado;
-}
-
-ICollection *Sistema::seleccionarInmobiliaria(string)
-{
-    return new List();
 }
 
 ICollection *Sistema::listarPublicaciones(string, float, float, opciones)
@@ -266,7 +263,6 @@ DTInmueble *Sistema::mostrarDetalle(int identificador)
     // inmu se obtuvo del find, por eso es local
     // cada getter le pide al inmueble sus propios datos
     direccion dir = inmu->getDireccion();
-    float sup = inmu->getSuperficie();
     fecha anio = inmu->getAnoConstruc();
     int codigo = inmu->getIdentificador();
     tipoInmueble tipo = inmu->getTipo();
@@ -335,8 +331,7 @@ Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string
 
     Publicacion *pub = adm->crearPublicacion(codigo, tipo, texto, precio, fechaHoy);
 
-    int codigo = pub->getCodigo();
-    Integer *key = new Integer(codigo);
+    Integer *key = new Integer(pub->getCodigo());
     publicaciones->add(key, pub);
 
     return Status ::OK;

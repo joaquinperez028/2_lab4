@@ -1,6 +1,8 @@
 #ifndef FECHA_H
 #define FECHA_H
 
+#include <iostream>
+
 using namespace std;
 
 class fecha
@@ -17,6 +19,8 @@ public:
     int getMes();
     int getAnio();
     bool operator==(const fecha &otra) const;
+
+    friend ostream &operator<<(ostream &os, const fecha &f);
 };
 
 #endif

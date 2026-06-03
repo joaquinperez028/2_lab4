@@ -70,17 +70,10 @@ void Inmueble::removerInmueble(Inmueble *inm)
     this->propietario = nullptr;
 }
 
-// Construye el DTProp con los datos del inmueble
 // Corresponde al mensaje 2* getDetalles() del diagrama de listarPropiedades
-// Internamente llama a getNombrePropietario() — mensaje 2.1*
-DTprop *Inmueble::getDetalles()
+DTInmueble *Inmueble::getDetalles()
 {
-    string nombreProp = "";
-    if (this->propietario != nullptr)
-    {
-        nombreProp = this->propietario->getNombre();
-    }
-    return new DTprop(std::to_string(this->identificador), this->direccion_, nombreProp);
+    return new DTInmueble(this->identificador, this->direccion_, this->anoConstruc, this->tipo);
 }
 
 DTInfoInmueble *Inmueble ::getDTInfoInmueble()
