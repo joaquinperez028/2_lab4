@@ -71,3 +71,7 @@ Apartamento* Propietario::crearApto(direccion direccion_, float superficie, fech
 
     return apartamento; //cambiar en diagrama que esta operacion retorne el objeto apto
 }
+DTprop* Propietario::getDTprop()
+{
+    return new DTprop(this->getNickName(), this->getNombre());
+}

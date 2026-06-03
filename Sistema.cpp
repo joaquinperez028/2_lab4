@@ -147,7 +147,20 @@ Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrase
 
 ICollection *Sistema::listarPropietarios()
 {
-    return new List();
+    ICollection *lista = new List();
+    IIterator *it = this->usuarios->getIterator();
+    while (it->hasCurrent())
+    {
+        Usuario *u = dynamic_cast<Usuario *>(it->getCurrent());
+        Propietario *p = dynamic_cast<Propietario *>(u);
+        if (p != nullptr)
+        {
+            lista->add(p->getDTprop());
+        }
+        it->next();
+    }
+    delete it;
+    return lista;
 }
 
 void Sistema::asociarPropietario(string)
@@ -222,7 +235,19 @@ DTEspecifica *Sistema::listarEspecifica(int codigoPubli)
 
 ICollection *Sistema::listarPropiedades()
 {
-    return new List();
+    ICollection *lista = new List();
+    IIterator *it = this->inmuebles->getIterator();
+    while (it->hasCurrent())
+    {
+        Inmueble *inm = dynamic_cast<Inmueble *>(it->getCurrent());
+        if (inm != nullptr)
+        {
+            lista->add(inm->getDetalles());
+        }
+        it->next();
+    }
+    delete it;
+    return lista;
 }
 
 DTInmueble *Sistema::mostrarDetalle(int identificador)

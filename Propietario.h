@@ -34,7 +34,7 @@ class Propietario : public Usuario {
         void removerPropietario(Inmueble*); //ESTA BIEN USAR * ?? O DEBO USAR & ??
         Casa* crearCasa(direccion, float, fecha, int, tipoTecho, bool);
         Apartamento* crearApto(direccion, float, fecha, int, int, bool, float); //cambiar en diagrama de comunicacion
-
+        DTprop* getDTprop();
 };
 
 #endif
