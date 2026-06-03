@@ -1,5 +1,6 @@
 #include "Inmobiliaria.h"
 #include "Administra.h"
+#include "Inmueble.h"
 #include "ICollection/collections/OrderedDictionary.h"
 #include "ICollection/String.h"
 #include "Propietario.h"
@@ -54,8 +55,16 @@ Status Inmobiliaria::crearAdministra(int)
     return Status::OK;
 }
 
-void Inmobiliaria::removerInmobiliaria(Inmueble *)
+void Inmobiliaria::removerInmobiliaria(Inmueble* inmueble)
 {
+    if (inmueble == nullptr || this->administraciones == nullptr)
+        return;
+
+    Integer* key = new Integer(inmueble->getIdentificador());
+
+    this->administraciones->remove(key);
+
+    delete key;
 }
 
 Administra *Inmobiliaria ::findAdministra(int identificador)
