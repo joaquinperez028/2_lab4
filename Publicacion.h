@@ -4,12 +4,11 @@
 class Administra;
 
 #include <string>
-#include "datatypes/tipoPublicacion.h"
+#include "datatypes/TipoPublicacion.h"
 #include "datatypes/opciones.h"
-#include "datatypes/fecha.h"
+#include "datatypes/Fecha.h"
 #include "ICollection/interfaces/ICollectible.h"
 #include "datatypes/DTEspecifica.h"
-#include "Datatypes/DTPublicacion.h"
 
 class Publicacion : public ICollectible
 {
@@ -21,6 +20,7 @@ private:
     bool activa;
     tipoPublicacion tipo;
     Administra *administra;
+    ICollection* agendas;
 
 public:
     Publicacion(int codigo, std::string texto, float precio, fecha fecha, tipoPublicacion tipo,
@@ -39,8 +39,6 @@ public:
 
     virtual ~Publicacion();
     DTEspecifica* getDTEspecifica();
-    string getNickInmo();
-    DTPublicacion* getPublicacion();
 };
 
 #endif

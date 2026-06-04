@@ -2,8 +2,8 @@
 #define ADMINISTRA_H
 
 #include "ICollection/interfaces/ICollectible.h"
-#include "datatypes/fecha.h"
-#include "datatypes/tipoPublicacion.h"
+#include "datatypes/Fecha.h"
+#include "datatypes/TipoPublicacion.h"
 #include "Publicacion.h"
 #include "datatypes/DTEspecifica.h"
 #include "datatypes/DTAdministrados.h"
@@ -35,7 +35,6 @@ public:
     DTAdministrados *getDTAdministrados();
     virtual ~Administra();
     DTEspecifica *getAdministra();
-    string getInmo();  // mensaje 5.1* del diagrama
 };
 
 #endif

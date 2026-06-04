@@ -3,6 +3,9 @@
 #include "Administra.h"
 #include "Inmueble.h"
 #include "Datatypes/TipoInmueble.h"
+#include "AgendaVisita.h"
+#include "ICollection/collections/List.h"
+#include "ICollection/interfaces/IIterator.h"
 
 using namespace std;
 
@@ -16,6 +19,7 @@ Publicacion ::Publicacion(int codigo, string texto, float precio, fecha fecha, t
     this->tipo = tipo;
     this->administra = adm;
     this->activa = true;
+    this->agendas = new List();
 }
 
 int Publicacion ::getCodigo()
@@ -83,30 +87,14 @@ Administra *Publicacion ::getAdministra()
 
 Publicacion ::~Publicacion()
 {
+    if(this->agendas != nullptr)
+    {
+        eliminarAgendas();
+    }
 }
 
 // Corresponde al mensaje 2: getDTEspecifica():DTEspecifica
 // Publicacion delega a Administra — mensaje 2.1
 DTEspecifica* Publicacion::getDTEspecifica() {
     return this->administra->getAdministra();
-}
-
-// Publicacion le pide a Administra el nickname de la inmobiliaria
-string Publicacion::getNickInmo() {
-    return this->administra->getInmo(); // mensaje 5.1*
-}
-
-DTPublicacion* Publicacion::getPublicacion() {
-    string nickInmo = this->getNickInmo();
- 
-    return new DTPublicacion(
-        this->activa,
-        this->codigo,
-        this->fechaPublicacion,
-        this->texto,
-        this->precio,
-        nickInmo,
-        this->tipo,
-        this->administra->getInmueble()->getTipo()  // tipoInmueble
-    );
 }

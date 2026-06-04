@@ -44,8 +44,16 @@ void Propietario::asociarInmobiliaria(Inmobiliaria* inmobiliaria)
     this->inmo = inmobiliaria;
 }
 
-void Propietario::removerPropietario(Inmueble*)
+void Propietario::removerPropietario(Inmueble* inmueble)
 {
+    if (inmueble == nullptr)
+        return;
+
+    Integer* key = new Integer(inmueble->getIdentificador());
+
+    this->inmuebles->remove(key);
+
+    delete key;
 }
 
 Casa* Propietario::crearCasa(direccion direccion_, float superficie, fecha anoConstruc,

@@ -13,6 +13,7 @@
 using namespace std;
 
 class Propietario;
+class Administra;
 
 class Inmueble : public ICollectible
 {
@@ -24,6 +25,7 @@ protected:
     tipoInmueble tipo;
 
     Propietario *propietario;
+    Administra* administra;
 
 public:
     Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo);
@@ -39,7 +41,6 @@ public:
 
     // Operaciones
     void asociarPropietario(Propietario *p);
-    void removerInmueble(Inmueble *inm);
     DTInfoInmueble *getDTInfoInmueble();
 
     // Para listarPropiedades — mensaje 2* en el diagrama
@@ -47,6 +48,9 @@ public:
 
     virtual void mostrarDetalle(int id) = 0;
     virtual DTEspecifica *getInmueble() = 0; // mensaje 2.1.1 del diagrama
+
+    void asociarAdministra(Administra* adm);
+    ICollection* prepararEliminacion();
 };
 
 #endif
