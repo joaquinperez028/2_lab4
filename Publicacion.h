@@ -11,6 +11,7 @@ class Administra;
 #include "Datatypes/DTEspecifica.h"
 #include "ICollection.h"
 #include "Datatypes/DTPublicacion.h"
+#include "AgendaVisita.h"
 
 class Publicacion : public ICollectible
 {
@@ -44,6 +45,7 @@ public:
     void eliminarAgendas();
     string getNickInmo();
     DTPublicacion* getPublicacion();
+    void agregarAgenda(AgendaVisita* agenda);
 
 };
 

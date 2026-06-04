@@ -4,6 +4,7 @@
 #include "ICollection/interfaces/IIterator.h"
 #include "Datatypes/DTInfoInmueble.h"
 #include "Inmueble.h"
+#include "Inmobiliaria.h"  
 
 using namespace std;
 
@@ -91,4 +92,8 @@ ICollection* Administra::getPublicaciones()
     delete it;
 
     return copia;
+}
+
+string Administra::getInmo() {
+    return this->inmobiliaria->getNickName();
 }
