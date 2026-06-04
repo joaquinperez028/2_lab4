@@ -44,9 +44,7 @@ fecha Publicacion ::getFecha()
 
 bool Publicacion ::esActiva()
 {
-    if (this->activa == true)
-        return true;
-    return false;
+    return this->activa;
 }
 
 bool Publicacion ::precioFranja(float min, float max)
@@ -56,9 +54,7 @@ bool Publicacion ::precioFranja(float min, float max)
 
 bool Publicacion ::coincideTipo(tipoPublicacion tipo)
 {
-    if (this->tipo == tipo)
-        return true;
-    return false;
+    return this->tipo == tipo;
 }
 
 bool Publicacion ::compararInteres(opciones interes)
@@ -87,39 +83,45 @@ Administra *Publicacion ::getAdministra()
 
 Publicacion ::~Publicacion()
 {
-    if(this->agendas != nullptr)
+    if (this->agendas != nullptr)
     {
         eliminarAgendas();
     }
 }
 
-// Corresponde al mensaje 2: getDTEspecifica():DTEspecifica
-// Publicacion delega a Administra — mensaje 2.1
-DTEspecifica* Publicacion::getDTEspecifica() {
+DTEspecifica *Publicacion::getDTEspecifica()
+{
     return this->administra->getAdministra();
 }
 
-string Publicacion::getNickInmo() {
-    return this->administra->getInmo();
+void Publicacion::agregarAgenda(AgendaVisita* agenda)
+{
+    if (agenda != nullptr)
+    {
+        this->agendas->add(agenda);
+    }
 }
 
-DTPublicacion* Publicacion::getPublicacion() {
-    string nickInmo = this->getNickInmo();
-    return new DTPublicacion(
-        this->activa,
-        this->codigo,
-        this->fechaPublicacion,
-        this->texto,
-        this->precio,
-        nickInmo,
-        this->tipo,
-        this->administra->getInmueble()->getTipo()
-    );
-}
-void Publicacion::eliminarAgendas() {
-    // elimina las agendas asociadas a esta publicacion
-    if (this->agendas != nullptr) {
-        delete this->agendas;
-        this->agendas = nullptr;
+void Publicacion::eliminarAgendas()
+{
+    if (this->agendas == nullptr)
+        return;
+
+    IIterator* it = this->agendas->getIterator();
+
+    while (it->hasCurrent())
+    {
+        AgendaVisita* agenda = dynamic_cast<AgendaVisita*>(it->getCurrent());
+
+        if (agenda != nullptr)
+        {
+            delete agenda;
+        }
+
+        it->next();
     }
+
+    delete it;
+    delete this->agendas;
+    this->agendas = nullptr;
 }

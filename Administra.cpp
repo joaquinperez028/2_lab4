@@ -2,18 +2,17 @@
 #include "ICollection/collections/List.h"
 #include "Publicacion.h"
 #include "ICollection/interfaces/IIterator.h"
-#include "datatypes/DTInfoInmueble.h"
+#include "Datatypes/DTInfoInmueble.h"
 #include "Inmueble.h"
 
 using namespace std;
 
 Administra ::Administra(Inmobiliaria *inmo, Inmueble *inm)
 {
-
     this->inmobiliaria = inmo;
     this->inmueble = inm;
-
     this->publicaciones = new List();
+    this->fechaInicio = fecha();
 }
 
 Inmobiliaria *Administra ::getInmobiliaria()
@@ -31,11 +30,10 @@ void Administra ::agregarPublicacion(Publicacion *pub)
     publicaciones->add(pub);
 }
 
-Administra ::~Administra() {
-
+Administra ::~Administra()
+{
     delete this->publicaciones;
-
-};
+}
 
 bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
 {
@@ -48,6 +46,7 @@ bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
             return true;
         it->next();
     }
+    delete it;
     return false;
 }
 
@@ -59,33 +58,37 @@ Publicacion *Administra ::crearPublicacion(int codigo, tipoPublicacion tipo, std
     return pub;
 }
 
-// Corresponde al mensaje 2.1: getAdministra():DTEspecifica
-// Delega a Inmueble para que construya su propio DTEspecifica
 DTEspecifica *Administra::getAdministra()
 {
-    return this->inmueble->getInmueble(); // mensaje 2.1.1
+    return this->inmueble->getInmueble();
 }
 
 DTAdministrados *Administra ::getDTAdministrados()
 {
-
     DTInfoInmueble *dtInm = this->inmueble->getDTInfoInmueble();
 
     DTAdministrados *res = new DTAdministrados(
-
         this->fechaInicio,
         dtInm->getIdentificador(),
-        dtInm->getDir()
+        dtInm->getDir());
 
-    );
     delete dtInm;
     return res;
 }
 
-ICollection* Administra::getPublicaciones() {
-    return this->publicaciones;
-}
+ICollection* Administra::getPublicaciones()
+{
+    ICollection* copia = new List();
 
-string Administra::getInmo() {
-    return this->inmobiliaria->getNickName();
+    IIterator* it = publicaciones->getIterator();
+
+    while(it->hasCurrent())
+    {
+        copia->add(it->getCurrent());
+        it->next();
+    }
+
+    delete it;
+
+    return copia;
 }

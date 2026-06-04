@@ -7,7 +7,7 @@
 #include "Datatypes/TipoInmueble.h"
 #include "Datatypes/DTInmueble.h"
 #include "Datatypes/DTEspecifica.h"
-#include "datatypes/DTInfoInmueble.h"
+#include "Datatypes/DTInfoInmueble.h"
 #include "ICollection.h"
 
 using namespace std;
@@ -25,13 +25,12 @@ protected:
     tipoInmueble tipo;
 
     Propietario *propietario;
-    Administra* administra;
+    Administra *administra;
 
 public:
     Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo);
     virtual ~Inmueble();
 
-    // Getters
     direccion getDireccion() const;
     float getSuperficie() const;
     fecha getAnoConstruc() const;
@@ -39,18 +38,15 @@ public:
     tipoInmueble getTipo() const;
     Propietario *getPropietario() const;
 
-    // Operaciones
     void asociarPropietario(Propietario *p);
     DTInfoInmueble *getDTInfoInmueble();
-
-    // Para listarPropiedades — mensaje 2* en el diagrama
     DTInmueble *getDetalles();
 
     virtual void mostrarDetalle(int id) = 0;
-    virtual DTEspecifica *getInmueble() = 0; // mensaje 2.1.1 del diagrama
+    virtual DTEspecifica *getInmueble() = 0;
 
-    void asociarAdministra(Administra* adm);
-    ICollection* prepararEliminacion();
+    void asociarAdministra(Administra *adm);
+    ICollection *prepararEliminacion();
 };
 
 #endif

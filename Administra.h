@@ -2,12 +2,11 @@
 #define ADMINISTRA_H
 
 #include "ICollection/interfaces/ICollectible.h"
-#include "datatypes/Fecha.h"
-#include "datatypes/TipoPublicacion.h"
+#include "Datatypes/Fecha.h"
+#include "Datatypes/TipoPublicacion.h"
 #include "Publicacion.h"
 #include "datatypes/DTEspecifica.h"
 #include "datatypes/DTAdministrados.h"
-#include "Inmobiliaria.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -16,12 +15,10 @@ class ICollection;
 
 class Administra : public ICollectible
 {
-
 private:
     Inmobiliaria *inmobiliaria;
     Inmueble *inmueble;
     ICollection *publicaciones;
-
     fecha fechaInicio;
 
 public:
@@ -37,7 +34,6 @@ public:
     virtual ~Administra();
     DTEspecifica *getAdministra();
     ICollection* getPublicaciones();
-    string getInmo();
 };
 
 #endif

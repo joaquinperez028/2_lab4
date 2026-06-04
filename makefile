@@ -20,7 +20,8 @@ SRC = \
 	Casa.cpp \
 	Apartamento.cpp \
 	Administra.cpp \
-	Publicacion.cpp
+	Publicacion.cpp \
+	AgendaVisita.cpp
 
 SRC += \
 	Datatypes/Direccion.cpp \

@@ -1,4 +1,5 @@
 #include "Usuario.h"
+#include "Inmobiliaria.h"
 
 Usuario::Usuario(string nickname, string nombre, string contrasenia, string email)
     : nickName(nickname), nombre(nombre), contrasenia(contrasenia), email(email)
@@ -27,4 +28,10 @@ string Usuario::getContrasenia()
 string Usuario::getEmail()
 {
     return this->email;
+}
+
+// Filtra si el usuario es una inmobiliaria usando dynamic_cast
+// Corresponde al [foreach && esInmobiliaria()] del diagrama
+bool Usuario::esInmobiliaria() {
+    return dynamic_cast<Inmobiliaria*>(this) != nullptr;
 }
