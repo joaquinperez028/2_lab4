@@ -8,12 +8,10 @@
 #include "Datatypes/TipoTecho.h"
 #include "Datatypes/Opciones.h"
 #include "Datatypes/DTEspecifica.h"
-#include "Datatypes/DTprop.h"
+#include "Datatypes/DTpropietario.h"
+#include "Datatypes/Fecha.h"
 #include "Datatypes/DTPublicacion.h"
 #include "Datatypes/DTInmueble.h"
-#include "Datatypes/DTInmobiliaria.h"
-#include "Datatypes/DTInmuebles.h"
-#include "Datatypes/DTInmueblesRep.h"
 #include "ICollection.h"
 #include "Datatypes/Status.h"
 
@@ -27,8 +25,8 @@ public:
     virtual Status revisarNickname(string) = 0;
     virtual Status altaCliente(string, string, string, string, string, string) = 0;
     virtual Status altaPropietario(string, string, string, string, string, string) = 0;
-    virtual Status altaCasa(direccion, float, int, tipoTecho, bool) = 0;
-    virtual Status altaApto(direccion, float, int, int, bool, float) = 0;
+    virtual Status altaCasa(direccion, float, fecha, tipoTecho, bool) = 0;
+    virtual Status altaApto(direccion, float, fecha, int, bool, float) = 0;
     virtual Status altaInmobiliaria(string, string, string, direccion, string, string) = 0;
     virtual ICollection* listarPropietarios() = 0;
     virtual void asociarPropietario(string) = 0;
@@ -36,9 +34,9 @@ public:
     virtual ICollection* seleccionarInmobiliaria(string) = 0;
     virtual Status altaPublicacion(int, tipoPublicacion, string, float) = 0;
     virtual ICollection* listarPublicaciones(string, float, float, opciones) = 0;
-    virtual DTEspecifica listarEspecifica(int) = 0;
+    virtual DTEspecifica* listarEspecifica(int) = 0;
     virtual ICollection* listarPropiedades() = 0;
-    virtual DTInmueble mostrarDetalle(int) = 0;
+    virtual DTInmueble* mostrarDetalle(int) = 0;
     virtual Status eliminarInmueble(int) = 0;
     virtual ICollection* listarInmueblesRepresentados(string) = 0;
     virtual Status altaAdministracion(int) = 0;

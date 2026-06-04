@@ -45,3 +45,16 @@ string DTPublicacion::getNomInmo()
 {
     return tipoInmueble;
 }
+
+ostream &operator<<(ostream &os, const DTPublicacion &dt)
+{
+    os << "Codigo: " << dt.codigoPubli
+       << " | Activa: " << (dt.activa ? "Si" : "No")
+       << " | Fecha: " << dt.fechaPubli
+       << " | Precio: " << dt.precio
+       << " | Inmobiliaria: " << dt.nomInmo
+       << " | Tipo pub.: " << dt.tipoPublicacion
+       << " | Tipo inm.: " << dt.tipoInmueble
+       << " | Descripcion: " << dt.textoDescriptivo;
+    return os;
+}

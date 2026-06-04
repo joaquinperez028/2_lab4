@@ -4,10 +4,14 @@
 class Administra;
 
 #include <string>
-#include "datatypes/tipoPublicacion.h"
-#include "datatypes/opciones.h"
-#include "datatypes/fecha.h"
+#include "Datatypes/TipoPublicacion.h"
+#include "Datatypes/Opciones.h"
+#include "Datatypes/Fecha.h"
 #include "ICollection/interfaces/ICollectible.h"
+#include "Datatypes/DTEspecifica.h"
+#include "ICollection.h"
+
+class AgendaVisita;
 
 class Publicacion : public ICollectible
 {
@@ -19,6 +23,7 @@ private:
     bool activa;
     tipoPublicacion tipo;
     Administra *administra;
+    ICollection* agendas;
 
 public:
     Publicacion(int codigo, std::string texto, float precio, fecha fecha, tipoPublicacion tipo,
@@ -27,6 +32,7 @@ public:
     int getCodigo();
     std::string getTexto();
     float getPrecio();
+    fecha getFecha();
     bool esActiva();
     bool precioFranja(float min, float max);
     bool coincideTipo(tipoPublicacion tipo);
@@ -35,6 +41,10 @@ public:
     Administra *getAdministra();
 
     virtual ~Publicacion();
+    DTEspecifica* getDTEspecifica();
+
+    void agregarAgenda(AgendaVisita* agenda);
+    void eliminarAgendas();
 };
 
 #endif

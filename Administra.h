@@ -2,9 +2,11 @@
 #define ADMINISTRA_H
 
 #include "ICollection/interfaces/ICollectible.h"
-#include "datatypes/fecha.h"
-#include "datatypes/DTEspecifica.h"
- 
+#include "Datatypes/Fecha.h"
+#include "Datatypes/TipoPublicacion.h"
+#include "Publicacion.h"
+#include "Datatypes/DTEspecifica.h"
+#include "Datatypes/DTAdministrados.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -13,23 +15,25 @@ class ICollection;
 
 class Administra : public ICollectible
 {
-    
-    private:
+private:
     Inmobiliaria *inmobiliaria;
     Inmueble *inmueble;
     ICollection *publicaciones;
-    
-    fecha fecha;
-    
-    public:
+    fecha fechaInicio;
+
+public:
     Administra(Inmobiliaria *inmo, Inmueble *inm);
     Inmobiliaria *getInmobiliaria();
     Inmueble *getInmueble();
-    
+
     void agregarPublicacion(Publicacion *pub);
-    
+    bool existePubAciva(tipoPublicacion tipo, fecha fechaHoy);
+    Publicacion *crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
+                                  fecha fechaHoy);
+    DTAdministrados *getDTAdministrados();
     virtual ~Administra();
-    DTEspecifica* getAdministra();  // mensaje 2.1 del diagrama
+    DTEspecifica *getAdministra();
+    ICollection *getPublicaciones();
 };
 
 #endif

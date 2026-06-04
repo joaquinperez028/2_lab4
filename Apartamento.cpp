@@ -1,63 +1,47 @@
 #include "Apartamento.h"
 #include "Propietario.h"
 
-// Constructor — delega los atributos comunes a Inmueble
-Apartamento::Apartamento(direccion dir, float superficie, int identificador, int numPiso, bool ascensor, float gastosComunes)
-    : Inmueble(dir, superficie, identificador, tipoInmueble::Apartamento) {
-    this->numPiso = numPiso;
-    this->ascensor = ascensor;
-    this->gastosComunes = gastosComunes;
+Apartamento::Apartamento(direccion dir, float superficie, fecha anoConstruc, int identificador,
+                         int numPiso, bool ascensor, float gastosComunes, Propietario *propietario)
+    : Inmueble(dir, superficie, anoConstruc, identificador, tipoInmueble::Apartamento),
+      numPiso(numPiso),
+      ascensor(ascensor),
+      gastosComunes(gastosComunes)
+{
+    if (propietario != nullptr)
+    {
+        asociarPropietario(propietario);
+    }
 }
 
-// --- Getters ---
-
-int Apartamento::getNumPiso() const {
-    return this->numPiso;
+int Apartamento::getNumPiso() const
+{
+    return numPiso;
 }
 
-bool Apartamento::getAscensor() const {
-    return this->ascensor;
+bool Apartamento::getAscensor() const
+{
+    return ascensor;
 }
 
-float Apartamento::getGastosComunes() const {
-    return this->gastosComunes;
+float Apartamento::getGastosComunes() const
+{
+    return gastosComunes;
 }
 
-// Factory method — crea una instancia de Apartamento
-// Corresponde al crearApto del DCD, llamado desde Propietario
-void Apartamento::crearApto(direccion dir, float superficie, int identificador, int numPiso, bool ascensor, float gastosComunes) {
-    this->direccion_ = dir;
-    this->superficie = superficie;
-    this->identificador = identificador;
-    this->numPiso = numPiso;
-    this->ascensor = ascensor;
-    this->gastosComunes = gastosComunes;
+void Apartamento::mostrarDetalle(int)
+{
 }
 
-// Implementacion del virtual puro de Inmueble
-// Retorna un DTApartamento con todos los datos especificos del apartamento
-// Corresponde al mensaje mostrarDetalle del diagrama
-void Apartamento::mostrarDetalle(int id) {
-    // se construye el DTApartamento con los datos propios y heredados
-    DTApartamento* dt = new DTApartamento(
-        this->getSuperficie(),
-        this->getDireccion(),
-        this->getAnoConstruc(),
-        tipoInmueble::Apartamento,
-        this->numPiso,
-        this->ascensor,
-        this->gastosComunes
-    );
-}
-
-DTEspecifica* Apartamento::getInmueble() {
+DTEspecifica *Apartamento::getInmueble()
+{
     return new DTApartamento(
-        this->getSuperficie(),
-        this->getDireccion(),
-        this->getAnoConstruc(),
+        getSuperficie(),
+        getDireccion(),
+        getAnoConstruc(),
         tipoInmueble::Apartamento,
-        this->numPiso,
-        this->ascensor,
-        this->gastosComunes
-    );
+        tipoTecho::Liviano,
+        numPiso,
+        ascensor,
+        gastosComunes);
 }

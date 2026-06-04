@@ -24,3 +24,9 @@ string direccion::getDepartamento()
 {
     return departamento;
 }
+
+ostream &operator<<(ostream &os, const direccion &d)
+{
+    os << d.calle << " " << d.numPuerta << ", " << d.localidad << " (" << d.departamento << ")";
+    return os;
+}

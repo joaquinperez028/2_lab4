@@ -1,6 +1,7 @@
 #ifndef DTAPARTAMENTO_H
 #define DTAPARTAMENTO_H
 
+#include <iostream>
 #include "DTEspecifica.h"
 
 using namespace std;
@@ -18,6 +19,8 @@ public:
     int getNumPiso();
     bool getAscensor();
     float getGastosComunes();
+
+    friend ostream &operator<<(ostream &os, const DTApartamento &dt);
 };
 
 #endif

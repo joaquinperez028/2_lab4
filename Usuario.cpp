@@ -1,4 +1,5 @@
 #include "Usuario.h"
+#include "Inmobiliaria.h"
 
 Usuario::Usuario(string nickname, string nombre, string contrasenia, string email)
     : nickName(nickname), nombre(nombre), contrasenia(contrasenia), email(email)

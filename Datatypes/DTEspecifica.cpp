@@ -32,3 +32,13 @@ tipoInmueble DTEspecifica::getTipo()
 {
     return tipoTecho;
 }
+
+ostream &operator<<(ostream &os, const DTEspecifica &dt)
+{
+    os << "Superficie: " << dt.Superficie
+       << " | Direccion: " << dt.direccion
+       << " | Construccion: " << dt.anioConstruc
+       << " | Tipo: " << dt.tipo
+       << " | Techo: " << dt.tipoTecho;
+    return os;
+}

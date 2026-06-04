@@ -19,3 +19,12 @@ float DTApartamento::getGastosComunes()
 {
     return gastosComunes;
 }
+
+ostream &operator<<(ostream &os, const DTApartamento &dt)
+{
+    os << static_cast<const DTEspecifica &>(dt)
+       << " | Piso: " << dt.numPiso
+       << " | Ascensor: " << (dt.ascensor ? "Si" : "No")
+       << " | Gastos comunes: " << dt.gastosComunes;
+    return os;
+}

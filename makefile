@@ -18,16 +18,22 @@ SRC = \
 	Inmobiliaria.cpp \
 	inmueble.cpp \
 	Casa.cpp \
-	Apartamento.cpp
+	Apartamento.cpp \
+	Administra.cpp \
+	Publicacion.cpp \
+	AgendaVisita.cpp
 
 SRC += \
 	Datatypes/Direccion.cpp \
 	Datatypes/Fecha.cpp \
-	Datatypes/DTprop.cpp \
+	Datatypes/DTpropietario.cpp \
 	Datatypes/DTPublicacion.cpp \
 	Datatypes/DTEspecifica.cpp \
 	Datatypes/DTCasa.cpp \
-	Datatypes/DTApartamento.cpp
+	Datatypes/DTApartamento.cpp \
+	Datatypes/DTInmueble.cpp \
+	Datatypes/DTInfoInmueble.cpp \
+	Datatypes/DTAdministrados.cpp
 
 SRC += \
 	ICollection/collections/List.cpp \

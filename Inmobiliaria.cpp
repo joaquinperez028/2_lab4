@@ -1,7 +1,11 @@
 #include "Inmobiliaria.h"
+#include "Administra.h"
+#include "Inmueble.h"
 #include "ICollection/collections/OrderedDictionary.h"
 #include "ICollection/String.h"
 #include "Propietario.h"
+#include "ICollection/Integer.h"
+#include "ICollection/collections/List.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
                            direccion direccion, string telefono, string URL)
@@ -10,7 +14,7 @@ Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, s
       telefono(telefono),
       URL(URL),
       inmuebles(nullptr),
-      administraciones(nullptr),
+      administraciones(new OrderedDictionary()),
       propietarios(new OrderedDictionary())
 {
 }
@@ -37,7 +41,7 @@ string Inmobiliaria::getUrl()
     return this->URL;
 }
 
-void Inmobiliaria::asociarPropietario(Propietario* propietario)
+void Inmobiliaria::asociarPropietario(Propietario *propietario)
 {
     if (this->propietarios == nullptr || propietario == nullptr)
     {
@@ -51,6 +55,50 @@ Status Inmobiliaria::crearAdministra(int)
     return Status::OK;
 }
 
-void Inmobiliaria::removerInmobiliaria(Inmueble*)
+void Inmobiliaria::removerInmobiliaria(Inmueble* inmueble)
 {
+    if (inmueble == nullptr || this->administraciones == nullptr)
+        return;
+
+    Integer* key = new Integer(inmueble->getIdentificador());
+
+    this->administraciones->remove(key);
+
+    delete key;
+}
+
+Administra *Inmobiliaria ::findAdministra(int identificador)
+{
+
+    Integer *key = new Integer(identificador);
+
+    ICollectible *val = administraciones->find(key);
+
+    delete key;
+
+    return dynamic_cast<Administra *>(val);
+}
+
+ICollection *Inmobiliaria ::getAdministras()
+{
+
+    ICollection *resultado = new List();
+
+    IIterator *it = administraciones->getIterator();
+
+    while (it->hasCurrent())
+    {
+        Administra *adm = (Administra *)it->getCurrent();
+        DTAdministrados *nuevo = adm->getDTAdministrados();
+        resultado->add(nuevo);
+
+        it->next();
+    }
+
+    return resultado;
+}
+
+ICollection *Inmobiliaria::getInmueblesRepresentados()
+{
+    return new List();
 }
