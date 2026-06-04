@@ -1,3 +1,6 @@
+#ifndef ICOLLECTION_STRING_H
+#define ICOLLECTION_STRING_H
+
 #include "interfaces/ICollectible.h"
 #include "interfaces/OrderedKey.h"
 
@@ -5,9 +8,6 @@
  *  Implementación simple del datatype String que hereda tanto de ICollectible
  *  como de HashedKey
  */
-
-#ifndef _STRING_H
-#define	_STRING_H
 
 class String: public ICollectible, public OrderedKey
 {
@@ -26,5 +26,5 @@ public:
     
 };
 
-#endif	/*_STRING_H */
+#endif /* ICOLLECTION_STRING_H */
 

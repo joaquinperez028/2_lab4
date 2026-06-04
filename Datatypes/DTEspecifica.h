@@ -13,10 +13,10 @@ class DTEspecifica
 {
 protected:
     float Superficie;
-    direccion direccion;
+    direccion direccion_;
     fecha anioConstruc;
     tipoInmueble tipo;
-    tipoTecho tipoTecho;
+    tipoTecho tipoTecho_;
 
 public:
     DTEspecifica();

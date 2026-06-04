@@ -8,9 +8,9 @@
 #include "ICollection/collections/List.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
-                           direccion direccion, string telefono, string URL)
+                           direccion dir, string telefono, string URL)
     : Usuario(nickname, nombre, contrasenia, email),
-      direccion_(direccion),
+      direccion_(dir),
       telefono(telefono),
       URL(URL),
       inmuebles(nullptr),

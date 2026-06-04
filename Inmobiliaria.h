@@ -25,7 +25,7 @@ protected:
 
 public:
     Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
-                 direccion direccion, string telefono, string URL);
+                 direccion dir, string telefono, string URL);
     ~Inmobiliaria();
     direccion getDireccion();
     string getTelefono();

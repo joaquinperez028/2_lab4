@@ -1,10 +1,10 @@
 #include "DTPublicacion.h"
 
 DTPublicacion::DTPublicacion()
-    : activa(false), codigoPubli(0), fechaPubli(), textoDescriptivo(""), precio(0), nomInmo(""), tipoPublicacion(tipoPublicacion::Venta), tipoInmueble(tipoInmueble::Casa) {}
+    : activa(false), codigoPubli(0), fechaPubli(), textoDescriptivo(""), precio(0), nomInmo(""), tipoPublicacion_(tipoPublicacion::Venta), tipoInmueble_(tipoInmueble::Casa) {}
 
 DTPublicacion::DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPublicacion, ::tipoInmueble tipoInmueble)
-    : activa(activa), codigoPubli(codigoPubli), fechaPubli(fechaPubli), textoDescriptivo(textoDescriptivo), precio(precio), nomInmo(nomInmo), tipoPublicacion(tipoPublicacion), tipoInmueble(tipoInmueble) {}
+    : activa(activa), codigoPubli(codigoPubli), fechaPubli(fechaPubli), textoDescriptivo(textoDescriptivo), precio(precio), nomInmo(nomInmo), tipoPublicacion_(tipoPublicacion), tipoInmueble_(tipoInmueble) {}
 
 bool DTPublicacion::getActiva()
 {
@@ -38,12 +38,12 @@ string DTPublicacion::getNomInmo()
 
 ::tipoPublicacion DTPublicacion::getTipoPublicacion()
 {
-    return tipoPublicacion;
+    return tipoPublicacion_;
 }
 
 ::tipoInmueble DTPublicacion::getTipoInmueble()
 {
-    return tipoInmueble;
+    return tipoInmueble_;
 }
 
 ostream &operator<<(ostream &os, const DTPublicacion &dt)
@@ -53,8 +53,8 @@ ostream &operator<<(ostream &os, const DTPublicacion &dt)
        << " | Fecha: " << dt.fechaPubli
        << " | Precio: " << dt.precio
        << " | Inmobiliaria: " << dt.nomInmo
-       << " | Tipo pub.: " << dt.tipoPublicacion
-       << " | Tipo inm.: " << dt.tipoInmueble
+       << " | Tipo pub.: " << dt.tipoPublicacion_
+       << " | Tipo inm.: " << dt.tipoInmueble_
        << " | Descripcion: " << dt.textoDescriptivo;
     return os;
 }
