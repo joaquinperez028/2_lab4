@@ -3,7 +3,7 @@
 
 #include <string>
 #include "ICollection/interfaces/ICollectible.h"
-
+#include "Datatypes/DTInmobiliaria.h"
 using namespace std;
 
 class Usuario : public ICollectible
@@ -21,6 +21,7 @@ public:
     string getNombre();
     string getContrasenia();
     string getEmail();
+    bool esInmobiliaria();
 };
 
 #endif
