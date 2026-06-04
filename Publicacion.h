@@ -9,6 +9,8 @@ class Administra;
 #include "datatypes/Fecha.h"
 #include "ICollection/interfaces/ICollectible.h"
 #include "datatypes/DTEspecifica.h"
+#include "ICollection.h"
+#include "Datatypes/DTPublicacion.h"
 
 class Publicacion : public ICollectible
 {
@@ -39,6 +41,10 @@ public:
 
     virtual ~Publicacion();
     DTEspecifica* getDTEspecifica();
+    void eliminarAgendas();
+    string getNickInmo();
+    DTPublicacion* getPublicacion();
+
 };
 
 #endif

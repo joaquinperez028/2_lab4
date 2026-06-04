@@ -7,6 +7,7 @@
 #include "Publicacion.h"
 #include "datatypes/DTEspecifica.h"
 #include "datatypes/DTAdministrados.h"
+#include "Inmobiliaria.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -35,6 +36,8 @@ public:
     DTAdministrados *getDTAdministrados();
     virtual ~Administra();
     DTEspecifica *getAdministra();
+    ICollection* getPublicaciones();
+    string getInmo();
 };
 
 #endif

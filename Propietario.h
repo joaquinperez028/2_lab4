@@ -9,6 +9,7 @@
 #include "Datatypes/DTpropietario.h"
 #include "ICollection.h"
 #include "ICollection/interfaces/IDictionary.h"
+#include "Datatypes/DTPublicacion.h" 
 
 using namespace std;
 
@@ -37,6 +38,8 @@ class Propietario : public Usuario {
         Casa* crearCasa(direccion, float, fecha, int, tipoTecho, bool);
         Apartamento* crearApto(direccion, float, fecha, int, int, bool, float); //cambiar en diagrama de comunicacion
         DTPropietario* getDTPropietario();
+        string getNickInmo();
+        DTPublicacion* getPublicacion();
 };
 
 #endif

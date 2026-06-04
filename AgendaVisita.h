@@ -1,7 +1,7 @@
 #ifndef AGENDAVISITA_H
 #define AGENDAVISITA_H
 
-#include "datatypes/datatypes.h"
+#include "Datatypes/Fecha.h"
 #include <string>
 using namespace std;
 

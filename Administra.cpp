@@ -81,3 +81,11 @@ DTAdministrados *Administra ::getDTAdministrados()
     delete dtInm;
     return res;
 }
+
+ICollection* Administra::getPublicaciones() {
+    return this->publicaciones;
+}
+
+string Administra::getInmo() {
+    return this->inmobiliaria->getNickName();
+}

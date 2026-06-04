@@ -98,3 +98,28 @@ Publicacion ::~Publicacion()
 DTEspecifica* Publicacion::getDTEspecifica() {
     return this->administra->getAdministra();
 }
+
+string Publicacion::getNickInmo() {
+    return this->administra->getInmo();
+}
+
+DTPublicacion* Publicacion::getPublicacion() {
+    string nickInmo = this->getNickInmo();
+    return new DTPublicacion(
+        this->activa,
+        this->codigo,
+        this->fechaPublicacion,
+        this->texto,
+        this->precio,
+        nickInmo,
+        this->tipo,
+        this->administra->getInmueble()->getTipo()
+    );
+}
+void Publicacion::eliminarAgendas() {
+    // elimina las agendas asociadas a esta publicacion
+    if (this->agendas != nullptr) {
+        delete this->agendas;
+        this->agendas = nullptr;
+    }
+}

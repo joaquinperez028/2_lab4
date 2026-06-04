@@ -6,10 +6,12 @@
 #include "Fecha.h"
 #include "TipoPublicacion.h"
 #include "TipoInmueble.h"
+#include "ICollection/interfaces/ICollectible.h"
+
 
 using namespace std;
 
-class DTPublicacion
+class DTPublicacion : public ICollectible
 {
 private:
     bool activa;
