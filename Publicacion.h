@@ -26,7 +26,7 @@ private:
     ICollection* agendas;
 
 public:
-    Publicacion(int codigo, std::string texto, float precio, fecha fecha, tipoPublicacion tipo,
+    Publicacion(int codigo, std::string texto, float precio, fecha fechaPub, tipoPublicacion tipoPub,
                 Administra *adm);
 
     int getCodigo();
@@ -35,7 +35,7 @@ public:
     fecha getFecha();
     bool esActiva();
     bool precioFranja(float min, float max);
-    bool coincideTipo(tipoPublicacion tipo);
+    bool coincideTipo(tipoPublicacion tipoPub);
     bool compararInteres(opciones interes);
     void desactivar();
     Administra *getAdministra();

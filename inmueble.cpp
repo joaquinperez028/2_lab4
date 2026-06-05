@@ -5,13 +5,13 @@
 #include <string>
 
 // Constructor
-Inmueble::Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo)
+Inmueble::Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipoInm)
 {
     this->direccion_ = dir;
     this->superficie = superficie;
     this->anoConstruc = anoConstruc;
     this->identificador = identificador;
-    this->tipo = tipo;
+    this->tipo = tipoInm;
     this->propietario = nullptr;
     this->administra = nullptr;
 }

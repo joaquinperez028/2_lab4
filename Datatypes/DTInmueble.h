@@ -19,7 +19,7 @@ private:
 
 public:
     DTInmueble();
-    DTInmueble(int codigoInmueble, ::direccion direccion, fecha anioConstrucion, tipoInmueble tipo);
+    DTInmueble(int codigoInmueble, ::direccion dir, fecha anioConstrucion, tipoInmueble tipoInm);
 
     int getCodigoInmueble();
     ::direccion getDireccion();

@@ -13,7 +13,7 @@ private:
 
 public:
     DTCasa();
-    DTCasa(float Superficie, ::direccion direccion, fecha anioConstruc, tipoInmueble tipo, ::tipoTecho tipoTecho, bool horizontal);
+    DTCasa(float Superficie, ::direccion dir, fecha anioConstruc, tipoInmueble tipoInm, ::tipoTecho techo, bool horizontal);
     bool getHorizontal();
 
     friend ostream &operator<<(ostream &os, const DTCasa &dt);

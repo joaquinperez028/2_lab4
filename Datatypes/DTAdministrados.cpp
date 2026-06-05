@@ -1,8 +1,8 @@
 #include "DTAdministrados.h"
 
-DTAdministrados ::DTAdministrados(fecha fechaComienzo, int identificador, direccion dir)
+DTAdministrados ::DTAdministrados(fecha fechaInicio, int identificador, direccion dir)
 {
-    this->fechaComienzo = fechaComienzo;
+    this->fechaComienzo = fechaInicio;
     this->identificador = identificador;
     this->dir = dir;
 }

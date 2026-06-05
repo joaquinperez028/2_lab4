@@ -13,14 +13,14 @@ class DTEspecifica
 {
 protected:
     float Superficie;
-    direccion direccion;
+    direccion direccion_;
     fecha anioConstruc;
-    tipoInmueble tipo;
-    tipoTecho tipoTecho;
+    tipoInmueble tipoInmueble_;
+    tipoTecho techo_;
 
 public:
     DTEspecifica();
-    DTEspecifica(float Superficie, ::direccion direccion, fecha anioConstruc, tipoInmueble tipo, ::tipoTecho tipoTecho);
+    DTEspecifica(float Superficie, ::direccion dir, fecha anioConstruc, tipoInmueble tipoInm, ::tipoTecho techo);
     virtual ~DTEspecifica();
     float getSuperficie();
     ::direccion getDireccion();

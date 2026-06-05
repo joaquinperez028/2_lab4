@@ -27,8 +27,8 @@ public:
     Inmueble *getInmueble();
 
     void agregarPublicacion(Publicacion *pub);
-    bool existePubAciva(tipoPublicacion tipo, fecha fechaHoy);
-    Publicacion *crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
+    bool existePubAciva(tipoPublicacion tipoPub, fecha fechaHoy);
+    Publicacion *crearPublicacion(int codigo, tipoPublicacion tipoPub, std::string texto, float precio,
                                   fecha fechaHoy);
     DTAdministrados *getDTAdministrados();
     virtual ~Administra();

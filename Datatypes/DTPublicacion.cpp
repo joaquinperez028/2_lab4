@@ -3,8 +3,8 @@
 DTPublicacion::DTPublicacion()
     : activa(false), codigoPubli(0), fechaPubli(), textoDescriptivo(""), precio(0), nomInmo(""), tipoPublicacion(tipoPublicacion::Venta), tipoInmueble(tipoInmueble::Casa) {}
 
-DTPublicacion::DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPublicacion, ::tipoInmueble tipoInmueble)
-    : activa(activa), codigoPubli(codigoPubli), fechaPubli(fechaPubli), textoDescriptivo(textoDescriptivo), precio(precio), nomInmo(nomInmo), tipoPublicacion(tipoPublicacion), tipoInmueble(tipoInmueble) {}
+DTPublicacion::DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPub, ::tipoInmueble tipoInm)
+    : activa(activa), codigoPubli(codigoPubli), fechaPubli(fechaPubli), textoDescriptivo(textoDescriptivo), precio(precio), nomInmo(nomInmo), tipoPublicacion(tipoPub), tipoInmueble(tipoInm) {}
 
 bool DTPublicacion::getActiva()
 {

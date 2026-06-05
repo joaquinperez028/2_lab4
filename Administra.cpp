@@ -35,14 +35,14 @@ Administra ::~Administra()
     delete this->publicaciones;
 }
 
-bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
+bool Administra ::existePubAciva(tipoPublicacion tipoPub, fecha fechaHoy)
 {
     IIterator *it = publicaciones->getIterator();
 
     while (it->hasCurrent())
     {
         Publicacion *pub = (Publicacion *)it->getCurrent();
-        if (pub->coincideTipo(tipo) && pub->getFecha() == fechaHoy && pub->esActiva())
+        if (pub->coincideTipo(tipoPub) && pub->getFecha() == fechaHoy && pub->esActiva())
             return true;
         it->next();
     }
@@ -50,10 +50,10 @@ bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
     return false;
 }
 
-Publicacion *Administra ::crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
+Publicacion *Administra ::crearPublicacion(int codigo, tipoPublicacion tipoPub, std::string texto, float precio,
                                            fecha fechaHoy)
 {
-    Publicacion *pub = new Publicacion(codigo, texto, precio, fechaHoy, tipo, this);
+    Publicacion *pub = new Publicacion(codigo, texto, precio, fechaHoy, tipoPub, this);
     agregarPublicacion(pub);
     return pub;
 }

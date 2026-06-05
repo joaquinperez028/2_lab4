@@ -56,11 +56,11 @@ void Propietario::removerPropietario(Inmueble* inmueble)
     delete key;
 }
 
-Casa* Propietario::crearCasa(direccion direccion_, float superficie, fecha anoConstruc,
-                              int identificador, tipoTecho tipoTecho, bool propHorizontal)
+Casa* Propietario::crearCasa(direccion dir, float superficie, fecha anoConstruc,
+                              int identificador, tipoTecho techo, bool propHorizontal)
 {   
-    Casa* casa = new Casa(direccion_, superficie, anoConstruc, identificador,
-                          tipoTecho, propHorizontal, this);
+    Casa* casa = new Casa(dir, superficie, anoConstruc, identificador,
+                          techo, propHorizontal, this);
 
     this->inmuebles->add(new Integer(identificador), casa);
 
@@ -68,11 +68,11 @@ Casa* Propietario::crearCasa(direccion direccion_, float superficie, fecha anoCo
 }
 
 
-Apartamento* Propietario::crearApto(direccion direccion_, float superficie, fecha anoConstruc,
+Apartamento* Propietario::crearApto(direccion dir, float superficie, fecha anoConstruc,
                                      int identificador, int numPiso, bool ascensor,
                                      float gastosComunes)
 {   
-    Apartamento* apartamento = new Apartamento(direccion_, superficie, anoConstruc,
+    Apartamento* apartamento = new Apartamento(dir, superficie, anoConstruc,
                                                identificador, numPiso, ascensor,
                                                gastosComunes, this);
 

@@ -15,7 +15,7 @@ private:
     direccion dir;
 
 public:
-    DTAdministrados(fecha fechaComienzo, int identificador, direccion dir);
+    DTAdministrados(fecha fechaInicio, int identificador, direccion dir);
     fecha getFechaComienzo();
     int getIdentificador();
     direccion getDir();

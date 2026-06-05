@@ -23,7 +23,7 @@ private:
 
 public:
     DTPublicacion();
-    DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPublicacion, ::tipoInmueble tipoInmueble);
+    DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPub, ::tipoInmueble tipoInm);
     bool getActiva();
     int getCodigoPubli();
     fecha getFechaPubli();

@@ -96,7 +96,7 @@ Status Sistema::altaPropietario(string nickname, string nombre, string contrasen
     return Status::OK;
 }
 
-Status Sistema::altaCasa(direccion direccion, float superficie, fecha anoConstruc,
+Status Sistema::altaCasa(direccion dir, float superficie, fecha anoConstruc,
                          tipoTecho techo, bool propHorizontal)
 {
     if (this->propRecordado == nullptr)
@@ -105,7 +105,7 @@ Status Sistema::altaCasa(direccion direccion, float superficie, fecha anoConstru
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Casa *casa = propRecordado->crearCasa(direccion, superficie, anoConstruc,
+    Casa *casa = propRecordado->crearCasa(dir, superficie, anoConstruc,
                                           codigo, techo, propHorizontal);
 
     this->inmuebles->add(new Integer(codigo), casa);
@@ -113,7 +113,7 @@ Status Sistema::altaCasa(direccion direccion, float superficie, fecha anoConstru
     return Status::OK;
 }
 
-Status Sistema::altaApto(direccion direccion, float superficie, fecha anoConstruc,
+Status Sistema::altaApto(direccion dir, float superficie, fecha anoConstruc,
                          int numPiso, bool ascensor, float gastosComunes)
 {
     if (this->propRecordado == nullptr)
@@ -122,7 +122,7 @@ Status Sistema::altaApto(direccion direccion, float superficie, fecha anoConstru
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Apartamento *apartamento = propRecordado->crearApto(direccion, superficie,
+    Apartamento *apartamento = propRecordado->crearApto(dir, superficie,
                                                         anoConstruc, codigo,
                                                         numPiso, ascensor,
                                                         gastosComunes);

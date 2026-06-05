@@ -9,14 +9,14 @@
 
 using namespace std;
 
-Publicacion ::Publicacion(int codigo, string texto, float precio, fecha fecha, tipoPublicacion tipo,
+Publicacion ::Publicacion(int codigo, string texto, float precio, fecha fechaPub, tipoPublicacion tipoPub,
                           Administra *adm)
 {
     this->codigo = codigo;
     this->texto = texto;
     this->precio = precio;
-    this->fechaPublicacion = fecha;
-    this->tipo = tipo;
+    this->fechaPublicacion = fechaPub;
+    this->tipo = tipoPub;
     this->administra = adm;
     this->activa = true;
     this->agendas = new List();
@@ -52,9 +52,9 @@ bool Publicacion ::precioFranja(float min, float max)
     return (this->precio <= max && this->precio >= min);
 }
 
-bool Publicacion ::coincideTipo(tipoPublicacion tipo)
+bool Publicacion ::coincideTipo(tipoPublicacion tipoPub)
 {
-    return this->tipo == tipo;
+    return this->tipo == tipoPub;
 }
 
 bool Publicacion ::compararInteres(opciones interes)

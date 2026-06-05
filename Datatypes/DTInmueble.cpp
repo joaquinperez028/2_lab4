@@ -2,11 +2,11 @@
 
 DTInmueble::DTInmueble() {}
 
-DTInmueble::DTInmueble(int codigoInmueble, ::direccion direccion, fecha anioConstrucion, tipoInmueble tipo) {
+DTInmueble::DTInmueble(int codigoInmueble, ::direccion dir, fecha anioConstrucion, tipoInmueble tipoInm) {
     this->codigoInmueble = codigoInmueble;
-    this->direccion_ = direccion;
+    this->direccion_ = dir;
     this->anioConstrucion = anioConstrucion;
-    this->tipo = tipo;
+    this->tipo = tipoInm;
 }
 
 int DTInmueble::getCodigoInmueble() {

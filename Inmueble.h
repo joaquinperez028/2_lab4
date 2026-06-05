@@ -28,7 +28,7 @@ protected:
     Administra *administra;
 
 public:
-    Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo);
+    Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipoInm);
     virtual ~Inmueble();
 
     direccion getDireccion() const;
