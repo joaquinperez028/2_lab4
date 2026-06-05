@@ -1,9 +1,9 @@
 #include "DTEspecifica.h"
 
 DTEspecifica::DTEspecifica()
-    : Superficie(0), direccion(), anioConstruc(), tipo(tipoInmueble::Casa), tipoTecho(tipoTecho::Liviano) {}
+    : Superficie(0), direccion(), anioConstruc(), tipo(TipoInmueble::Casa), tipoTecho(TipoTecho::Liviano) {}
 
-DTEspecifica::DTEspecifica(float Superficie, ::direccion direccion, fecha anioConstruc, tipoInmueble tipo, ::tipoTecho tipoTecho)
+DTEspecifica::DTEspecifica(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo, ::TipoTecho tipoTecho)
     : Superficie(Superficie), direccion(direccion), anioConstruc(anioConstruc), tipo(tipo), tipoTecho(tipoTecho) {}
 
 DTEspecifica::~DTEspecifica() {}
@@ -13,22 +13,22 @@ float DTEspecifica::getSuperficie()
     return Superficie;
 }
 
-::direccion DTEspecifica::getDireccion()
+::Direccion DTEspecifica::getDireccion()
 {
     return direccion;
 }
 
-fecha DTEspecifica::getAnioConstruc()
+Fecha DTEspecifica::getAnioConstruc()
 {
     return anioConstruc;
 }
 
-tipoInmueble DTEspecifica::getTipo()
+TipoInmueble DTEspecifica::getTipo()
 {
     return tipo;
 }
 
-::tipoTecho DTEspecifica::getTipoTecho()
+::TipoTecho DTEspecifica::getTipoTecho()
 {
     return tipoTecho;
 }

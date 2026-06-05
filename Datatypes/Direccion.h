@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class direccion
+class Direccion
 {
 private:
     int numPuerta;
@@ -15,14 +15,14 @@ private:
     string departamento;
 
 public:
-    direccion();
-    direccion(int numPuerta, string calle, string localidad, string departamento);
+    Direccion();
+    Direccion(int numPuerta, string calle, string localidad, string departamento);
     int getNumPuerta();
     string getCalle();
     string getLocalidad();
     string getDepartamento();
 
-    friend ostream &operator<<(ostream &os, const direccion &d);
+    friend ostream &operator<<(ostream &os, const Direccion &d);
 };
 
 #endif

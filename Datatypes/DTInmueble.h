@@ -13,18 +13,18 @@ class DTInmueble : public ICollectible
 {
 private:
     int codigoInmueble;
-    direccion direccion_;
-    fecha anioConstrucion;
-    tipoInmueble tipo;
+    Direccion direccion_;
+    Fecha anioConstrucion;
+    TipoInmueble tipo;
 
 public:
     DTInmueble();
-    DTInmueble(int codigoInmueble, ::direccion direccion, fecha anioConstrucion, tipoInmueble tipo);
+    DTInmueble(int codigoInmueble, ::Direccion direccion, Fecha anioConstrucion, TipoInmueble tipo);
 
     int getCodigoInmueble();
-    ::direccion getDireccion();
-    fecha getAnioConstrucion();
-    tipoInmueble getTipo();
+    ::Direccion getDireccion();
+    Fecha getAnioConstrucion();
+    TipoInmueble getTipo();
 
     friend ostream &operator<<(ostream &os, const DTInmueble &dt);
 };

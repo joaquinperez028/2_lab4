@@ -18,24 +18,24 @@ class Administra;
 class Inmueble : public ICollectible
 {
 protected:
-    direccion direccion_;
+    Direccion direccion_;
     float superficie;
-    fecha anoConstruc;
+    Fecha anoConstruc;
     int identificador;
-    tipoInmueble tipo;
+    TipoInmueble tipo;
 
     Propietario *propietario;
     Administra *administra;
 
 public:
-    Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo);
+    Inmueble(Direccion dir, float superficie, Fecha anoConstruc, int identificador, TipoInmueble tipo);
     virtual ~Inmueble();
 
-    direccion getDireccion() const;
+    Direccion getDireccion() const;
     float getSuperficie() const;
-    fecha getAnoConstruc() const;
+    Fecha getAnoConstruc() const;
     int getIdentificador() const;
-    tipoInmueble getTipo() const;
+    TipoInmueble getTipo() const;
     Propietario *getPropietario() const;
 
     void asociarPropietario(Propietario *p);

@@ -7,12 +7,12 @@
 
 using namespace std;
 
-Administra ::Administra(Inmobiliaria *inmo, Inmueble *inm)
+Administra ::Administra(Inmobiliaria *inmo, Inmueble *inm, Fecha fechaIni)
 {
     this->inmobiliaria = inmo;
     this->inmueble = inm;
     this->publicaciones = new List();
-    this->fechaInicio = fecha();
+    this->fechaInicio = fechaIni;
 }
 
 Inmobiliaria *Administra ::getInmobiliaria()
@@ -35,7 +35,7 @@ Administra ::~Administra()
     delete this->publicaciones;
 }
 
-bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
+bool Administra ::existePubAciva(TipoPublicacion tipo, Fecha fechaHoy)
 {
     IIterator *it = publicaciones->getIterator();
 
@@ -50,8 +50,8 @@ bool Administra ::existePubAciva(tipoPublicacion tipo, fecha fechaHoy)
     return false;
 }
 
-Publicacion *Administra ::crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
-                                           fecha fechaHoy)
+Publicacion *Administra ::crearPublicacion(int codigo, TipoPublicacion tipo, std::string texto, float precio,
+                                           Fecha fechaHoy)
 {
     Publicacion *pub = new Publicacion(codigo, texto, precio, fechaHoy, tipo, this);
     agregarPublicacion(pub);

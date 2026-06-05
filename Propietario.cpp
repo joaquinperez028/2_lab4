@@ -21,7 +21,7 @@ Propietario::Propietario(string nickname, string nombre, string contrasenia, str
 
 Propietario::~Propietario()
 {
-    //ojo cuando se implemente el destructor, como elimina o desasocia la coleccion de inmuebles...
+    // ojo cuando se implemente el destructor, como elimina o desasocia la coleccion de inmuebles...
 }
 
 string Propietario::getNumCuenta()
@@ -39,49 +39,48 @@ string Propietario::getTelefono()
     return this->telefono;
 }
 
-void Propietario::asociarInmobiliaria(Inmobiliaria* inmobiliaria)
+void Propietario::asociarInmobiliaria(Inmobiliaria *inmobiliaria)
 {
     this->inmo = inmobiliaria;
 }
 
-void Propietario::removerPropietario(Inmueble* inmueble)
+void Propietario::removerPropietario(Inmueble *inmueble)
 {
     if (inmueble == nullptr)
         return;
 
-    Integer* key = new Integer(inmueble->getIdentificador());
+    Integer *key = new Integer(inmueble->getIdentificador());
 
     this->inmuebles->remove(key);
 
     delete key;
 }
 
-Casa* Propietario::crearCasa(direccion direccion_, float superficie, fecha anoConstruc,
-                              int identificador, tipoTecho tipoTecho, bool propHorizontal)
-{   
-    Casa* casa = new Casa(direccion_, superficie, anoConstruc, identificador,
+Casa *Propietario::crearCasa(Direccion direccion_, float superficie, Fecha anoConstruc,
+                             int identificador, TipoTecho tipoTecho, bool propHorizontal)
+{
+    Casa *casa = new Casa(direccion_, superficie, anoConstruc, identificador,
                           tipoTecho, propHorizontal, this);
 
     this->inmuebles->add(new Integer(identificador), casa);
 
-    return casa; //cambiar en diagrama que esta operacion retorne el objeto casa
+    return casa; // cambiar en diagrama que esta operacion retorne el objeto casa
 }
 
-
-Apartamento* Propietario::crearApto(direccion direccion_, float superficie, fecha anoConstruc,
-                                     int identificador, int numPiso, bool ascensor,
-                                     float gastosComunes)
-{   
-    Apartamento* apartamento = new Apartamento(direccion_, superficie, anoConstruc,
+Apartamento *Propietario::crearApto(Direccion direccion_, float superficie, Fecha anoConstruc,
+                                    int identificador, int numPiso, bool ascensor,
+                                    float gastosComunes)
+{
+    Apartamento *apartamento = new Apartamento(direccion_, superficie, anoConstruc,
                                                identificador, numPiso, ascensor,
                                                gastosComunes, this);
 
     this->inmuebles->add(new Integer(identificador), apartamento);
 
-    return apartamento; //cambiar en diagrama que esta operacion retorne el objeto apto
+    return apartamento; // cambiar en diagrama que esta operacion retorne el objeto apto
 }
 
-DTPropietario* Propietario::getDTPropietario()
+DTPropietario *Propietario::getDTPropietario()
 {
     return new DTPropietario(this->getNickName(), this->getNombre());
 }

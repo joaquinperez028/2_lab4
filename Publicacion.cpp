@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Publicacion ::Publicacion(int codigo, string texto, float precio, fecha fecha, tipoPublicacion tipo,
+Publicacion ::Publicacion(int codigo, string texto, float precio, Fecha fecha, TipoPublicacion tipo,
                           Administra *adm)
 {
     this->codigo = codigo;
@@ -37,7 +37,7 @@ float Publicacion ::getPrecio()
     return this->precio;
 }
 
-fecha Publicacion ::getFecha()
+Fecha Publicacion ::getFecha()
 {
     return this->fechaPublicacion;
 }
@@ -52,20 +52,20 @@ bool Publicacion ::precioFranja(float min, float max)
     return (this->precio <= max && this->precio >= min);
 }
 
-bool Publicacion ::coincideTipo(tipoPublicacion tipo)
+bool Publicacion ::coincideTipo(TipoPublicacion tipo)
 {
     return this->tipo == tipo;
 }
 
-bool Publicacion ::compararInteres(opciones interes)
+bool Publicacion ::compararInteres(Opciones interes)
 {
-    if (interes == opciones::Todos)
+    if (interes == Opciones::Todos)
         return true;
 
-    if (interes == opciones::InteresApto && this->administra->getInmueble()->getTipo() == tipoInmueble::Apartamento)
+    if (interes == Opciones::InteresApto && this->administra->getInmueble()->getTipo() == TipoInmueble::Apartamento)
         return true;
 
-    if (interes == opciones::InteresCasa && this->administra->getInmueble()->getTipo() == tipoInmueble::Casa)
+    if (interes == Opciones::InteresCasa && this->administra->getInmueble()->getTipo() == TipoInmueble::Casa)
         return true;
 
     return false;

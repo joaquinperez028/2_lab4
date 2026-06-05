@@ -19,31 +19,31 @@ private:
     int codigo;
     std::string texto;
     float precio;
-    fecha fechaPublicacion;
+    Fecha fechaPublicacion;
     bool activa;
-    tipoPublicacion tipo;
+    TipoPublicacion tipo;
     Administra *administra;
-    ICollection* agendas;
+    ICollection *agendas;
 
 public:
-    Publicacion(int codigo, std::string texto, float precio, fecha fecha, tipoPublicacion tipo,
+    Publicacion(int codigo, std::string texto, float precio, Fecha fecha, TipoPublicacion tipo,
                 Administra *adm);
 
     int getCodigo();
     std::string getTexto();
     float getPrecio();
-    fecha getFecha();
+    Fecha getFecha();
     bool esActiva();
     bool precioFranja(float min, float max);
-    bool coincideTipo(tipoPublicacion tipo);
-    bool compararInteres(opciones interes);
+    bool coincideTipo(TipoPublicacion tipo);
+    bool compararInteres(Opciones interes);
     void desactivar();
     Administra *getAdministra();
 
     virtual ~Publicacion();
-    DTEspecifica* getDTEspecifica();
+    DTEspecifica *getDTEspecifica();
 
-    void agregarAgenda(AgendaVisita* agenda);
+    void agregarAgenda(AgendaVisita *agenda);
     void eliminarAgendas();
 };
 

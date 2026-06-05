@@ -8,7 +8,7 @@
 #include "ICollection/collections/List.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
-                           direccion direccion, string telefono, string URL)
+                           Direccion direccion, string telefono, string URL)
     : Usuario(nickname, nombre, contrasenia, email),
       direccion_(direccion),
       telefono(telefono),
@@ -26,7 +26,7 @@ Inmobiliaria::~Inmobiliaria()
     delete administraciones;
 }
 
-direccion Inmobiliaria::getDireccion()
+Direccion Inmobiliaria::getDireccion()
 {
     return this->direccion_;
 }
@@ -50,17 +50,31 @@ void Inmobiliaria::asociarPropietario(Propietario *propietario)
     this->propietarios->add(new String(propietario->getNickName().c_str()), propietario);
 }
 
-Status Inmobiliaria::crearAdministra(int)
+Status Inmobiliaria::crearAdministra(Inmueble *inmu, Fecha fechaHoy)
 {
-    return Status::OK;
+    Administra *nueva = new Administra(this, inmu, fechaHoy);
+
+    int ident = inmu->getIdentificador();
+    Integer *key = new Integer(ident);
+
+    if (administraciones->member(key))
+    {
+        delete key;
+        return Status ::ERROR;
+    }
+
+    this->administraciones->add(key, nueva);
+    inmu->asociarAdministra(nueva);
+
+    return Status ::OK;
 }
 
-void Inmobiliaria::removerInmobiliaria(Inmueble* inmueble)
+void Inmobiliaria::removerInmobiliaria(Inmueble *inmueble)
 {
     if (inmueble == nullptr || this->administraciones == nullptr)
         return;
 
-    Integer* key = new Integer(inmueble->getIdentificador());
+    Integer *key = new Integer(inmueble->getIdentificador());
 
     this->administraciones->remove(key);
 

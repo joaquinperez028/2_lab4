@@ -13,20 +13,20 @@ class DTEspecifica
 {
 protected:
     float Superficie;
-    direccion direccion;
-    fecha anioConstruc;
-    tipoInmueble tipo;
-    tipoTecho tipoTecho;
+    Direccion direccion;
+    Fecha anioConstruc;
+    TipoInmueble tipo;
+    TipoTecho tipoTecho;
 
 public:
     DTEspecifica();
-    DTEspecifica(float Superficie, ::direccion direccion, fecha anioConstruc, tipoInmueble tipo, ::tipoTecho tipoTecho);
+    DTEspecifica(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo, ::TipoTecho tipoTecho);
     virtual ~DTEspecifica();
     float getSuperficie();
-    ::direccion getDireccion();
-    fecha getAnioConstruc();
-    tipoInmueble getTipo();
-    ::tipoTecho getTipoTecho();
+    ::Direccion getDireccion();
+    Fecha getAnioConstruc();
+    TipoInmueble getTipo();
+    ::TipoTecho getTipoTecho();
 
     friend ostream &operator<<(ostream &os, const DTEspecifica &dt);
 };

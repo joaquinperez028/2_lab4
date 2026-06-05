@@ -13,16 +13,16 @@ class Publicacion;
 class AgendaVisita : public ICollectible
 {
 private:
-    fecha fecha;
+    Fecha fecha;
     string formaContacto;
     Cliente *cliente;
     Publicacion *publicacion;
 
 public:
-    AgendaVisita(::fecha fecha, string formaContacto, Cliente *cliente, Publicacion *publicacion);
+    AgendaVisita(::Fecha fecha, string formaContacto, Cliente *cliente, Publicacion *publicacion);
     ~AgendaVisita();
 
-    ::fecha getFecha();
+    ::Fecha getFecha();
     string getFormaContacto();
     Cliente *getCliente();
     Publicacion *getPublicacion();

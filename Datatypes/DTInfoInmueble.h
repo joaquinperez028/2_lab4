@@ -8,12 +8,12 @@ class DTInfoInmueble
 {
 private:
     int identificador;
-    direccion dir;
+    Direccion dir;
 
 public:
-    DTInfoInmueble(int identificador, direccion dir);
+    DTInfoInmueble(int identificador, Direccion dir);
     int getIdentificador();
-    direccion getDir();
+    Direccion getDir();
 
     friend std::ostream &operator<<(std::ostream &os, const DTInfoInmueble &dt);
 };

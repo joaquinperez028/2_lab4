@@ -19,17 +19,17 @@ private:
     Inmobiliaria *inmobiliaria;
     Inmueble *inmueble;
     ICollection *publicaciones;
-    fecha fechaInicio;
+    Fecha fechaInicio;
 
 public:
-    Administra(Inmobiliaria *inmo, Inmueble *inm);
+    Administra(Inmobiliaria *inmo, Inmueble *inm, Fecha fechaIni);
     Inmobiliaria *getInmobiliaria();
     Inmueble *getInmueble();
 
     void agregarPublicacion(Publicacion *pub);
-    bool existePubAciva(tipoPublicacion tipo, fecha fechaHoy);
-    Publicacion *crearPublicacion(int codigo, tipoPublicacion tipo, std::string texto, float precio,
-                                  fecha fechaHoy);
+    bool existePubAciva(TipoPublicacion tipo, Fecha fechaHoy);
+    Publicacion *crearPublicacion(int codigo, TipoPublicacion tipo, std::string texto, float precio,
+                                  Fecha fechaHoy);
     DTAdministrados *getDTAdministrados();
     virtual ~Administra();
     DTEspecifica *getAdministra();

@@ -2,7 +2,7 @@
 
 DTCasa::DTCasa() : DTEspecifica(), horizontal(false) {}
 
-DTCasa::DTCasa(float Superficie, ::direccion direccion, fecha anioConstruc, tipoInmueble tipo, ::tipoTecho tipoTecho, bool horizontal)
+DTCasa::DTCasa(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo, ::TipoTecho tipoTecho, bool horizontal)
     : DTEspecifica(Superficie, direccion, anioConstruc, tipo, tipoTecho), horizontal(horizontal) {}
 
 bool DTCasa::getHorizontal()

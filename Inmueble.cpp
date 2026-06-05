@@ -5,7 +5,7 @@
 #include <string>
 
 // Constructor
-Inmueble::Inmueble(direccion dir, float superficie, fecha anoConstruc, int identificador, tipoInmueble tipo)
+Inmueble::Inmueble(Direccion dir, float superficie, Fecha anoConstruc, int identificador, TipoInmueble tipo)
 {
     this->direccion_ = dir;
     this->superficie = superficie;
@@ -24,7 +24,7 @@ Inmueble::~Inmueble()
 
 // --- Getters ---
 
-direccion Inmueble::getDireccion() const
+Direccion Inmueble::getDireccion() const
 {
     return this->direccion_;
 }
@@ -34,7 +34,7 @@ float Inmueble::getSuperficie() const
     return this->superficie;
 }
 
-fecha Inmueble::getAnoConstruc() const
+Fecha Inmueble::getAnoConstruc() const
 {
     return this->anoConstruc;
 }
@@ -44,7 +44,7 @@ int Inmueble::getIdentificador() const
     return this->identificador;
 }
 
-tipoInmueble Inmueble::getTipo() const
+TipoInmueble Inmueble::getTipo() const
 {
     return this->tipo;
 }
@@ -76,14 +76,14 @@ DTInfoInmueble *Inmueble ::getDTInfoInmueble()
     return resultado;
 }
 
-void Inmueble::asociarAdministra(Administra* adm)
+void Inmueble::asociarAdministra(Administra *adm)
 {
     this->administra = adm;
 }
 
-ICollection* Inmueble::prepararEliminacion()
+ICollection *Inmueble::prepararEliminacion()
 {
-    ICollection* publicaciones = nullptr;
+    ICollection *publicaciones = nullptr;
 
     if (this->propietario != nullptr)
     {
@@ -95,7 +95,7 @@ ICollection* Inmueble::prepararEliminacion()
     {
         publicaciones = this->administra->getPublicaciones();
 
-        Inmobiliaria* inmo = this->administra->getInmobiliaria();
+        Inmobiliaria *inmo = this->administra->getInmobiliaria();
 
         if (inmo != nullptr)
         {
