@@ -97,3 +97,7 @@ ICollection* Administra::getPublicaciones()
 string Administra::getInmo() {
     return this->inmobiliaria->getNickName();
 }
+
+bool Administra::compararInteres(opciones interes) {
+    return this->inmueble->compararInteres(interes); // mensaje 4.1.1*
+}

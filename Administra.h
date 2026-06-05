@@ -35,6 +35,7 @@ public:
     DTEspecifica *getAdministra();
     ICollection* getPublicaciones();
     string getInmo();
+    bool compararInteres(opciones interes);
 };
 
 #endif

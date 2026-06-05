@@ -108,3 +108,13 @@ ICollection* Inmueble::prepararEliminacion()
 
     return publicaciones;
 }
+
+bool Inmueble::compararInteres(opciones interes) {
+    if (interes == opciones::Todos)
+        return true;
+    if (interes == opciones::InteresApto && this->tipo == tipoInmueble::Apartamento)
+        return true;
+    if (interes == opciones::InteresCasa && this->tipo == tipoInmueble::Casa)
+        return true;
+    return false;
+}

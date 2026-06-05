@@ -58,18 +58,8 @@ bool Publicacion ::coincideTipo(tipoPublicacion tipo)
     return this->tipo == tipo;
 }
 
-bool Publicacion ::compararInteres(opciones interes)
-{
-    if (interes == opciones::Todos)
-        return true;
-
-    if (interes == opciones::InteresApto && this->administra->getInmueble()->getTipo() == tipoInmueble::Apartamento)
-        return true;
-
-    if (interes == opciones::InteresCasa && this->administra->getInmueble()->getTipo() == tipoInmueble::Casa)
-        return true;
-
-    return false;
+bool Publicacion::compararInteres(opciones interes) {
+    return this->administra->compararInteres(interes); // mensaje 4.1*
 }
 
 void Publicacion ::desactivar()
