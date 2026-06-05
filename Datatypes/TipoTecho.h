@@ -6,7 +6,8 @@
 enum class tipoTecho
 {
     Liviano,
-    Pesado
+    DosAguas,
+    Plano
 };
 
 inline std::ostream &operator<<(std::ostream &os, tipoTecho t)
@@ -16,8 +17,11 @@ inline std::ostream &operator<<(std::ostream &os, tipoTecho t)
     case tipoTecho::Liviano:
         os << "Liviano";
         break;
-    case tipoTecho::Pesado:
-        os << "Pesado";
+    case tipoTecho::DosAguas:
+        os << "Dos aguas";
+        break;
+    case tipoTecho::Plano:
+        os << "Plano";
         break;
     }
     return os;
