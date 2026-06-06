@@ -172,8 +172,10 @@ ICollectible *OrderedDictionary::getMin()
 }
 
 OrderedDictionary::~OrderedDictionary() {
-    root->deleteInDepth();
-    delete root;
+    if (root != NULL) {
+        root->deleteInDepth();
+        delete root;
+    }
 }
 
 void OrderedDictionary::makeListOrder(OrderedDictionaryEntry *entry,

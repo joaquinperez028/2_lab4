@@ -58,33 +58,64 @@ void Inmobiliaria::asociarPropietario(Propietario *propietario)
 
 Status Inmobiliaria::crearAdministra(Inmueble *inmu, Fecha fechaHoy)
 {
-    Administra *nueva = new Administra(this, inmu, fechaHoy);
-
     int ident = inmu->getIdentificador();
     Integer *key = new Integer(ident);
 
     if (administraciones->member(key))
     {
-        delete key;
-        return Status ::ERROR;
+        Administra *existente = dynamic_cast<Administra *>(administraciones->find(key));
+        if (existente != nullptr)
+        {
+            Inmueble *inmExist = existente->getInmueble();
+            if (inmExist == inmu && inmu->getAdministra() == existente)
+            {
+                delete key;
+                return Status::ERROR;
+            }
+        }
+        eliminarAdministracion(ident, inmu);
     }
+    delete key;
 
+    Administra *nueva = new Administra(this, inmu, fechaHoy);
+    key = new Integer(ident);
     this->administraciones->add(key, nueva);
     inmu->asociarAdministra(nueva);
 
-    return Status ::OK;
+    return Status::OK;
+}
+
+void Inmobiliaria::eliminarAdministracion(int identificador, Inmueble *inmueble)
+{
+    if (this->administraciones == nullptr)
+        return;
+
+    Integer *key = new Integer(identificador);
+    Administra *adm = dynamic_cast<Administra *>(this->administraciones->find(key));
+
+    if (adm == nullptr)
+    {
+        delete key;
+        return;
+    }
+
+    Inmueble *inmAdm = adm->getInmueble();
+    if (inmAdm != nullptr && inmAdm->getAdministra() == adm)
+        inmAdm->desasociarAdministra();
+    else if (inmueble != nullptr && inmueble->getAdministra() == adm)
+        inmueble->desasociarAdministra();
+
+    this->administraciones->remove(key);
+    delete key;
+    delete adm;
 }
 
 void Inmobiliaria::removerInmobiliaria(Inmueble *inmueble)
 {
-    if (inmueble == nullptr || this->administraciones == nullptr)
+    if (inmueble == nullptr)
         return;
 
-    Integer *key = new Integer(inmueble->getIdentificador());
-
-    this->administraciones->remove(key);
-
-    delete key;
+    eliminarAdministracion(inmueble->getIdentificador(), inmueble);
 }
 
 Administra *Inmobiliaria ::findAdministra(int identificador)

@@ -6,6 +6,7 @@
 #include "Datatypes/Fecha.h"
 #include "Datatypes/TipoInmueble.h"
 #include "Datatypes/DTInmueble.h"
+#include "Datatypes/DTPropiedad.h"
 #include "Datatypes/DTEspecifica.h"
 #include "Datatypes/DTInfoInmueble.h"
 #include "Datatypes/Opciones.h"
@@ -40,8 +41,11 @@ public:
     Propietario *getPropietario() const;
 
     void asociarPropietario(Propietario *p);
+    Administra *getAdministra() const;
+    void desasociarAdministra();
     DTInfoInmueble *getDTInfoInmueble();
     DTInmueble *getDetalles();
+    DTPropiedad *getDTPropiedad();
 
     virtual void mostrarDetalle(int id) = 0;
     virtual DTEspecifica *getInmueble() = 0;

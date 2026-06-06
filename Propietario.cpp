@@ -5,6 +5,7 @@
 #include "ICollection/collections/OrderedDictionary.h"
 #include "ICollection/Integer.h"
 #include "Datatypes/DTpropietario.h"
+#include "ICollection/interfaces/IIterator.h"
 #include <iostream>
 using namespace std;
 
@@ -44,16 +45,34 @@ void Propietario::asociarInmobiliaria(Inmobiliaria *inmobiliaria)
     this->inmo = inmobiliaria;
 }
 
+Inmobiliaria *Propietario::getInmobiliaria()
+{
+    return this->inmo;
+}
+
 void Propietario::removerPropietario(Inmueble *inmueble)
 {
-    if (inmueble == nullptr)
+    if (inmueble == nullptr || this->inmuebles == nullptr)
         return;
 
     Integer *key = new Integer(inmueble->getIdentificador());
-
     this->inmuebles->remove(key);
-
     delete key;
+
+    IIterator *it = this->inmuebles->getIterator();
+    while (it->hasCurrent())
+    {
+        Inmueble *inm = dynamic_cast<Inmueble *>(it->getCurrent());
+        if (inm == inmueble)
+        {
+            Integer *k = new Integer(inm->getIdentificador());
+            this->inmuebles->remove(k);
+            delete k;
+            break;
+        }
+        it->next();
+    }
+    delete it;
 }
 
 Casa *Propietario::crearCasa(Direccion direccion_, float superficie, Fecha anoConstruc,

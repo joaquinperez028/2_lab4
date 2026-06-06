@@ -36,6 +36,7 @@ public:
     void asociarPropietario(Propietario *propietario);
     Status crearAdministra(Inmueble *inmu, Fecha fechaHoy);
     void removerInmobiliaria(Inmueble *);
+    void eliminarAdministracion(int identificador, Inmueble *inmueble);
     Administra *findAdministra(int identificador);
     ICollection *getAdministras();
     ICollection *getInmueblesRepresentados();

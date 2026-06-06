@@ -1,5 +1,6 @@
 #include "Inmueble.h"
 #include "Propietario.h"
+#include "Datatypes/DTPropiedad.h"
 #include "Administra.h"
 #include "Inmobiliaria.h"
 #include "Datatypes/Opciones.h"
@@ -63,10 +64,31 @@ void Inmueble::asociarPropietario(Propietario *p)
     this->propietario = p;
 }
 
+Administra *Inmueble::getAdministra() const
+{
+    return this->administra;
+}
+
+void Inmueble::desasociarAdministra()
+{
+    this->administra = nullptr;
+}
+
 // Corresponde al mensaje 2* getDetalles() del diagrama de listarPropiedades
 DTInmueble *Inmueble::getDetalles()
 {
     return new DTInmueble(this->identificador, this->dir, this->anoConstruc, this->tipo);
+}
+
+DTPropiedad *Inmueble::getDTPropiedad()
+{
+    string nombre = "";
+    if (this->propietario != nullptr)
+    {
+        nombre = this->propietario->getNombre();
+    }
+
+    return new DTPropiedad(this->identificador, this->dir, this->anoConstruc, nombre);
 }
 
 DTInfoInmueble *Inmueble ::getDTInfoInmueble()
@@ -85,6 +107,17 @@ void Inmueble::asociarAdministra(Administra *adm)
 ICollection *Inmueble::prepararEliminacion()
 {
     ICollection *publicaciones = nullptr;
+    Inmobiliaria *inmo = nullptr;
+
+    if (this->administra != nullptr)
+    {
+        inmo = this->administra->getInmobiliaria();
+        publicaciones = this->administra->getPublicaciones();
+    }
+    else if (this->propietario != nullptr)
+    {
+        inmo = this->propietario->getInmobiliaria();
+    }
 
     if (this->propietario != nullptr)
     {
@@ -92,17 +125,12 @@ ICollection *Inmueble::prepararEliminacion()
         this->propietario = nullptr;
     }
 
-    if (this->administra != nullptr)
+    if (inmo != nullptr)
     {
-        publicaciones = this->administra->getPublicaciones();
-
-        Inmobiliaria *inmo = this->administra->getInmobiliaria();
-
-        if (inmo != nullptr)
-        {
-            inmo->removerInmobiliaria(this);
-        }
-
+        inmo->eliminarAdministracion(this->identificador, this);
+    }
+    else if (this->administra != nullptr)
+    {
         delete this->administra;
         this->administra = nullptr;
     }

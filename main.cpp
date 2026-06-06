@@ -7,8 +7,15 @@
 #include "Datatypes/Fecha.h"
 #include "Datatypes/TipoTecho.h"
 #include "Datatypes/DTpropietario.h"
+#include "Datatypes/DTPropiedad.h"
+#include "Datatypes/DTInmueble.h"
+#include "Datatypes/DTPublicacion.h"
+#include "Datatypes/Opciones.h"
 #include "Datatypes/DTAdministrados.h"
 #include "Datatypes/TipoPublicacion.h"
+#include "Datatypes/DTEspecifica.h"
+#include "Datatypes/DTCasa.h"
+#include "Datatypes/DTApartamento.h"
 #include "ICollection/interfaces/IIterator.h"
 #include "Inmobiliaria.h"
 
@@ -78,9 +85,12 @@ static void mostrarMenu()
     cout << "\n========== MENU ==========" << endl;
     cout << " 1. Caso de uso 1 - Alta de usuario" << endl;
     cout << " 2. Caso de uso 2 - Alta de publicacion" << endl;
-    cout << " 3. Caso de uso 3" << endl;
-    cout << " 4. Caso de uso 4" << endl;
+    cout << " 3. Caso de uso 3 - Consulta de publicaciones" << endl;
+    cout << " 4. Caso de uso 4 - Eliminar inmueble" << endl;
     cout << " 5. Cargar datos de prueba" << endl;
+    cout << " 6. Listar propietarios" << endl;
+    cout << " 7. Listar inmuebles" << endl;
+    cout << " 8. Listar publicaciones" << endl;
     cout << " 0. Salir" << endl;
     cout << "==========================" << endl;
     cout << "Ingrese una opcion: ";
@@ -457,16 +467,246 @@ static void casoDeUso2(ISistema *sistema){
 
 static void casoDeUso3(ISistema *sistema)
 {
-    cout << "\n--- Caso de uso 3 ---" << endl;
-    cout << "Pendiente de implementar." << endl;
-    (void)sistema;
+    cout << "\n--- Caso de uso 3: Consulta de publicaciones ---" << endl;
+
+    cout << "Tipo de publicacion: 1) Venta  2) Alquiler: ";
+    int tipoOpcion = 0;
+    while (true)
+    {
+        if (cin >> tipoOpcion && (tipoOpcion == 1 || tipoOpcion == 2))
+        {
+            consumirSaltoLinea();
+            break;
+        }
+        cout << "Opcion invalida. Elija 1 o 2: ";
+        cin.clear();
+        consumirSaltoLinea();
+    }
+
+    string tipoPub = (tipoOpcion == 1) ? "Venta" : "Alquiler";
+
+    float precioMin = leerFloat("Precio minimo: ");
+    float precioMax = leerFloat("Precio maximo: ");
+    while (precioMax < precioMin)
+    {
+        cout << "El precio maximo debe ser mayor o igual al minimo." << endl;
+        precioMax = leerFloat("Precio maximo: ");
+    }
+
+    cout << "Interes en inmuebles: 1) Todos  2) Solo casas  3) Solo apartamentos: ";
+    int interesOpcion = 0;
+    while (true)
+    {
+        if (cin >> interesOpcion && interesOpcion >= 1 && interesOpcion <= 3)
+        {
+            consumirSaltoLinea();
+            break;
+        }
+        cout << "Opcion invalida. Elija 1, 2 o 3: ";
+        cin.clear();
+        consumirSaltoLinea();
+    }
+
+    Opciones interes = Opciones::Todos;
+    if (interesOpcion == 2)
+        interes = Opciones::InteresCasa;
+    else if (interesOpcion == 3)
+        interes = Opciones::InteresApto;
+
+    ICollection *publicaciones = sistema->listarPublicaciones(tipoPub, precioMin, precioMax, interes);
+    IIterator *it = publicaciones->getIterator();
+    bool hayPublicaciones = false;
+
+    cout << "\nPublicaciones encontradas:" << endl;
+    while (it->hasCurrent())
+    {
+        DTPublicacion *dt = dynamic_cast<DTPublicacion *>(it->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  Codigo: " << dt->getCodigoPubli()
+                 << " | Fecha: " << dt->getFechaPubli()
+                 << " | Texto: " << dt->getTextoDescriptivo()
+                 << " | Precio: " << dt->getPrecio()
+                 << " | Inmobiliaria: " << dt->getNomInmo() << endl;
+            hayPublicaciones = true;
+        }
+        it->next();
+    }
+    delete it;
+
+    if (!hayPublicaciones)
+    {
+        cout << "  (No hay publicaciones que cumplan los criterios indicados)" << endl;
+        delete publicaciones;
+        return;
+    }
+
+    if (leerSiNo("¿Desea ver el detalle completo de una publicacion?"))
+    {
+        int codigoPub = leerEntero("Ingrese el codigo de la publicacion: ");
+
+        DTEspecifica *detalle = sistema->listarEspecifica(codigoPub);
+        if (detalle == nullptr)
+        {
+            cout << "No existe una publicacion con ese codigo." << endl;
+        }
+        else
+        {
+            cout << "\nDetalle del inmueble:" << endl;
+            DTCasa *casa = dynamic_cast<DTCasa *>(detalle);
+            if (casa != nullptr)
+            {
+                cout << "  " << *casa << endl;
+            }
+            else
+            {
+                DTApartamento *apto = dynamic_cast<DTApartamento *>(detalle);
+                if (apto != nullptr)
+                    cout << "  " << *apto << endl;
+                else
+                    cout << "  " << *detalle << endl;
+            }
+            delete detalle;
+        }
+    }
+
+    delete publicaciones;
 }
 
 static void casoDeUso4(ISistema *sistema)
 {
-    cout << "\n--- Caso de uso 4 ---" << endl;
-    cout << "Pendiente de implementar." << endl;
-    (void)sistema;
+    cout << "\n--- Caso de uso 4: Eliminar inmueble ---" << endl;
+
+    ICollection *propiedades = sistema->listarPropiedades();
+    IIterator *it = propiedades->getIterator();
+    bool hayPropiedades = false;
+
+    cout << "\nInmuebles registrados:" << endl;
+    while (it->hasCurrent())
+    {
+        DTPropiedad *dt = dynamic_cast<DTPropiedad *>(it->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  " << *dt << endl;
+            hayPropiedades = true;
+        }
+        it->next();
+    }
+    delete it;
+
+    if (!hayPropiedades)
+    {
+        cout << "  (No hay inmuebles registrados)" << endl;
+        delete propiedades;
+        return;
+    }
+
+    int codigo = leerEntero("\nIngrese el codigo del inmueble: ");
+
+    DTInmueble *detalle = sistema->mostrarDetalle(codigo);
+    if (detalle == nullptr)
+    {
+        cout << "No existe un inmueble con ese codigo." << endl;
+        delete propiedades;
+        return;
+    }
+
+    cout << "\nDetalle del inmueble:" << endl;
+    cout << "  " << *detalle << endl;
+    delete detalle;
+
+    if (leerSiNo("¿Desea eliminar este inmueble?"))
+    {
+        Status st = sistema->eliminarInmueble(codigo);
+        if (st == Status::OK)
+            cout << "Inmueble eliminado correctamente." << endl;
+        else
+            cout << "Error al eliminar el inmueble." << endl;
+    }
+    else
+    {
+        cout << "Operacion cancelada. El sistema permanece sin cambios." << endl;
+    }
+
+    delete propiedades;
+}
+
+static void listarPropietarios(ISistema *sistema)
+{
+    cout << "\n--- Listado de propietarios ---" << endl;
+
+    ICollection *propietarios = sistema->listarPropietarios();
+    IIterator *it = propietarios->getIterator();
+    bool hayPropietarios = false;
+
+    while (it->hasCurrent())
+    {
+        DTPropietario *dt = dynamic_cast<DTPropietario *>(it->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  " << *dt << endl;
+            hayPropietarios = true;
+        }
+        it->next();
+    }
+    delete it;
+
+    if (!hayPropietarios)
+        cout << "  (No hay propietarios registrados)" << endl;
+
+    delete propietarios;
+}
+
+static void listarInmuebles(ISistema *sistema)
+{
+    cout << "\n--- Listado de inmuebles ---" << endl;
+
+    ICollection *propiedades = sistema->listarPropiedades();
+    IIterator *it = propiedades->getIterator();
+    bool hayInmuebles = false;
+
+    while (it->hasCurrent())
+    {
+        DTPropiedad *dt = dynamic_cast<DTPropiedad *>(it->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  " << *dt << endl;
+            hayInmuebles = true;
+        }
+        it->next();
+    }
+    delete it;
+
+    if (!hayInmuebles)
+        cout << "  (No hay inmuebles registrados)" << endl;
+
+    delete propiedades;
+}
+
+static void listarPublicaciones(ISistema *sistema)
+{
+    cout << "\n--- Listado de publicaciones ---" << endl;
+
+    ICollection *publicaciones = sistema->listarPublicaciones("Todos", 0.0f, 999999999.0f, Opciones::Todos);
+    IIterator *it = publicaciones->getIterator();
+    bool hayPublicaciones = false;
+
+    while (it->hasCurrent())
+    {
+        DTPublicacion *dt = dynamic_cast<DTPublicacion *>(it->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  " << *dt << endl;
+            hayPublicaciones = true;
+        }
+        it->next();
+    }
+    delete it;
+
+    if (!hayPublicaciones)
+        cout << "  (No hay publicaciones activas registradas)" << endl;
+
+    delete publicaciones;
 }
 
 static void cargarDatosPrueba(ISistema *sistema)
@@ -506,6 +746,12 @@ static void cargarDatosPrueba(ISistema *sistema)
     st = sistema->altaAdministracion(2);
     cout << (st == Status::OK ? "Alta administracion inmo_central (apto id 2): OK" : "Alta administracion inmo_central (apto id 2): ERROR") << endl;
 
+    st = sistema->altaPublicacion(1, TipoPublicacion::Venta, "Casa amplia en Av Brasil", 250000);
+    cout << (st == Status::OK ? "Alta publicacion venta casa id 1: OK" : "Alta publicacion venta casa id 1: ERROR") << endl;
+
+    st = sistema->altaPublicacion(2, TipoPublicacion::Alquiler, "Apartamento centrico 18 de Julio", 35000);
+    cout << (st == Status::OK ? "Alta publicacion alquiler apto id 2: OK" : "Alta publicacion alquiler apto id 2: ERROR") << endl;
+
     // --- Inmobiliaria 2: Inmo del Sur + propietario Luis ---
     st = sistema->altaPropietario("luis_prop", "Luis", "pass456", "luis@mail.com", "99887766", "BBVA", "098333444");
     cout << (st == Status::OK ? "Alta propietario (luis_prop): OK" : "Alta propietario (luis_prop): ERROR") << endl;
@@ -536,10 +782,17 @@ static void cargarDatosPrueba(ISistema *sistema)
     st = sistema->altaAdministracion(4);
     cout << (st == Status::OK ? "Alta administracion inmo_sur (apto id 4): OK" : "Alta administracion inmo_sur (apto id 4): ERROR") << endl;
 
+    st = sistema->altaPublicacion(3, TipoPublicacion::Venta, "Casa con pH en Bvar Artigas", 180000);
+    cout << (st == Status::OK ? "Alta publicacion venta casa id 3: OK" : "Alta publicacion venta casa id 3: ERROR") << endl;
+
+    st = sistema->altaPublicacion(4, TipoPublicacion::Alquiler, "Apto con vista a la rambla", 28000);
+    cout << (st == Status::OK ? "Alta publicacion alquiler apto id 4: OK" : "Alta publicacion alquiler apto id 4: ERROR") << endl;
+
     cout << "\nResumen datos de prueba:" << endl;
     cout << "  Clientes: juan123" << endl;
     cout << "  Inmobiliaria inmo_central -> propietaria ana_prop -> inmuebles 1 (casa) y 2 (apto)" << endl;
     cout << "  Inmobiliaria inmo_sur     -> propietario luis_prop -> inmuebles 3 (casa) y 4 (apto)" << endl;
+    cout << "  Publicaciones: venta id1, alquiler id2, venta id3, alquiler id4" << endl;
     cout << "Datos de prueba cargados." << endl;
 }
 
@@ -570,6 +823,15 @@ int main()
             break;
         case 5:
             cargarDatosPrueba(sistema);
+            break;
+        case 6:
+            listarPropietarios(sistema);
+            break;
+        case 7:
+            listarInmuebles(sistema);
+            break;
+        case 8:
+            listarPublicaciones(sistema);
             break;
         case 0:
             cout << "Saliendo..." << endl;

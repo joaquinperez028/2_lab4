@@ -16,15 +16,18 @@ private:
     Direccion direccion_;
     Fecha anioConstrucion;
     TipoInmueble tipo;
+    string nombrePropietario;
 
 public:
     DTInmueble();
-    DTInmueble(int codigoInmueble, ::Direccion direccion, Fecha anioConstrucion, TipoInmueble tipo);
+    DTInmueble(int codigoInmueble, ::Direccion direccion, Fecha anioConstrucion, TipoInmueble tipo,
+               string nombrePropietario = "");
 
     int getCodigoInmueble();
     ::Direccion getDireccion();
     Fecha getAnioConstrucion();
     TipoInmueble getTipo();
+    string getNombrePropietario();
 
     friend ostream &operator<<(ostream &os, const DTInmueble &dt);
 };

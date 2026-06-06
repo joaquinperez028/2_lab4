@@ -34,6 +34,7 @@ public:
     string getBanco();
     string getTelefono();
     void asociarInmobiliaria(Inmobiliaria *inmobiliaria);
+    Inmobiliaria *getInmobiliaria();
     void removerPropietario(Inmueble *);
     Casa *crearCasa(Direccion, float, Fecha, int, TipoTecho, bool);
     Apartamento *crearApto(Direccion, float, Fecha, int, int, bool, float);

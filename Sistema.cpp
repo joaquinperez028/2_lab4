@@ -11,6 +11,7 @@
 #include "Casa.h"
 #include "Apartamento.h"
 #include "Datatypes/TipoTecho.h"
+#include "Datatypes/TipoPublicacion.h"
 #include "Publicacion.h"
 #include <ctime>
 #include "Datatypes/DTPublicacion.h"
@@ -216,27 +217,36 @@ ICollection *Sistema::listarInmobiliarias()
 ICollection* Sistema::listarPublicaciones(string tipo, float precioMin, float precioMax, Opciones interes) {
     ICollection* resultado = new List();
  
-    // mensaje 1* [foreach] pub := next — visibilidad <<association>>
-    // Sistema itera su coleccion de publicaciones
     IIterator* it = this->publicaciones->getIterator();
  
     while (it->hasCurrent()) {
-        // pub se obtiene de la iteracion — visibilidad <<local>>
+
         Publicacion* pub = dynamic_cast<Publicacion*>(it->getCurrent());
+
+        if (pub == nullptr)
+        {
+            it->next();
+            continue;
+        }
  
-        // mensaje 2*: esActiva():bool — visibilidad <<local>>
         if (pub->esActiva()) {
+
+            if (tipo == "Venta" && !pub->coincideTipo(TipoPublicacion::Venta))
+            {
+                it->next();
+                continue;
+            }
+            if (tipo == "Alquiler" && !pub->coincideTipo(TipoPublicacion::Alquiler))
+            {
+                it->next();
+                continue;
+            }
  
-            // mensaje 3* [activa]: precioFranja(precioMin, precioMax):bool — visibilidad <<local>>
             if (pub->precioFranja(precioMin, precioMax)) {
  
-                // mensaje 4* [precio]: compararInteres(interes):bool — visibilidad <<local>>
-                // internamente navega Administra → Inmueble (mensajes 4.1* y 4.1.1*)
+
                 if (pub->compararInteres(interes)) {
  
-                    // mensaje 5* [Interesado]: getNickInmo():string — visibilidad <<local>>
-                    // internamente navega Administra → Inmobiliaria (mensajes 5.1* y 5.1.1*)
-                    // mensaje 6* [nickname]: getPublicacion():DTPublicacion — visibilidad <<local>>
                     DTPublicacion* dt = pub->getPublicacion();
                     resultado->add(dt);
                 }
@@ -272,7 +282,7 @@ ICollection *Sistema::listarPropiedades()
         Inmueble *inm = dynamic_cast<Inmueble *>(it->getCurrent());
         if (inm != nullptr)
         {
-            lista->add(inm->getDetalles());
+            lista->add(inm->getDTPropiedad());
         }
         it->next();
     }
@@ -290,15 +300,17 @@ DTInmueble *Sistema::mostrarDetalle(int identificador)
     if (inmu == nullptr)
         return nullptr;
 
-    // mensajes 2 al 6 — visibilidad <<local>>
-    // inmu se obtuvo del find, por eso es local
-    // cada getter le pide al inmueble sus propios datos
     Direccion dir = inmu->getDireccion();
     Fecha anio = inmu->getAnoConstruc();
     int codigo = inmu->getIdentificador();
     TipoInmueble tipo = inmu->getTipo();
+    string nombrePropietario = "";
+    if (inmu->getPropietario() != nullptr)
+    {
+        nombrePropietario = inmu->getPropietario()->getNombre();
+    }
 
-    return new DTInmueble(codigo, dir, anio, tipo);
+    return new DTInmueble(codigo, dir, anio, tipo, nombrePropietario);
 }
 
 Status Sistema::eliminarInmueble(int id)
