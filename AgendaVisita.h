@@ -13,7 +13,7 @@ class Publicacion;
 class AgendaVisita : public ICollectible
 {
 private:
-    Fecha fecha;
+    Fecha fechaVisita;
     string formaContacto;
     Cliente *cliente;
     Publicacion *publicacion;

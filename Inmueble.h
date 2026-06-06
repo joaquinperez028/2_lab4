@@ -18,7 +18,7 @@ class Administra;
 class Inmueble : public ICollectible
 {
 protected:
-    Direccion direccion_;
+    Direccion dir;
     float superficie;
     Fecha anoConstruc;
     int identificador;

@@ -34,9 +34,9 @@ public:
     string getBanco();
     string getTelefono();
     void asociarInmobiliaria(Inmobiliaria *inmobiliaria);
-    void removerPropietario(Inmueble *); // ESTA BIEN USAR * ?? O DEBO USAR & ??
+    void removerPropietario(Inmueble *);
     Casa *crearCasa(Direccion, float, Fecha, int, TipoTecho, bool);
-    Apartamento *crearApto(Direccion, float, Fecha, int, int, bool, float); // cambiar en diagrama de comunicacion
+    Apartamento *crearApto(Direccion, float, Fecha, int, int, bool, float);
     DTPropietario *getDTPropietario();
 };
 

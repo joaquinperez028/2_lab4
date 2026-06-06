@@ -7,7 +7,7 @@
 // Constructor
 Inmueble::Inmueble(Direccion dir, float superficie, Fecha anoConstruc, int identificador, TipoInmueble tipo)
 {
-    this->direccion_ = dir;
+    this->dir = dir;
     this->superficie = superficie;
     this->anoConstruc = anoConstruc;
     this->identificador = identificador;
@@ -26,7 +26,7 @@ Inmueble::~Inmueble()
 
 Direccion Inmueble::getDireccion() const
 {
-    return this->direccion_;
+    return this->dir;
 }
 
 float Inmueble::getSuperficie() const
@@ -65,7 +65,7 @@ void Inmueble::asociarPropietario(Propietario *p)
 // Corresponde al mensaje 2* getDetalles() del diagrama de listarPropiedades
 DTInmueble *Inmueble::getDetalles()
 {
-    return new DTInmueble(this->identificador, this->direccion_, this->anoConstruc, this->tipo);
+    return new DTInmueble(this->identificador, this->dir, this->anoConstruc, this->tipo);
 }
 
 DTInfoInmueble *Inmueble ::getDTInfoInmueble()

@@ -17,7 +17,7 @@ class Administra;
 class Inmobiliaria : public Usuario
 {
 protected:
-    Direccion direccion_;
+    Direccion dir;
     string telefono;
     string URL;
     IDictionary *inmuebles;
