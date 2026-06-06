@@ -340,10 +340,19 @@ ICollection *Sistema::listarInmueblesRepresentados(string nickname)
     return inmo->getInmueblesRepresentados();
 }
 
-Status Sistema::altaAdministracion(int)
+Status Sistema::altaAdministracion(int identificador)
 {
+    if (inmoSeleccionada == nullptr)
+        return Status::ERROR;
 
-    return Status::OK;
+    Integer *key = new Integer(identificador);
+    Inmueble *inm = dynamic_cast<Inmueble *>(inmuebles->find(key));
+    delete key;
+
+    if (inm == nullptr)
+        return Status::ERROR;
+
+    return inmoSeleccionada->crearAdministra(inm);
 }
 
 fecha Sistema ::obtenerFechaActual()

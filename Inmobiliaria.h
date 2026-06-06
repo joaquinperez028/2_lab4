@@ -31,7 +31,7 @@ public:
     string getTelefono();
     string getUrl();
     void asociarPropietario(Propietario *propietario);
-    Status crearAdministra(int);
+    Status crearAdministra(Inmueble *inmueble);
     void removerInmobiliaria(Inmueble *);
     Administra *findAdministra(int identificador);
     ICollection *getAdministras();

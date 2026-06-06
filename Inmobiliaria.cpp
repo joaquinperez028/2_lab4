@@ -50,8 +50,20 @@ void Inmobiliaria::asociarPropietario(Propietario *propietario)
     this->propietarios->add(new String(propietario->getNickName().c_str()), propietario);
 }
 
-Status Inmobiliaria::crearAdministra(int)
+Status Inmobiliaria::crearAdministra(Inmueble *inmueble)
 {
+    if (inmueble == nullptr)
+        return Status::ERROR;
+
+    int identificador = inmueble->getIdentificador();
+
+    if (findAdministra(identificador) != nullptr)
+        return Status::ERROR;
+
+    Administra *adm = new Administra(this, inmueble);
+    inmueble->asociarAdministra(adm);
+    administraciones->add(new Integer(identificador), adm);
+
     return Status::OK;
 }
 
