@@ -249,7 +249,7 @@ static void casoDeUso1(ISistema *sistema){
                     int anio = leerEntero("Año construccion: ");
                     Fecha f(dia, mes, anio);
 
-                    cout << "Tipo de inmueble: 1) Casa  2) Apartamento: ";
+                    cout << "Tipo de inmueble: \n1- Casa   \n2- Apartamento \nOpcion: ";
                     int tipoInm = 0;
                     while (true)
                     {
@@ -268,7 +268,7 @@ static void casoDeUso1(ISistema *sistema){
                     {
                         bool esPH = leerSiNo("¿Es propiedad horizontal (pH)?");
 
-                        cout << "Tipo de techo: 1) Liviano  2) Dos aguas  3) Plano: ";
+                        cout << "Tipo de techo: \n1- Liviano  \2- Dos aguas  \n3- Plano \nOpciones: ";
                         int ttec = 0;
                         while (true)
                         {
@@ -469,7 +469,7 @@ static void casoDeUso3(ISistema *sistema)
 {
     cout << "\n--- Caso de uso 3: Consulta de publicaciones ---" << endl;
 
-    cout << "Tipo de publicacion: 1) Venta  2) Alquiler: ";
+    cout << "Tipo de publicacion: \n1- Venta \n2- Alquiler \nOpcion: ";
     int tipoOpcion = 0;
     while (true)
     {
@@ -493,7 +493,7 @@ static void casoDeUso3(ISistema *sistema)
         precioMax = leerFloat("Precio maximo: ");
     }
 
-    cout << "Interes en inmuebles: 1) Todos  2) Solo casas  3) Solo apartamentos: ";
+    cout << "Interes en inmuebles: \n1- Todos  \n2- Solo casas  \n3- Solo apartamentos \nOpciones: ";
     int interesOpcion = 0;
     while (true)
     {
