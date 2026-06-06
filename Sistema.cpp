@@ -200,7 +200,8 @@ ICollection *Sistema::listarInmobiliarias()
 
         if (inmo != nullptr)
         {
-            resultado->add(inmo);
+            DTInmobiliaria* dt = inmo->getDTInmobiliaria();
+            resultado->add(dt);
         }
 
         it->next();
@@ -276,9 +277,7 @@ DTInmueble *Sistema::mostrarDetalle(int identificador)
     if (inmu == nullptr)
         return nullptr;
 
-    // mensajes 2 al 6 — visibilidad <<local>>
-    // inmu se obtuvo del find, por eso es local
-    // cada getter le pide al inmueble sus propios datos
+    
     Direccion dir = inmu->getDireccion();
     Fecha anio = inmu->getAnoConstruc();
     int codigo = inmu->getIdentificador();
@@ -337,20 +336,13 @@ Status Sistema::eliminarInmueble(int id)
 
 ICollection *Sistema::listarInmueblesRepresentados(string nickname)
 {
-
-    // mensaje 1: inmo := find(nickname) — visibilidad <<association>>
-    // usa buscarPorNickname que ya tienen implementado en Sistema
-    Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(
+  Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(
         this->buscarPorNickname(nickname));
 
     if (inmo == nullptr)
         return nullptr;
-
-    // sistema recuerda inmo segun la nota del diagrama
     this->inmoSeleccionada = inmo;
 
-    // mensaje 2: getInmueblesRepresentados() — visibilidad <<local>>
-    // inmo se obtuvo del find, por eso es local
     return inmo->getInmueblesRepresentados();
 }
 
