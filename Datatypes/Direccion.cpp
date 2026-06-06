@@ -1,31 +1,31 @@
 #include "Direccion.h"
 
-direccion::direccion() : numPuerta(0), calle(""), localidad(""), departamento("") {}
+Direccion::Direccion() : numPuerta(0), calle(""), localidad(""), departamento("") {}
 
-direccion::direccion(int numPuerta, string calle, string localidad, string departamento)
+Direccion::Direccion(int numPuerta, string calle, string localidad, string departamento)
     : numPuerta(numPuerta), calle(calle), localidad(localidad), departamento(departamento) {}
 
-int direccion::getNumPuerta()
+int Direccion::getNumPuerta()
 {
     return numPuerta;
 }
 
-string direccion::getCalle()
+string Direccion::getCalle()
 {
     return calle;
 }
 
-string direccion::getLocalidad()
+string Direccion::getLocalidad()
 {
     return localidad;
 }
 
-string direccion::getDepartamento()
+string Direccion::getDepartamento()
 {
     return departamento;
 }
 
-ostream &operator<<(ostream &os, const direccion &d)
+ostream &operator<<(ostream &os, const Direccion &d)
 {
     os << d.calle << " " << d.numPuerta << ", " << d.localidad << " (" << d.departamento << ")";
     return os;

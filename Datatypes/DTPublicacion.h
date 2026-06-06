@@ -14,24 +14,24 @@ class DTPublicacion
 private:
     bool activa;
     int codigoPubli;
-    fecha fechaPubli;
+    Fecha fechaPubli;
     string textoDescriptivo;
     float precio;
     string nomInmo;
-    ::tipoPublicacion tipoPub_;
-    ::tipoInmueble tipoInm_;
+    TipoPublicacion tipoPublicacion;
+    TipoInmueble tipoInmueble;
 
 public:
     DTPublicacion();
-    DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPub, ::tipoInmueble tipoInm);
+    DTPublicacion(bool activa, int codigoPubli, Fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::TipoPublicacion tipoPublicacion, ::TipoInmueble tipoInmueble);
     bool getActiva();
     int getCodigoPubli();
-    fecha getFechaPubli();
+    Fecha getFechaPubli();
     string getTextoDescriptivo();
     float getPrecio();
     string getNomInmo();
-    ::tipoPublicacion getTipoPublicacion();
-    ::tipoInmueble getTipoInmueble();
+    ::TipoPublicacion getTipoPublicacion();
+    ::TipoInmueble getTipoInmueble();
 
     friend ostream &operator<<(ostream &os, const DTPublicacion &dt);
 };

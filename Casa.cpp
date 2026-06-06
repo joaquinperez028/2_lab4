@@ -1,9 +1,9 @@
 #include "Casa.h"
 #include "Propietario.h"
 
-Casa::Casa(direccion dir, float superficie, fecha anoConstruc, int identificador,
-           tipoTecho techo, bool propHorizontal, Propietario *propietario)
-    : Inmueble(dir, superficie, anoConstruc, identificador, tipoInmueble::Casa),
+Casa::Casa(Direccion dir, float superficie, Fecha anoConstruc, int identificador,
+           TipoTecho techo, bool propHorizontal, Propietario *propietario)
+    : Inmueble(dir, superficie, anoConstruc, identificador, TipoInmueble::Casa),
       techo(techo),
       propHorizontal(propHorizontal)
 {
@@ -18,7 +18,7 @@ bool Casa::getPropHorizontal() const
     return propHorizontal;
 }
 
-tipoTecho Casa::getTipoTecho() const
+TipoTecho Casa::getTipoTecho() const
 {
     return techo;
 }
@@ -33,7 +33,7 @@ DTEspecifica *Casa::getInmueble()
         getSuperficie(),
         getDireccion(),
         getAnoConstruc(),
-        tipoInmueble::Casa,
+        TipoInmueble::Casa,
         techo,
         propHorizontal);
 }

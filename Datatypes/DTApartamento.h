@@ -15,7 +15,7 @@ private:
 
 public:
     DTApartamento();
-    DTApartamento(float Superficie, ::direccion dir, fecha anioConstruc, tipoInmueble tipoInm, ::tipoTecho techo, int numPiso, bool ascensor, float gastosComunes);
+    DTApartamento(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo, ::TipoTecho tipoTecho, int numPiso, bool ascensor, float gastosComunes);
     int getNumPiso();
     bool getAscensor();
     float getGastosComunes();

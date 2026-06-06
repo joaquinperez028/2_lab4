@@ -3,20 +3,20 @@
 
 #include <iostream>
 
-enum class tipoPublicacion
+enum class TipoPublicacion
 {
     Venta,
     Alquiler
 };
 
-inline std::ostream &operator<<(std::ostream &os, tipoPublicacion t)
+inline std::ostream &operator<<(std::ostream &os, TipoPublicacion t)
 {
     switch (t)
     {
-    case tipoPublicacion::Venta:
+    case TipoPublicacion::Venta:
         os << "Venta";
         break;
-    case tipoPublicacion::Alquiler:
+    case TipoPublicacion::Alquiler:
         os << "Alquiler";
         break;
     }

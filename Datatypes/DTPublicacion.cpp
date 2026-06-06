@@ -1,10 +1,10 @@
 #include "DTPublicacion.h"
 
 DTPublicacion::DTPublicacion()
-    : activa(false), codigoPubli(0), fechaPubli(), textoDescriptivo(""), precio(0), nomInmo(""), tipoPub_(tipoPublicacion::Venta), tipoInm_(tipoInmueble::Casa) {}
+    : activa(false), codigoPubli(0), fechaPubli(), textoDescriptivo(""), precio(0), nomInmo(""), tipoPublicacion(TipoPublicacion::Venta), tipoInmueble(TipoInmueble::Casa) {}
 
-DTPublicacion::DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPub, ::tipoInmueble tipoInm)
-    : activa(activa), codigoPubli(codigoPubli), fechaPubli(fechaPubli), textoDescriptivo(textoDescriptivo), precio(precio), nomInmo(nomInmo), tipoPub_(tipoPub), tipoInm_(tipoInm) {}
+DTPublicacion::DTPublicacion(bool activa, int codigoPubli, Fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::TipoPublicacion tipoPublicacion, ::TipoInmueble tipoInmueble)
+    : activa(activa), codigoPubli(codigoPubli), fechaPubli(fechaPubli), textoDescriptivo(textoDescriptivo), precio(precio), nomInmo(nomInmo), tipoPublicacion(tipoPublicacion), tipoInmueble(tipoInmueble) {}
 
 bool DTPublicacion::getActiva()
 {
@@ -16,7 +16,7 @@ int DTPublicacion::getCodigoPubli()
     return codigoPubli;
 }
 
-fecha DTPublicacion::getFechaPubli()
+Fecha DTPublicacion::getFechaPubli()
 {
     return fechaPubli;
 }
@@ -36,14 +36,14 @@ string DTPublicacion::getNomInmo()
     return nomInmo;
 }
 
-::tipoPublicacion DTPublicacion::getTipoPublicacion()
+::TipoPublicacion DTPublicacion::getTipoPublicacion()
 {
-    return tipoPub_;
+    return tipoPublicacion;
 }
 
-::tipoInmueble DTPublicacion::getTipoInmueble()
+::TipoInmueble DTPublicacion::getTipoInmueble()
 {
-    return tipoInm_;
+    return tipoInmueble;
 }
 
 ostream &operator<<(ostream &os, const DTPublicacion &dt)
@@ -53,8 +53,8 @@ ostream &operator<<(ostream &os, const DTPublicacion &dt)
        << " | Fecha: " << dt.fechaPubli
        << " | Precio: " << dt.precio
        << " | Inmobiliaria: " << dt.nomInmo
-       << " | Tipo pub.: " << dt.tipoPub_
-       << " | Tipo inm.: " << dt.tipoInm_
+       << " | Tipo pub.: " << dt.tipoPublicacion
+       << " | Tipo inm.: " << dt.tipoInmueble
        << " | Descripcion: " << dt.textoDescriptivo;
     return os;
 }

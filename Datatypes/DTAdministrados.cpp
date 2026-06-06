@@ -1,13 +1,13 @@
 #include "DTAdministrados.h"
 
-DTAdministrados ::DTAdministrados(fecha fechaInicio, int identificador, direccion dir)
+DTAdministrados ::DTAdministrados(Fecha fechaComienzo, int identificador, Direccion dir)
 {
-    this->fechaComienzo = fechaInicio;
+    this->fechaComienzo = fechaComienzo;
     this->identificador = identificador;
     this->dir = dir;
 }
 
-fecha DTAdministrados ::getFechaComienzo()
+Fecha DTAdministrados ::getFechaComienzo()
 {
     return this->fechaComienzo;
 }
@@ -17,7 +17,7 @@ int DTAdministrados ::getIdentificador()
     return this->identificador;
 }
 
-direccion DTAdministrados ::getDir()
+Direccion DTAdministrados ::getDir()
 {
     return this->dir;
 }

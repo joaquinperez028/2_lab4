@@ -1,32 +1,32 @@
 #include "Fecha.h"
 
-fecha::fecha() : dia(0), mes(0), anio(0) {}
+Fecha::Fecha() : dia(0), mes(0), anio(0) {}
 
-fecha::fecha(int dia, int mes, int anio) : dia(dia), mes(mes), anio(anio) {}
+Fecha::Fecha(int dia, int mes, int anio) : dia(dia), mes(mes), anio(anio) {}
 
-int fecha::getDia()
+int Fecha::getDia()
 {
     return dia;
 }
 
-int fecha::getMes()
+int Fecha::getMes()
 {
     return mes;
 }
 
-int fecha::getAnio()
+int Fecha::getAnio()
 {
     return anio;
 }
 
-bool fecha ::operator==(const fecha &otra) const
+bool Fecha ::operator==(const Fecha &otra) const
 {
     return dia == otra.dia &&
            mes == otra.mes &&
            anio == otra.anio;
 }
 
-ostream &operator<<(ostream &os, const fecha &f)
+ostream &operator<<(ostream &os, const Fecha &f)
 {
     os << f.dia << "/" << f.mes << "/" << f.anio;
     return os;

@@ -17,26 +17,27 @@ class Inmobiliaria;
 class Casa;
 class Apartamento;
 
-class Propietario : public Usuario {
-    protected:
-        string numCuenta;
-        string banco;
-        string telefono;
-        IDictionary* inmuebles;
-        Inmobiliaria* inmo;
+class Propietario : public Usuario
+{
+protected:
+    string numCuenta;
+    string banco;
+    string telefono;
+    IDictionary *inmuebles;
+    Inmobiliaria *inmo;
 
-    public:
-        Propietario(string nickname, string nombre, string contrasenia, string email,
-                    string numCuenta, string banco, string telefono);
-        ~Propietario();
-        string getNumCuenta();
-        string getBanco();
-        string getTelefono();
-        void asociarInmobiliaria(Inmobiliaria* inmobiliaria);
-        void removerPropietario(Inmueble*); //ESTA BIEN USAR * ?? O DEBO USAR & ??
-        Casa* crearCasa(direccion, float, fecha, int, tipoTecho, bool);
-        Apartamento* crearApto(direccion, float, fecha, int, int, bool, float); //cambiar en diagrama de comunicacion
-        DTPropietario* getDTPropietario();
+public:
+    Propietario(string nickname, string nombre, string contrasenia, string email,
+                string numCuenta, string banco, string telefono);
+    ~Propietario();
+    string getNumCuenta();
+    string getBanco();
+    string getTelefono();
+    void asociarInmobiliaria(Inmobiliaria *inmobiliaria);
+    void removerPropietario(Inmueble *);
+    Casa *crearCasa(Direccion, float, Fecha, int, TipoTecho, bool);
+    Apartamento *crearApto(Direccion, float, Fecha, int, int, bool, float);
+    DTPropietario *getDTPropietario();
 };
 
 #endif

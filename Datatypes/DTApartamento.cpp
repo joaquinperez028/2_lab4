@@ -2,8 +2,8 @@
 
 DTApartamento::DTApartamento() : DTEspecifica(), numPiso(0), ascensor(false), gastosComunes(0) {}
 
-DTApartamento::DTApartamento(float Superficie, ::direccion dir, fecha anioConstruc, tipoInmueble tipoInm, ::tipoTecho techo, int numPiso, bool ascensor, float gastosComunes)
-    : DTEspecifica(Superficie, dir, anioConstruc, tipoInm, techo), numPiso(numPiso), ascensor(ascensor), gastosComunes(gastosComunes) {}
+DTApartamento::DTApartamento(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo, ::TipoTecho tipoTecho, int numPiso, bool ascensor, float gastosComunes)
+    : DTEspecifica(Superficie, direccion, anioConstruc, tipo, tipoTecho), numPiso(numPiso), ascensor(ascensor), gastosComunes(gastosComunes) {}
 
 int DTApartamento::getNumPiso()
 {

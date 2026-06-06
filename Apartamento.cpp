@@ -1,9 +1,9 @@
 #include "Apartamento.h"
 #include "Propietario.h"
 
-Apartamento::Apartamento(direccion dir, float superficie, fecha anoConstruc, int identificador,
+Apartamento::Apartamento(Direccion dir, float superficie, Fecha anoConstruc, int identificador,
                          int numPiso, bool ascensor, float gastosComunes, Propietario *propietario)
-    : Inmueble(dir, superficie, anoConstruc, identificador, tipoInmueble::Apartamento),
+    : Inmueble(dir, superficie, anoConstruc, identificador, TipoInmueble::Apartamento),
       numPiso(numPiso),
       ascensor(ascensor),
       gastosComunes(gastosComunes)
@@ -39,8 +39,8 @@ DTEspecifica *Apartamento::getInmueble()
         getSuperficie(),
         getDireccion(),
         getAnoConstruc(),
-        tipoInmueble::Apartamento,
-        tipoTecho::Liviano,
+        TipoInmueble::Apartamento,
+        TipoTecho::Liviano,
         numPiso,
         ascensor,
         gastosComunes);

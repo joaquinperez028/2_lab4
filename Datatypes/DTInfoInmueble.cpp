@@ -1,6 +1,6 @@
 #include "DTInfoInmueble.h"
 
-DTInfoInmueble ::DTInfoInmueble(int identificador, direccion dir)
+DTInfoInmueble ::DTInfoInmueble(int identificador, Direccion dir)
 {
     this->identificador = identificador;
     this->dir = dir;
@@ -11,7 +11,7 @@ int DTInfoInmueble ::getIdentificador()
     return this->identificador;
 }
 
-direccion DTInfoInmueble ::getDir()
+Direccion DTInfoInmueble ::getDir()
 {
     return this->dir;
 }

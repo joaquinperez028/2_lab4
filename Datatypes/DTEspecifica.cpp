@@ -1,10 +1,10 @@
 #include "DTEspecifica.h"
 
 DTEspecifica::DTEspecifica()
-    : Superficie(0), direccion_(), anioConstruc(), tipoInmueble_(tipoInmueble::Casa), techo_(tipoTecho::Liviano) {}
+    : Superficie(0), direccion(), anioConstruc(), tipo(TipoInmueble::Casa), tipoTecho(TipoTecho::Liviano) {}
 
-DTEspecifica::DTEspecifica(float Superficie, ::direccion dir, fecha anioConstruc, tipoInmueble tipoInm, ::tipoTecho techo)
-    : Superficie(Superficie), direccion_(dir), anioConstruc(anioConstruc), tipoInmueble_(tipoInm), techo_(techo) {}
+DTEspecifica::DTEspecifica(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo, ::TipoTecho tipoTecho)
+    : Superficie(Superficie), direccion(direccion), anioConstruc(anioConstruc), tipo(tipo), tipoTecho(tipoTecho) {}
 
 DTEspecifica::~DTEspecifica() {}
 
@@ -13,32 +13,32 @@ float DTEspecifica::getSuperficie()
     return Superficie;
 }
 
-::direccion DTEspecifica::getDireccion()
+::Direccion DTEspecifica::getDireccion()
 {
-    return direccion_;
+    return direccion;
 }
 
-fecha DTEspecifica::getAnioConstruc()
+Fecha DTEspecifica::getAnioConstruc()
 {
     return anioConstruc;
 }
 
-tipoInmueble DTEspecifica::getTipo()
+TipoInmueble DTEspecifica::getTipo()
 {
-    return tipoInmueble_;
+    return tipo;
 }
 
-::tipoTecho DTEspecifica::getTipoTecho()
+::TipoTecho DTEspecifica::getTipoTecho()
 {
-    return techo_;
+    return tipoTecho;
 }
 
 ostream &operator<<(ostream &os, const DTEspecifica &dt)
 {
     os << "Superficie: " << dt.Superficie
-       << " | Direccion: " << dt.direccion_
+       << " | Direccion: " << dt.direccion
        << " | Construccion: " << dt.anioConstruc
-       << " | Tipo: " << dt.tipoInmueble_
-       << " | Techo: " << dt.techo_;
+       << " | Tipo: " << dt.tipo
+       << " | Techo: " << dt.tipoTecho;
     return os;
 }

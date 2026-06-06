@@ -1,15 +1,15 @@
 #include "AgendaVisita.h"
 
-AgendaVisita::AgendaVisita(::fecha fechaVisita, string formaContacto, Cliente *cliente, Publicacion *publicacion)
-    : fecha_(fechaVisita), formaContacto(formaContacto), cliente(cliente), publicacion(publicacion)
+AgendaVisita::AgendaVisita(::Fecha fecha, string formaContacto, Cliente *cliente, Publicacion *publicacion)
+    : fechaVisita(fecha), formaContacto(formaContacto), cliente(cliente), publicacion(publicacion)
 {
 }
 
 AgendaVisita::~AgendaVisita() {}
 
-::fecha AgendaVisita::getFecha()
+::Fecha AgendaVisita::getFecha()
 {
-    return fecha_;
+    return fechaVisita;
 }
 
 string AgendaVisita::getFormaContacto()

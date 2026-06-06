@@ -8,20 +8,21 @@
 
 class Propietario;
 
-class Casa : public Inmueble {
+class Casa : public Inmueble
+{
 private:
-    tipoTecho techo;
+    TipoTecho techo;
     bool propHorizontal;
 
 public:
-    Casa(direccion dir, float superficie, fecha anoConstruc, int identificador,
-         tipoTecho techo, bool propHorizontal, Propietario* propietario);
+    Casa(Direccion dir, float superficie, Fecha anoConstruc, int identificador,
+         TipoTecho techo, bool propHorizontal, Propietario *propietario);
 
     bool getPropHorizontal() const;
-    tipoTecho getTipoTecho() const;
+    TipoTecho getTipoTecho() const;
 
     void mostrarDetalle(int id) override;
-    DTEspecifica* getInmueble() override;
+    DTEspecifica *getInmueble() override;
 };
 
-#endif 
+#endif

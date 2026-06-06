@@ -10,15 +10,15 @@ class DTAdministrados : public ICollectible
 {
 
 private:
-    fecha fechaComienzo;
+    Fecha fechaComienzo;
     int identificador;
-    direccion dir;
+    Direccion dir;
 
 public:
-    DTAdministrados(fecha fechaInicio, int identificador, direccion dir);
-    fecha getFechaComienzo();
+    DTAdministrados(Fecha fechaComienzo, int identificador, Direccion dir);
+    Fecha getFechaComienzo();
     int getIdentificador();
-    direccion getDir();
+    Direccion getDir();
 
     friend std::ostream &operator<<(std::ostream &os, const DTAdministrados &dt);
 };

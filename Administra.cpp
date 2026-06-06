@@ -7,12 +7,12 @@
 
 using namespace std;
 
-Administra ::Administra(Inmobiliaria *inmo, Inmueble *inm)
+Administra ::Administra(Inmobiliaria *inmo, Inmueble *inm, Fecha fechaIni)
 {
     this->inmobiliaria = inmo;
     this->inmueble = inm;
     this->publicaciones = new List();
-    this->fechaInicio = fecha();
+    this->fechaInicio = fechaIni;
 }
 
 Inmobiliaria *Administra ::getInmobiliaria()
@@ -35,14 +35,14 @@ Administra ::~Administra()
     delete this->publicaciones;
 }
 
-bool Administra ::existePubAciva(tipoPublicacion tipoPub, fecha fechaHoy)
+bool Administra ::existePubAciva(TipoPublicacion tipo, Fecha fechaHoy)
 {
     IIterator *it = publicaciones->getIterator();
 
     while (it->hasCurrent())
     {
         Publicacion *pub = (Publicacion *)it->getCurrent();
-        if (pub->coincideTipo(tipoPub) && pub->getFecha() == fechaHoy && pub->esActiva())
+        if (pub->coincideTipo(tipo) && pub->getFecha() == fechaHoy && pub->esActiva())
             return true;
         it->next();
     }
@@ -50,10 +50,10 @@ bool Administra ::existePubAciva(tipoPublicacion tipoPub, fecha fechaHoy)
     return false;
 }
 
-Publicacion *Administra ::crearPublicacion(int codigo, tipoPublicacion tipoPub, std::string texto, float precio,
-                                           fecha fechaHoy)
+Publicacion *Administra ::crearPublicacion(int codigo, TipoPublicacion tipo, std::string texto, float precio,
+                                           Fecha fechaHoy)
 {
-    Publicacion *pub = new Publicacion(codigo, texto, precio, fechaHoy, tipoPub, this);
+    Publicacion *pub = new Publicacion(codigo, texto, precio, fechaHoy, tipo, this);
     agregarPublicacion(pub);
     return pub;
 }

@@ -8,9 +8,9 @@
 #include "ICollection/collections/List.h"
 
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
-                           direccion dir, string telefono, string URL)
+                           Direccion direccion, string telefono, string URL)
     : Usuario(nickname, nombre, contrasenia, email),
-      direccion_(dir),
+      dir(direccion),
       telefono(telefono),
       URL(URL),
       inmuebles(nullptr),
@@ -26,9 +26,9 @@ Inmobiliaria::~Inmobiliaria()
     delete administraciones;
 }
 
-direccion Inmobiliaria::getDireccion()
+Direccion Inmobiliaria::getDireccion()
 {
-    return this->direccion_;
+    return this->dir;
 }
 
 string Inmobiliaria::getTelefono()
@@ -50,29 +50,31 @@ void Inmobiliaria::asociarPropietario(Propietario *propietario)
     this->propietarios->add(new String(propietario->getNickName().c_str()), propietario);
 }
 
-Status Inmobiliaria::crearAdministra(Inmueble *inmueble)
+Status Inmobiliaria::crearAdministra(Inmueble *inmu, Fecha fechaHoy)
 {
-    if (inmueble == nullptr)
-        return Status::ERROR;
+    Administra *nueva = new Administra(this, inmu, fechaHoy);
 
-    int identificador = inmueble->getIdentificador();
+    int ident = inmu->getIdentificador();
+    Integer *key = new Integer(ident);
 
-    if (findAdministra(identificador) != nullptr)
-        return Status::ERROR;
+    if (administraciones->member(key))
+    {
+        delete key;
+        return Status ::ERROR;
+    }
 
-    Administra *adm = new Administra(this, inmueble);
-    inmueble->asociarAdministra(adm);
-    administraciones->add(new Integer(identificador), adm);
+    this->administraciones->add(key, nueva);
+    inmu->asociarAdministra(nueva);
 
-    return Status::OK;
+    return Status ::OK;
 }
 
-void Inmobiliaria::removerInmobiliaria(Inmueble* inmueble)
+void Inmobiliaria::removerInmobiliaria(Inmueble *inmueble)
 {
     if (inmueble == nullptr || this->administraciones == nullptr)
         return;
 
-    Integer* key = new Integer(inmueble->getIdentificador());
+    Integer *key = new Integer(inmueble->getIdentificador());
 
     this->administraciones->remove(key);
 
