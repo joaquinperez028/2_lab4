@@ -18,8 +18,8 @@ private:
     string textoDescriptivo;
     float precio;
     string nomInmo;
-    tipoPublicacion tipoPublicacion;
-    tipoInmueble tipoInmueble;
+    ::tipoPublicacion tipoPub_;
+    ::tipoInmueble tipoInm_;
 
 public:
     DTPublicacion();
