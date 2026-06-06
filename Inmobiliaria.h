@@ -17,6 +17,7 @@ class Administra;
 class Inmobiliaria : public Usuario
 {
 protected:
+    string email;
     Direccion dir;
     string telefono;
     string URL;
@@ -28,6 +29,7 @@ public:
     Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
                  Direccion direccion, string telefono, string URL);
     ~Inmobiliaria();
+    string getEmail();
     Direccion getDireccion();
     string getTelefono();
     string getUrl();

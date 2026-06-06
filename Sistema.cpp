@@ -80,7 +80,8 @@ Status Sistema::altaCliente(string nickname, string nombre, string contrasenia,
 }
 
 Status Sistema::altaPropietario(string nickname, string nombre, string contrasenia,
-                                string email, string numCuenta, string banco)
+                                string email, string numCuenta, string banco,
+                                string telefono)
 {
     Status st = this->revisarNickname(nickname);
     if (st != Status::OK)
@@ -89,7 +90,7 @@ Status Sistema::altaPropietario(string nickname, string nombre, string contrasen
     }
 
     Propietario *propietario = new Propietario(nickname, nombre, contrasenia, email,
-                                               numCuenta, banco, "");
+                                               numCuenta, banco, telefono);
     this->usuarios->add(new String(nickname.c_str()), propietario);
 
     this->propRecordado = propietario;
@@ -134,7 +135,8 @@ Status Sistema::altaApto(Direccion dir, float superficie, Fecha anoConstruc,
 }
 
 Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrasenia,
-                                 Direccion dir, string telefono, string url)
+                                 string email, Direccion dir, string telefono,
+                                 string url)
 {
     Status st = this->revisarNickname(nickname);
     if (st != Status::OK)
@@ -142,7 +144,7 @@ Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrase
         return st;
     }
 
-    Inmobiliaria *inmobiliaria = new Inmobiliaria(nickname, nombre, contrasenia, "",
+    Inmobiliaria *inmobiliaria = new Inmobiliaria(nickname, nombre, contrasenia, email,
                                                   dir, telefono, url);
     this->usuarios->add(new String(nickname.c_str()), inmobiliaria);
 

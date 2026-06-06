@@ -10,6 +10,7 @@
 Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
                            Direccion direccion, string telefono, string URL)
     : Usuario(nickname, nombre, contrasenia, email),
+      email(email),
       dir(direccion),
       telefono(telefono),
       URL(URL),
@@ -24,6 +25,11 @@ Inmobiliaria::~Inmobiliaria()
     delete propietarios;
     delete inmuebles;
     delete administraciones;
+}
+
+string Inmobiliaria::getEmail()
+{
+    return this->email;
 }
 
 Direccion Inmobiliaria::getDireccion()

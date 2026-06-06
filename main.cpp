@@ -214,8 +214,9 @@ static void casoDeUso1(ISistema *sistema){
             // Alta propietario
             string numCuenta = leerTextoValido("Numero de cuenta: ", false);
             string banco = leerTextoValido("Banco: ", true);
+            string telefono = leerTextoValido("Telefono: ", false);
 
-            st = sistema->altaPropietario(nickname, nombre, contrasenia, email, numCuenta, banco);
+            st = sistema->altaPropietario(nickname, nombre, contrasenia, email, numCuenta, banco, telefono);
             cout << (st == Status::OK ? "Alta propietario: OK" : "Alta propietario: ERROR (nickname ya existe)") << endl;
 
             if (st == Status::OK)
@@ -313,7 +314,7 @@ static void casoDeUso1(ISistema *sistema){
                 cout << "URL invalida." << endl;
             }
 
-            st = sistema->altaInmobiliaria(nickname, nombre, contrasenia, dir, telefono, url);
+            st = sistema->altaInmobiliaria(nickname, nombre, contrasenia, email, dir, telefono, url);
             cout << (st == Status::OK ? "Alta inmobiliaria: OK" : "Alta inmobiliaria: ERROR (nickname ya existe)") << endl;
 
             if (st == Status::OK)
@@ -476,7 +477,7 @@ static void cargarDatosPrueba(ISistema *sistema)
     cout << (st == Status::OK ? "Alta cliente: OK" : "Alta cliente: ERROR") << endl;
 
     // --- Inmobiliaria 1: Inmo Central + propietaria Ana ---
-    st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander");
+    st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander", "099111222");
     cout << (st == Status::OK ? "Alta propietario (ana_prop): OK" : "Alta propietario (ana_prop): ERROR") << endl;
 
     Fecha fechaCasaAna(1, 1, 2005);
@@ -490,7 +491,7 @@ static void cargarDatosPrueba(ISistema *sistema)
     cout << (st == Status::OK ? "Alta apartamento Ana (id 2): OK" : "Alta apartamento Ana: ERROR") << endl;
 
     Direccion dirInmoCentral(100, "Av. Italia", "Montevideo", "Montevideo");
-    st = sistema->altaInmobiliaria("inmo_central", "Inmo Central", "passInmo", dirInmoCentral, "24001234", "http://inmocentral.com");
+    st = sistema->altaInmobiliaria("inmo_central", "Inmo Central", "passInmo", "contacto@inmocentral.com", dirInmoCentral, "24001234", "http://inmocentral.com");
     cout << (st == Status::OK ? "Alta inmobiliaria (inmo_central): OK" : "Alta inmobiliaria (inmo_central): ERROR") << endl;
 
     sistema->asociarPropietario("ana_prop");
@@ -506,7 +507,7 @@ static void cargarDatosPrueba(ISistema *sistema)
     cout << (st == Status::OK ? "Alta administracion inmo_central (apto id 2): OK" : "Alta administracion inmo_central (apto id 2): ERROR") << endl;
 
     // --- Inmobiliaria 2: Inmo del Sur + propietario Luis ---
-    st = sistema->altaPropietario("luis_prop", "Luis", "pass456", "luis@mail.com", "99887766", "BBVA");
+    st = sistema->altaPropietario("luis_prop", "Luis", "pass456", "luis@mail.com", "99887766", "BBVA", "098333444");
     cout << (st == Status::OK ? "Alta propietario (luis_prop): OK" : "Alta propietario (luis_prop): ERROR") << endl;
 
     Fecha fechaCasaLuis(15, 3, 1998);
@@ -520,7 +521,7 @@ static void cargarDatosPrueba(ISistema *sistema)
     cout << (st == Status::OK ? "Alta apartamento Luis (id 4): OK" : "Alta apartamento Luis: ERROR") << endl;
 
     Direccion dirInmoSur(550, "Av. Giannattasio", "Montevideo", "Canelones");
-    st = sistema->altaInmobiliaria("inmo_sur", "Inmo del Sur", "passSur", dirInmoSur, "26005678", "http://inmosur.com");
+    st = sistema->altaInmobiliaria("inmo_sur", "Inmo del Sur", "passSur", "info@inmosur.com", dirInmoSur, "26005678", "http://inmosur.com");
     cout << (st == Status::OK ? "Alta inmobiliaria (inmo_sur): OK" : "Alta inmobiliaria (inmo_sur): ERROR") << endl;
 
     sistema->asociarPropietario("luis_prop");

@@ -25,10 +25,10 @@ public:
     virtual ~ISistema();
     virtual Status revisarNickname(string) = 0;
     virtual Status altaCliente(string, string, string, string, string, string) = 0;
-    virtual Status altaPropietario(string, string, string, string, string, string) = 0;
+    virtual Status altaPropietario(string, string, string, string, string, string, string) = 0;
     virtual Status altaCasa(Direccion, float, Fecha, TipoTecho, bool) = 0;
     virtual Status altaApto(Direccion, float, Fecha, int, bool, float) = 0;
-    virtual Status altaInmobiliaria(string, string, string, Direccion, string, string) = 0;
+    virtual Status altaInmobiliaria(string, string, string, string, Direccion, string, string) = 0;
     virtual ICollection *listarPropietarios() = 0;
     virtual void asociarPropietario(string) = 0;
     virtual ICollection *listarInmobiliarias() = 0;

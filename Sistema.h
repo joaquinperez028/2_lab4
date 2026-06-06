@@ -34,10 +34,10 @@ public:
     static Sistema *getInstance();
     Status revisarNickname(string) override;                                             // TORTU
     Status altaCliente(string, string, string, string, string, string) override;         // TORTU
-    Status altaPropietario(string, string, string, string, string, string) override;     // TORTU
+    Status altaPropietario(string, string, string, string, string, string, string) override;     // TORTU
     Status altaCasa(Direccion, float, Fecha, TipoTecho, bool) override;                  // MATIAS
     Status altaApto(Direccion, float, Fecha, int, bool, float) override;                 // MATIAS
-    Status altaInmobiliaria(string, string, string, Direccion, string, string) override; // TORTU
+    Status altaInmobiliaria(string, string, string, string, Direccion, string, string) override; // TORTU
     ICollection *listarPropietarios() override;                                          // YANI
     void asociarPropietario(string) override;                                            // TORTU
     ICollection *listarInmobiliarias() override;                                         // FRAN
