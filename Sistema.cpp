@@ -213,25 +213,37 @@ ICollection *Sistema::listarInmobiliarias()
 
 ICollection* Sistema::listarPublicaciones(string tipo, float precioMin, float precioMax, Opciones interes) {
     ICollection* resultado = new List();
-
-    TipoPublicacion tipoPub = TipoPublicacion::Venta;
-    if (tipo == "Alquiler")
-        tipoPub = TipoPublicacion::Alquiler;
-
+ 
+    // mensaje 1* [foreach] pub := next — visibilidad <<association>>
+    // Sistema itera su coleccion de publicaciones
     IIterator* it = this->publicaciones->getIterator();
-
+ 
     while (it->hasCurrent()) {
+        // pub se obtiene de la iteracion — visibilidad <<local>>
         Publicacion* pub = dynamic_cast<Publicacion*>(it->getCurrent());
-
-        if (pub != nullptr && pub->esActiva() && pub->coincideTipo(tipoPub) &&
-            pub->precioFranja(precioMin, precioMax) && pub->compararInteres(interes)) {
-            DTPublicacion* dt = pub->getPublicacion();
-            resultado->add(dt);
+ 
+        // mensaje 2*: esActiva():bool — visibilidad <<local>>
+        if (pub->esActiva()) {
+ 
+            // mensaje 3* [activa]: precioFranja(precioMin, precioMax):bool — visibilidad <<local>>
+            if (pub->precioFranja(precioMin, precioMax)) {
+ 
+                // mensaje 4* [precio]: compararInteres(interes):bool — visibilidad <<local>>
+                // internamente navega Administra → Inmueble (mensajes 4.1* y 4.1.1*)
+                if (pub->compararInteres(interes)) {
+ 
+                    // mensaje 5* [Interesado]: getNickInmo():string — visibilidad <<local>>
+                    // internamente navega Administra → Inmobiliaria (mensajes 5.1* y 5.1.1*)
+                    // mensaje 6* [nickname]: getPublicacion():DTPublicacion — visibilidad <<local>>
+                    DTPublicacion* dt = pub->getPublicacion();
+                    resultado->add(dt);
+                }
+            }
         }
-
+ 
         it->next();
     }
-
+ 
     delete it;
     return resultado;
 }
