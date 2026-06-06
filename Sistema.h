@@ -27,6 +27,7 @@ private:
     int ultimoCodigoInmueble;
     int ultimoCodigoPub;
     Usuario *buscarPorNickname(string nickname);
+    Inmobiliaria *inmoSeleccionada;
 
 public:
     ~Sistema();

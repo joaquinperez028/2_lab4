@@ -23,6 +23,7 @@ Sistema::Sistema()
     this->publicaciones = new OrderedDictionary();
     this->propRecordado = nullptr;
     this->inmoRecordada = nullptr;
+    this->inmoSeleccionada = nullptr;
     this->ultimoCodigoPub = 0;
     this->ultimoCodigoInmueble = 0;
 }
@@ -95,7 +96,7 @@ Status Sistema::altaPropietario(string nickname, string nombre, string contrasen
     return Status::OK;
 }
 
-Status Sistema::altaCasa(Direccion direccion, float superficie, Fecha anoConstruc,
+Status Sistema::altaCasa(Direccion dir, float superficie, Fecha anoConstruc,
                          TipoTecho techo, bool propHorizontal)
 {
     if (this->propRecordado == nullptr)
@@ -104,17 +105,15 @@ Status Sistema::altaCasa(Direccion direccion, float superficie, Fecha anoConstru
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Casa *casa = propRecordado->crearCasa(direccion, superficie, anoConstruc,
+    Casa *casa = propRecordado->crearCasa(dir, superficie, anoConstruc,
                                           codigo, techo, propHorizontal);
 
     this->inmuebles->add(new Integer(codigo), casa);
 
-    this->propRecordado = NULL;
-
     return Status::OK;
 }
 
-Status Sistema::altaApto(Direccion direccion, float superficie, Fecha anoConstruc,
+Status Sistema::altaApto(Direccion dir, float superficie, Fecha anoConstruc,
                          int numPiso, bool ascensor, float gastosComunes)
 {
     if (this->propRecordado == nullptr)
@@ -123,14 +122,12 @@ Status Sistema::altaApto(Direccion direccion, float superficie, Fecha anoConstru
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Apartamento *apartamento = propRecordado->crearApto(direccion, superficie,
+    Apartamento *apartamento = propRecordado->crearApto(dir, superficie,
                                                         anoConstruc, codigo,
                                                         numPiso, ascensor,
                                                         gastosComunes);
 
     this->inmuebles->add(new Integer(codigo), apartamento);
-
-    this->propRecordado = NULL;
 
     return Status::OK;
 }
@@ -148,6 +145,7 @@ Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrase
                                                   dir, telefono, url);
     this->usuarios->add(new String(nickname.c_str()), inmobiliaria);
 
+    // El sistema recuerda inmo (diagrama altaInmobiliaria)
     this->inmoRecordada = inmobiliaria;
 
     return Status::OK;
@@ -178,16 +176,16 @@ void Sistema::asociarPropietario(string nickname)
         return;
     }
 
+    // mensaje 1: p := find(nickname) — visibilidad <<association>>
     Propietario *propietario = dynamic_cast<Propietario *>(this->buscarPorNickname(nickname));
     if (propietario == nullptr)
     {
         return;
     }
 
+    // mensaje 2: inmo.asociarPropietario(p) — inmo es la recordada en altaInmobiliaria
     this->inmoRecordada->asociarPropietario(propietario);
     propietario->asociarInmobiliaria(this->inmoRecordada);
-
-    this->inmoRecordada = NULL;
 }
 
 ICollection *Sistema::listarInmobiliarias()
@@ -221,6 +219,8 @@ ICollection *Sistema::listarPublicaciones(string, float, float, Opciones)
 DTEspecifica *Sistema::listarEspecifica(int codigoPubli)
 {
 
+    // mensaje 1: pub := find(codigoPubli) — visibilidad <<association>>
+    // Sistema tiene IDictionary* publicaciones como atributo
     Integer *key = new Integer(codigoPubli);
     Publicacion *pub = dynamic_cast<Publicacion *>(this->publicaciones->find(key));
     delete key;
@@ -228,6 +228,8 @@ DTEspecifica *Sistema::listarEspecifica(int codigoPubli)
     if (pub == nullptr)
         return nullptr;
 
+    // mensaje 2: dt := getDTEspecifica() — visibilidad <<local>>
+    // pub se obtuvo del find, por eso es local
     return pub->getDTEspecifica();
 }
 
@@ -251,6 +253,8 @@ ICollection *Sistema::listarPropiedades()
 DTInmueble *Sistema::mostrarDetalle(int identificador)
 {
 
+    // mensaje 1: inmu := find(Identificador) — visibilidad <<association>>
+    // Sistema tiene IDictionary* inmuebles como atributo
     Integer *key = new Integer(identificador);
     Inmueble *inmu = dynamic_cast<Inmueble *>(this->inmuebles->find(key));
     delete key;
@@ -258,6 +262,9 @@ DTInmueble *Sistema::mostrarDetalle(int identificador)
     if (inmu == nullptr)
         return nullptr;
 
+    // mensajes 2 al 6 — visibilidad <<local>>
+    // inmu se obtuvo del find, por eso es local
+    // cada getter le pide al inmueble sus propios datos
     Direccion dir = inmu->getDireccion();
     Fecha anio = inmu->getAnoConstruc();
     int codigo = inmu->getIdentificador();
@@ -317,15 +324,37 @@ Status Sistema::eliminarInmueble(int id)
 ICollection *Sistema::listarInmueblesRepresentados(string nickname)
 {
 
+    // mensaje 1: inmo := find(nickname) — visibilidad <<association>>
+    // usa buscarPorNickname que ya tienen implementado en Sistema
     Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(
         this->buscarPorNickname(nickname));
 
     if (inmo == nullptr)
         return nullptr;
 
-    this->inmoRecordada = inmo;
+    // sistema recuerda inmo segun la nota del diagrama
+    this->inmoSeleccionada = inmo;
 
+    // mensaje 2: getInmueblesRepresentados() — visibilidad <<local>>
+    // inmo se obtuvo del find, por eso es local
     return inmo->getInmueblesRepresentados();
+}
+
+Status Sistema::altaAdministracion(int identificador)
+{
+    if (inmoSeleccionada == nullptr)
+        return Status::ERROR;
+
+    Integer *key = new Integer(identificador);
+    Inmueble *inm = dynamic_cast<Inmueble *>(inmuebles->find(key));
+    delete key;
+
+    if (inm == nullptr)
+        return Status::ERROR;
+
+    Fecha fechaActual = obtenerFechaActual();
+
+    return inmoSeleccionada->crearAdministra(inm, fechaActual);
 }
 
 Fecha Sistema ::obtenerFechaActual()
@@ -342,19 +371,17 @@ Fecha Sistema ::obtenerFechaActual()
 Status Sistema ::altaPublicacion(int identificador, TipoPublicacion tipo, string texto,
                                  float precio)
 {
-    if (inmoRecordada == NULL)
+    if (inmoSeleccionada == NULL)
         return Status ::ERROR;
 
-    Administra *adm = inmoRecordada->findAdministra(identificador);
+    Administra *adm = inmoSeleccionada->findAdministra(identificador);
     if (adm == NULL)
-        this->inmoRecordada = NULL;
-    return Status ::ERROR;
+        return Status ::ERROR;
 
     Fecha fechaHoy = obtenerFechaActual();
 
     if (adm->existePubAciva(tipo, fechaHoy))
-        this->inmoRecordada = NULL;
-    return Status ::ERROR;
+        return Status ::ERROR;
 
     this->ultimoCodigoPub++;
     int codigo = this->ultimoCodigoPub;
@@ -364,7 +391,6 @@ Status Sistema ::altaPublicacion(int identificador, TipoPublicacion tipo, string
     Integer *key = new Integer(pub->getCodigo());
     publicaciones->add(key, pub);
 
-    this->inmoRecordada = NULL;
     return Status ::OK;
 }
 
@@ -379,28 +405,9 @@ ICollection *Sistema ::seleccionarInmobiliaria(string nickname)
     if (inmo == NULL)
         return NULL;
 
-    this->inmoRecordada = inmo;
+    this->inmoSeleccionada = inmo;
 
     ICollection *resultado = inmo->getAdministras();
 
     return resultado;
-}
-
-Status Sistema ::altaAdministracion(int identificador)
-{
-    Integer *key = new Integer(identificador);
-
-    Inmueble *inmu = dynamic_cast<Inmueble *>(this->inmuebles->find(key));
-    if (inmu == NULL)
-        inmoRecordada = NULL;
-    return Status ::ERROR;
-
-    Fecha fechaActual = obtenerFechaActual();
-
-    inmoRecordada->crearAdministra(inmu, fechaActual);
-
-    inmoRecordada = NULL;
-    inmu = NULL;
-
-    return Status ::OK;
 }

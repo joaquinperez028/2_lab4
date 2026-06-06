@@ -229,14 +229,14 @@ static void casoDeUso1(ISistema *sistema){
                     string calle = leerTextoValido("Calle: ", true);
                     string localidad = leerTextoValido("Localidad: ", true);
                     string departamento = leerTextoValido("Departamento: ", true);
-                    direccion dir(numPuerta, calle, localidad, departamento);
+                    Direccion dir(numPuerta, calle, localidad, departamento);
 
                     float superficie = leerFloat("Superficie (m2): ");
 
                     int dia = leerEntero("Dia construccion: ");
                     int mes = leerEntero("Mes construccion: ");
                     int anio = leerEntero("Año construccion: ");
-                    fecha f(dia, mes, anio);
+                    Fecha f(dia, mes, anio);
 
                     cout << "Tipo de inmueble: 1) Casa  2) Apartamento: ";
                     int tipoInm = 0;
@@ -270,11 +270,11 @@ static void casoDeUso1(ISistema *sistema){
                             cin.clear();
                             consumirSaltoLinea();
                         }
-                        tipoTecho techo = tipoTecho::Liviano;
+                        TipoTecho techo = TipoTecho::Liviano;
                         if (ttec == 2)
-                            techo = tipoTecho::DosAguas;
+                            techo = TipoTecho::DosAguas;
                         else if (ttec == 3)
-                            techo = tipoTecho::Plano;
+                            techo = TipoTecho::Plano;
 
                         stInm = sistema->altaCasa(dir, superficie, f, techo, esPH);
                     }
@@ -299,7 +299,7 @@ static void casoDeUso1(ISistema *sistema){
             string calle = leerTextoValido("Calle: ", true);
             string localidad = leerTextoValido("Localidad: ", true);
             string departamento = leerTextoValido("Departamento: ", true);
-            direccion dir(numPuerta, calle, localidad, departamento);
+            Direccion dir(numPuerta, calle, localidad, departamento);
 
             string telefono = leerTextoValido("Telefono: ", false);
 
@@ -429,7 +429,7 @@ static void casoDeUso2(ISistema *sistema){
         consumirSaltoLinea();
     }
 
-    tipoPublicacion tipoPub = (tipoOpcion == 1) ? tipoPublicacion::Venta : tipoPublicacion::Alquiler;
+    TipoPublicacion tipoPub = (tipoOpcion == 1) ? TipoPublicacion::Venta : TipoPublicacion::Alquiler;
 
     string texto;
     while (true)
@@ -479,17 +479,17 @@ static void cargarDatosPrueba(ISistema *sistema)
     st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander");
     cout << (st == Status::OK ? "Alta propietario (ana_prop): OK" : "Alta propietario (ana_prop): ERROR") << endl;
 
-    fecha fechaCasaAna(1, 1, 2005);
-    direccion dirCasaAna(123, "Av. Brasil", "Montevideo", "Montevideo");
-    st = sistema->altaCasa(dirCasaAna, 120.5, fechaCasaAna, tipoTecho::Liviano, false);
+    Fecha fechaCasaAna(1, 1, 2005);
+    Direccion dirCasaAna(123, "Av. Brasil", "Montevideo", "Montevideo");
+    st = sistema->altaCasa(dirCasaAna, 120.5, fechaCasaAna, TipoTecho::Liviano, false);
     cout << (st == Status::OK ? "Alta casa Ana (id 1): OK" : "Alta casa Ana: ERROR") << endl;
 
-    fecha fechaAptoAna(1, 6, 2015);
-    direccion dirAptoAna(456, "18 de Julio", "Montevideo", "Montevideo");
+    Fecha fechaAptoAna(1, 6, 2015);
+    Direccion dirAptoAna(456, "18 de Julio", "Montevideo", "Montevideo");
     st = sistema->altaApto(dirAptoAna, 65.0, fechaAptoAna, 4, true, 8500);
     cout << (st == Status::OK ? "Alta apartamento Ana (id 2): OK" : "Alta apartamento Ana: ERROR") << endl;
 
-    direccion dirInmoCentral(100, "Av. Italia", "Montevideo", "Montevideo");
+    Direccion dirInmoCentral(100, "Av. Italia", "Montevideo", "Montevideo");
     st = sistema->altaInmobiliaria("inmo_central", "Inmo Central", "passInmo", dirInmoCentral, "24001234", "http://inmocentral.com");
     cout << (st == Status::OK ? "Alta inmobiliaria (inmo_central): OK" : "Alta inmobiliaria (inmo_central): ERROR") << endl;
 
@@ -509,17 +509,17 @@ static void cargarDatosPrueba(ISistema *sistema)
     st = sistema->altaPropietario("luis_prop", "Luis", "pass456", "luis@mail.com", "99887766", "BBVA");
     cout << (st == Status::OK ? "Alta propietario (luis_prop): OK" : "Alta propietario (luis_prop): ERROR") << endl;
 
-    fecha fechaCasaLuis(15, 3, 1998);
-    direccion dirCasaLuis(890, "Bvar. Artigas", "Montevideo", "Montevideo");
-    st = sistema->altaCasa(dirCasaLuis, 95.0, fechaCasaLuis, tipoTecho::DosAguas, true);
+    Fecha fechaCasaLuis(15, 3, 1998);
+    Direccion dirCasaLuis(890, "Bvar. Artigas", "Montevideo", "Montevideo");
+    st = sistema->altaCasa(dirCasaLuis, 95.0, fechaCasaLuis, TipoTecho::DosAguas, true);
     cout << (st == Status::OK ? "Alta casa Luis (id 3): OK" : "Alta casa Luis: ERROR") << endl;
 
-    fecha fechaAptoLuis(10, 9, 2020);
-    direccion dirAptoLuis(2100, "Rambla Republica", "Montevideo", "Montevideo");
+    Fecha fechaAptoLuis(10, 9, 2020);
+    Direccion dirAptoLuis(2100, "Rambla Republica", "Montevideo", "Montevideo");
     st = sistema->altaApto(dirAptoLuis, 48.5, fechaAptoLuis, 8, false, 6200);
     cout << (st == Status::OK ? "Alta apartamento Luis (id 4): OK" : "Alta apartamento Luis: ERROR") << endl;
 
-    direccion dirInmoSur(550, "Av. Giannattasio", "Montevideo", "Canelones");
+    Direccion dirInmoSur(550, "Av. Giannattasio", "Montevideo", "Canelones");
     st = sistema->altaInmobiliaria("inmo_sur", "Inmo del Sur", "passSur", dirInmoSur, "26005678", "http://inmosur.com");
     cout << (st == Status::OK ? "Alta inmobiliaria (inmo_sur): OK" : "Alta inmobiliaria (inmo_sur): ERROR") << endl;
 
