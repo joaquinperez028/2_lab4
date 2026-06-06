@@ -2,26 +2,31 @@
 
 DTInmueble::DTInmueble() {}
 
-DTInmueble::DTInmueble(int codigoInmueble, ::direccion direccion, fecha anioConstrucion, tipoInmueble tipo) {
+DTInmueble::DTInmueble(int codigoInmueble, ::Direccion direccion, Fecha anioConstrucion, TipoInmueble tipo)
+{
     this->codigoInmueble = codigoInmueble;
     this->direccion_ = direccion;
     this->anioConstrucion = anioConstrucion;
     this->tipo = tipo;
 }
 
-int DTInmueble::getCodigoInmueble() {
+int DTInmueble::getCodigoInmueble()
+{
     return this->codigoInmueble;
 }
 
-direccion DTInmueble::getDireccion() {
+Direccion DTInmueble::getDireccion()
+{
     return this->direccion_;
 }
 
-fecha DTInmueble::getAnioConstrucion() {
+Fecha DTInmueble::getAnioConstrucion()
+{
     return this->anioConstrucion;
 }
 
-tipoInmueble DTInmueble::getTipo() {
+TipoInmueble DTInmueble::getTipo()
+{
     return this->tipo;
 }
 

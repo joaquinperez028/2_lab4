@@ -6,6 +6,7 @@
 #include "ICollection/interfaces/IDictionary.h"
 #include "Datatypes/Direccion.h"
 #include "Datatypes/Status.h"
+#include "Datatypes/Fecha.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class Administra;
 class Inmobiliaria : public Usuario
 {
 protected:
-    direccion direccion_;
+    Direccion dir;
     string telefono;
     string URL;
     IDictionary *inmuebles;
@@ -25,13 +26,13 @@ protected:
 
 public:
     Inmobiliaria(string nickname, string nombre, string contrasenia, string email,
-                 direccion direccion, string telefono, string URL);
+                 Direccion direccion, string telefono, string URL);
     ~Inmobiliaria();
-    direccion getDireccion();
+    Direccion getDireccion();
     string getTelefono();
     string getUrl();
     void asociarPropietario(Propietario *propietario);
-    Status crearAdministra(int);
+    Status crearAdministra(Inmueble *inmu, Fecha fechaHoy);
     void removerInmobiliaria(Inmueble *);
     Administra *findAdministra(int identificador);
     ICollection *getAdministras();

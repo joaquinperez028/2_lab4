@@ -37,22 +37,22 @@ public:
     Status revisarNickname(string) override;                                             // TORTU
     Status altaCliente(string, string, string, string, string, string) override;         // TORTU
     Status altaPropietario(string, string, string, string, string, string) override;     // TORTU
-    Status altaCasa(direccion, float, fecha, tipoTecho, bool) override;                    // MATIAS
-    Status altaApto(direccion, float, fecha, int, bool, float) override;                   // MATIAS
-    Status altaInmobiliaria(string, string, string, direccion, string, string) override; // TORTU
+    Status altaCasa(Direccion, float, Fecha, TipoTecho, bool) override;                  // MATIAS
+    Status altaApto(Direccion, float, Fecha, int, bool, float) override;                 // MATIAS
+    Status altaInmobiliaria(string, string, string, Direccion, string, string) override; // TORTU
     ICollection *listarPropietarios() override;                                          // YANI
-    void asociarPropietario(string) override; // TORTU
-    ICollection *listarInmobiliarias() override;                          // FRAN
-    ICollection *seleccionarInmobiliaria(string) override;                // DIEGO
-    Status altaPublicacion(int, tipoPublicacion, string, float) override; // DIEGO
-    ICollection *listarPublicaciones(string, float, float, opciones) override;
+    void asociarPropietario(string) override;                                            // TORTU
+    ICollection *listarInmobiliarias() override;                                         // FRAN
+    ICollection *seleccionarInmobiliaria(string) override;                               // DIEGO
+    Status altaPublicacion(int, TipoPublicacion, string, float) override;                // DIEGO
+    ICollection *listarPublicaciones(string, float, float, Opciones) override;
     DTEspecifica *listarEspecifica(int codigoPubli) override;
     ICollection *listarPropiedades() override;                  // YANI
     DTInmueble *mostrarDetalle(int identificador) override;     // FRAN
     Status eliminarInmueble(int) override;                      // MATIAS
     ICollection *listarInmueblesRepresentados(string) override; // FRAN
-    Status altaAdministracion(int) override;
-    fecha obtenerFechaActual(); // DIEGo
+    Status altaAdministracion(int identificador) override;
+    Fecha obtenerFechaActual(); // DIEGo
 };
 
 #endif

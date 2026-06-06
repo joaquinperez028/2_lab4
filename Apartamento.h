@@ -7,22 +7,23 @@
 
 class Propietario;
 
-class Apartamento : public Inmueble {
+class Apartamento : public Inmueble
+{
 private:
     int numPiso;
     bool ascensor;
     float gastosComunes;
 
 public:
-    Apartamento(direccion dir, float superficie, fecha anoConstruc, int identificador,
-                int numPiso, bool ascensor, float gastosComunes, Propietario* propietario);
+    Apartamento(Direccion dir, float superficie, Fecha anoConstruc, int identificador,
+                int numPiso, bool ascensor, float gastosComunes, Propietario *propietario);
 
     int getNumPiso() const;
     bool getAscensor() const;
     float getGastosComunes() const;
 
     void mostrarDetalle(int id) override;
-    DTEspecifica* getInmueble() override;
+    DTEspecifica *getInmueble() override;
 };
 
 #endif

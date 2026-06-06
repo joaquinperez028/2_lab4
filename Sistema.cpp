@@ -13,7 +13,6 @@
 #include "Datatypes/TipoTecho.h"
 #include "Publicacion.h"
 #include <ctime>
-#include "Datatypes/DTPublicacion.h"
 
 Sistema *Sistema::instance = nullptr;
 
@@ -97,8 +96,8 @@ Status Sistema::altaPropietario(string nickname, string nombre, string contrasen
     return Status::OK;
 }
 
-Status Sistema::altaCasa(direccion direccion, float superficie, fecha anoConstruc,
-                         tipoTecho techo, bool propHorizontal)
+Status Sistema::altaCasa(Direccion dir, float superficie, Fecha anoConstruc,
+                         TipoTecho techo, bool propHorizontal)
 {
     if (this->propRecordado == nullptr)
         return Status::ERROR;
@@ -106,7 +105,7 @@ Status Sistema::altaCasa(direccion direccion, float superficie, fecha anoConstru
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Casa *casa = propRecordado->crearCasa(direccion, superficie, anoConstruc,
+    Casa *casa = propRecordado->crearCasa(dir, superficie, anoConstruc,
                                           codigo, techo, propHorizontal);
 
     this->inmuebles->add(new Integer(codigo), casa);
@@ -114,7 +113,7 @@ Status Sistema::altaCasa(direccion direccion, float superficie, fecha anoConstru
     return Status::OK;
 }
 
-Status Sistema::altaApto(direccion direccion, float superficie, fecha anoConstruc,
+Status Sistema::altaApto(Direccion dir, float superficie, Fecha anoConstruc,
                          int numPiso, bool ascensor, float gastosComunes)
 {
     if (this->propRecordado == nullptr)
@@ -123,7 +122,7 @@ Status Sistema::altaApto(direccion direccion, float superficie, fecha anoConstru
     this->ultimoCodigoInmueble++;
     int codigo = this->ultimoCodigoInmueble;
 
-    Apartamento *apartamento = propRecordado->crearApto(direccion, superficie,
+    Apartamento *apartamento = propRecordado->crearApto(dir, superficie,
                                                         anoConstruc, codigo,
                                                         numPiso, ascensor,
                                                         gastosComunes);
@@ -134,7 +133,7 @@ Status Sistema::altaApto(direccion direccion, float superficie, fecha anoConstru
 }
 
 Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrasenia,
-                                 direccion dir, string telefono, string url)
+                                 Direccion dir, string telefono, string url)
 {
     Status st = this->revisarNickname(nickname);
     if (st != Status::OK)
@@ -212,41 +211,9 @@ ICollection *Sistema::listarInmobiliarias()
     return resultado;
 }
 
-ICollection* Sistema::listarPublicaciones(string tipo, float precioMin, float precioMax, opciones interes) {
-    ICollection* resultado = new List();
- 
-    // mensaje 1* [foreach] pub := next — visibilidad <<association>>
-    // Sistema itera su coleccion de publicaciones
-    IIterator* it = this->publicaciones->getIterator();
- 
-    while (it->hasCurrent()) {
-        // pub se obtiene de la iteracion — visibilidad <<local>>
-        Publicacion* pub = dynamic_cast<Publicacion*>(it->getCurrent());
- 
-        // mensaje 2*: esActiva():bool — visibilidad <<local>>
-        if (pub->esActiva()) {
- 
-            // mensaje 3* [activa]: precioFranja(precioMin, precioMax):bool — visibilidad <<local>>
-            if (pub->precioFranja(precioMin, precioMax)) {
- 
-                // mensaje 4* [precio]: compararInteres(interes):bool — visibilidad <<local>>
-                // internamente navega Administra → Inmueble (mensajes 4.1* y 4.1.1*)
-                if (pub->compararInteres(interes)) {
- 
-                    // mensaje 5* [Interesado]: getNickInmo():string — visibilidad <<local>>
-                    // internamente navega Administra → Inmobiliaria (mensajes 5.1* y 5.1.1*)
-                    // mensaje 6* [nickname]: getPublicacion():DTPublicacion — visibilidad <<local>>
-                    DTPublicacion* dt = pub->getPublicacion();
-                    resultado->add(dt);
-                }
-            }
-        }
- 
-        it->next();
-    }
- 
-    delete it;
-    return resultado;
+ICollection *Sistema::listarPublicaciones(string, float, float, Opciones)
+{
+    return new List();
 }
 
 DTEspecifica *Sistema::listarEspecifica(int codigoPubli)
@@ -298,19 +265,19 @@ DTInmueble *Sistema::mostrarDetalle(int identificador)
     // mensajes 2 al 6 — visibilidad <<local>>
     // inmu se obtuvo del find, por eso es local
     // cada getter le pide al inmueble sus propios datos
-    direccion dir = inmu->getDireccion();
-    fecha anio = inmu->getAnoConstruc();
+    Direccion dir = inmu->getDireccion();
+    Fecha anio = inmu->getAnoConstruc();
     int codigo = inmu->getIdentificador();
-    tipoInmueble tipo = inmu->getTipo();
+    TipoInmueble tipo = inmu->getTipo();
 
     return new DTInmueble(codigo, dir, anio, tipo);
 }
 
 Status Sistema::eliminarInmueble(int id)
 {
-    Integer* keyInmueble = new Integer(id);
+    Integer *keyInmueble = new Integer(id);
 
-    Inmueble* inmu = dynamic_cast<Inmueble*>(this->inmuebles->find(keyInmueble));
+    Inmueble *inmu = dynamic_cast<Inmueble *>(this->inmuebles->find(keyInmueble));
 
     if (inmu == nullptr)
     {
@@ -318,15 +285,15 @@ Status Sistema::eliminarInmueble(int id)
         return Status::ERROR;
     }
 
-    ICollection* colPublicaciones = inmu->prepararEliminacion();
+    ICollection *colPublicaciones = inmu->prepararEliminacion();
 
     if (colPublicaciones != nullptr)
     {
-        IIterator* it = colPublicaciones->getIterator();
+        IIterator *it = colPublicaciones->getIterator();
 
         while (it->hasCurrent())
         {
-            Publicacion* pub = dynamic_cast<Publicacion*>(it->getCurrent());
+            Publicacion *pub = dynamic_cast<Publicacion *>(it->getCurrent());
 
             it->next();
 
@@ -334,7 +301,7 @@ Status Sistema::eliminarInmueble(int id)
             {
                 pub->eliminarAgendas();
 
-                Integer* keyPub = new Integer(pub->getCodigo());
+                Integer *keyPub = new Integer(pub->getCodigo());
                 this->publicaciones->remove(keyPub);
                 delete keyPub;
 
@@ -373,24 +340,35 @@ ICollection *Sistema::listarInmueblesRepresentados(string nickname)
     return inmo->getInmueblesRepresentados();
 }
 
-Status Sistema::altaAdministracion(int)
+Status Sistema::altaAdministracion(int identificador)
 {
+    if (inmoSeleccionada == nullptr)
+        return Status::ERROR;
 
-    return Status::OK;
+    Integer *key = new Integer(identificador);
+    Inmueble *inm = dynamic_cast<Inmueble *>(inmuebles->find(key));
+    delete key;
+
+    if (inm == nullptr)
+        return Status::ERROR;
+
+    Fecha fechaActual = obtenerFechaActual();
+
+    return inmoSeleccionada->crearAdministra(inm, fechaActual);
 }
 
-fecha Sistema ::obtenerFechaActual()
+Fecha Sistema ::obtenerFechaActual()
 {
     time_t t = time(nullptr);
     tm *now = localtime(&t);
 
-    return fecha(
+    return Fecha(
         now->tm_mday,
         now->tm_mon + 1,
         now->tm_year + 1900);
 }
 
-Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string texto,
+Status Sistema ::altaPublicacion(int identificador, TipoPublicacion tipo, string texto,
                                  float precio)
 {
     if (inmoSeleccionada == NULL)
@@ -400,7 +378,7 @@ Status Sistema ::altaPublicacion(int identificador, tipoPublicacion tipo, string
     if (adm == NULL)
         return Status ::ERROR;
 
-    fecha fechaHoy = obtenerFechaActual();
+    Fecha fechaHoy = obtenerFechaActual();
 
     if (adm->existePubAciva(tipo, fechaHoy))
         return Status ::ERROR;

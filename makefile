@@ -16,7 +16,7 @@ SRC = \
 	Cliente.cpp \
 	Propietario.cpp \
 	Inmobiliaria.cpp \
-	inmueble.cpp \
+	Inmueble.cpp \
 	Casa.cpp \
 	Apartamento.cpp \
 	Administra.cpp \

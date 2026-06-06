@@ -1,9 +1,9 @@
 #include "DTPublicacion.h"
 
 DTPublicacion::DTPublicacion()
-    : activa(false), codigoPubli(0), fechaPubli(), textoDescriptivo(""), precio(0), nomInmo(""), tipoPublicacion(tipoPublicacion::Venta), tipoInmueble(tipoInmueble::Casa) {}
+    : activa(false), codigoPubli(0), fechaPubli(), textoDescriptivo(""), precio(0), nomInmo(""), tipoPublicacion(TipoPublicacion::Venta), tipoInmueble(TipoInmueble::Casa) {}
 
-DTPublicacion::DTPublicacion(bool activa, int codigoPubli, fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::tipoPublicacion tipoPublicacion, ::tipoInmueble tipoInmueble)
+DTPublicacion::DTPublicacion(bool activa, int codigoPubli, Fecha fechaPubli, string textoDescriptivo, float precio, string nomInmo, ::TipoPublicacion tipoPublicacion, ::TipoInmueble tipoInmueble)
     : activa(activa), codigoPubli(codigoPubli), fechaPubli(fechaPubli), textoDescriptivo(textoDescriptivo), precio(precio), nomInmo(nomInmo), tipoPublicacion(tipoPublicacion), tipoInmueble(tipoInmueble) {}
 
 bool DTPublicacion::getActiva()
@@ -16,7 +16,7 @@ int DTPublicacion::getCodigoPubli()
     return codigoPubli;
 }
 
-fecha DTPublicacion::getFechaPubli()
+Fecha DTPublicacion::getFechaPubli()
 {
     return fechaPubli;
 }
@@ -36,12 +36,12 @@ string DTPublicacion::getNomInmo()
     return nomInmo;
 }
 
-::tipoPublicacion DTPublicacion::getTipoPublicacion()
+::TipoPublicacion DTPublicacion::getTipoPublicacion()
 {
     return tipoPublicacion;
 }
 
-::tipoInmueble DTPublicacion::getTipoInmueble()
+::TipoInmueble DTPublicacion::getTipoInmueble()
 {
     return tipoInmueble;
 }
