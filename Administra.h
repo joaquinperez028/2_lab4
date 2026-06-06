@@ -7,6 +7,7 @@
 #include "Publicacion.h"
 #include "Datatypes/DTEspecifica.h"
 #include "Datatypes/DTAdministrados.h"
+#include "Datatypes/Opciones.h"
 
 class Inmobiliaria;
 class Inmueble;
@@ -35,7 +36,7 @@ public:
     DTEspecifica *getAdministra();
     ICollection* getPublicaciones();
     string getInmo();
-    bool compararInteres(opciones interes);
+    bool compararInteres(Opciones interes);
 };
 
 #endif

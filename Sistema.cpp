@@ -13,6 +13,7 @@
 #include "Datatypes/TipoTecho.h"
 #include "Publicacion.h"
 #include <ctime>
+#include "Datatypes/DTPublicacion.h"
 
 Sistema *Sistema::instance = nullptr;
 
@@ -176,14 +177,12 @@ void Sistema::asociarPropietario(string nickname)
         return;
     }
 
-    // mensaje 1: p := find(nickname) — visibilidad <<association>>
     Propietario *propietario = dynamic_cast<Propietario *>(this->buscarPorNickname(nickname));
     if (propietario == nullptr)
     {
         return;
     }
 
-    // mensaje 2: inmo.asociarPropietario(p) — inmo es la recordada en altaInmobiliaria
     this->inmoRecordada->asociarPropietario(propietario);
     propietario->asociarInmobiliaria(this->inmoRecordada);
 }
@@ -211,16 +210,47 @@ ICollection *Sistema::listarInmobiliarias()
     return resultado;
 }
 
-ICollection *Sistema::listarPublicaciones(string, float, float, Opciones)
-{
-    return new List();
+
+ICollection* Sistema::listarPublicaciones(string tipo, float precioMin, float precioMax, Opciones interes) {
+    ICollection* resultado = new List();
+ 
+    // mensaje 1* [foreach] pub := next — visibilidad <<association>>
+    // Sistema itera su coleccion de publicaciones
+    IIterator* it = this->publicaciones->getIterator();
+ 
+    while (it->hasCurrent()) {
+        // pub se obtiene de la iteracion — visibilidad <<local>>
+        Publicacion* pub = dynamic_cast<Publicacion*>(it->getCurrent());
+ 
+        // mensaje 2*: esActiva():bool — visibilidad <<local>>
+        if (pub->esActiva()) {
+ 
+            // mensaje 3* [activa]: precioFranja(precioMin, precioMax):bool — visibilidad <<local>>
+            if (pub->precioFranja(precioMin, precioMax)) {
+ 
+                // mensaje 4* [precio]: compararInteres(interes):bool — visibilidad <<local>>
+                // internamente navega Administra → Inmueble (mensajes 4.1* y 4.1.1*)
+                if (pub->compararInteres(interes)) {
+ 
+                    // mensaje 5* [Interesado]: getNickInmo():string — visibilidad <<local>>
+                    // internamente navega Administra → Inmobiliaria (mensajes 5.1* y 5.1.1*)
+                    // mensaje 6* [nickname]: getPublicacion():DTPublicacion — visibilidad <<local>>
+                    DTPublicacion* dt = pub->getPublicacion();
+                    resultado->add(dt);
+                }
+            }
+        }
+ 
+        it->next();
+    }
+ 
+    delete it;
+    return resultado;
 }
 
 DTEspecifica *Sistema::listarEspecifica(int codigoPubli)
 {
 
-    // mensaje 1: pub := find(codigoPubli) — visibilidad <<association>>
-    // Sistema tiene IDictionary* publicaciones como atributo
     Integer *key = new Integer(codigoPubli);
     Publicacion *pub = dynamic_cast<Publicacion *>(this->publicaciones->find(key));
     delete key;
@@ -228,8 +258,6 @@ DTEspecifica *Sistema::listarEspecifica(int codigoPubli)
     if (pub == nullptr)
         return nullptr;
 
-    // mensaje 2: dt := getDTEspecifica() — visibilidad <<local>>
-    // pub se obtuvo del find, por eso es local
     return pub->getDTEspecifica();
 }
 
@@ -253,8 +281,6 @@ ICollection *Sistema::listarPropiedades()
 DTInmueble *Sistema::mostrarDetalle(int identificador)
 {
 
-    // mensaje 1: inmu := find(Identificador) — visibilidad <<association>>
-    // Sistema tiene IDictionary* inmuebles como atributo
     Integer *key = new Integer(identificador);
     Inmueble *inmu = dynamic_cast<Inmueble *>(this->inmuebles->find(key));
     delete key;

@@ -2,6 +2,7 @@
 #include "Propietario.h"
 #include "Administra.h"
 #include "Inmobiliaria.h"
+#include "Datatypes/Opciones.h"
 #include <string>
 
 // Constructor
@@ -109,12 +110,12 @@ ICollection *Inmueble::prepararEliminacion()
     return publicaciones;
 }
 
-bool Inmueble::compararInteres(opciones interes) {
-    if (interes == opciones::Todos)
+bool Inmueble::compararInteres(Opciones interes) {
+    if (interes == Opciones::Todos)
         return true;
-    if (interes == opciones::InteresApto && this->tipo == tipoInmueble::Apartamento)
+    if (interes == Opciones::InteresApto && this->tipo == TipoInmueble::Apartamento)
         return true;
-    if (interes == opciones::InteresCasa && this->tipo == tipoInmueble::Casa)
+    if (interes == Opciones::InteresCasa && this->tipo == TipoInmueble::Casa)
         return true;
     return false;
 }

@@ -28,8 +28,6 @@ private:
     int ultimoCodigoPub;
     Usuario *buscarPorNickname(string nickname);
     Inmobiliaria *inmoSeleccionada;
-    string getNickInmo();
-    DTPublicacion* getPublicacion();
 
 public:
     ~Sistema();

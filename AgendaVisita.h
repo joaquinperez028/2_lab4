@@ -2,6 +2,7 @@
 #define AGENDAVISITA_H
 
 #include "Datatypes/Fecha.h"
+#include "ICollection/interfaces/ICollectible.h"
 #include <string>
 
 using namespace std;

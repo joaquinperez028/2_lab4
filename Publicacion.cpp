@@ -6,6 +6,7 @@
 #include "AgendaVisita.h"
 #include "ICollection/collections/List.h"
 #include "ICollection/interfaces/IIterator.h"
+#include "Datatypes/DTPublicacion.h"
 
 using namespace std;
 
@@ -124,4 +125,23 @@ void Publicacion::eliminarAgendas()
     delete it;
     delete this->agendas;
     this->agendas = nullptr;
+}
+
+string Publicacion::getNickInmo()
+{
+    return this->administra->getInmo();
+}
+
+DTPublicacion *Publicacion::getPublicacion()
+{
+    string nickInmo = this->getNickInmo();
+    return new DTPublicacion(
+        this->activa,
+        this->codigo,
+        this->fechaPublicacion,
+        this->texto,
+        this->precio,
+        nickInmo,
+        this->tipo,
+        this->administra->getInmueble()->getTipo());
 }

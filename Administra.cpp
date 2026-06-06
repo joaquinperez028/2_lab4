@@ -98,6 +98,6 @@ string Administra::getInmo() {
     return this->inmobiliaria->getNickName();
 }
 
-bool Administra::compararInteres(opciones interes) {
+bool Administra::compararInteres(Opciones interes) {
     return this->inmueble->compararInteres(interes); // mensaje 4.1.1*
 }

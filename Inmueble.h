@@ -8,6 +8,7 @@
 #include "Datatypes/DTInmueble.h"
 #include "Datatypes/DTEspecifica.h"
 #include "Datatypes/DTInfoInmueble.h"
+#include "Datatypes/Opciones.h"
 #include "ICollection.h"
 
 using namespace std;
@@ -47,6 +48,7 @@ public:
 
     void asociarAdministra(Administra *adm);
     ICollection *prepararEliminacion();
+    bool compararInteres(Opciones interes);
 };
 
 #endif
