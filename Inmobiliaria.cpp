@@ -212,5 +212,31 @@ ICollection *Inmobiliaria ::getAdministras()
 
 ICollection *Inmobiliaria::getInmueblesRepresentados()
 {
-    return new List();
+    ICollection *resultado = new List();
+
+    if (this->propietarios == nullptr)
+        return resultado;
+
+    IIterator *it = this->propietarios->getIterator();
+    while (it->hasCurrent())
+    {
+        Propietario *prop = dynamic_cast<Propietario *>(it->getCurrent());
+        if (prop != nullptr)
+        {
+            ICollection *inmueblesProp = prop->listarInmueblesPropiedad();
+            IIterator *itInm = inmueblesProp->getIterator();
+
+            while (itInm->hasCurrent())
+            {
+                resultado->add(itInm->getCurrent());
+                itInm->next();
+            }
+            delete itInm;
+            delete inmueblesProp;
+        }
+        it->next();
+    }
+    delete it;
+
+    return resultado;
 }

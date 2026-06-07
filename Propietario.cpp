@@ -102,6 +102,26 @@ void Propietario::limpiarInmuebles(Sistema *sistema)
     delete codigos;
 }
 
+ICollection *Propietario::listarInmueblesPropiedad()
+{
+    ICollection *lista = new List();
+
+    if (this->inmuebles == nullptr)
+        return lista;
+
+    IIterator *it = this->inmuebles->getIterator();
+    while (it->hasCurrent())
+    {
+        Inmueble *inm = dynamic_cast<Inmueble *>(it->getCurrent());
+        if (inm != nullptr)
+            lista->add(inm->getDTPropiedad());
+        it->next();
+    }
+    delete it;
+
+    return lista;
+}
+
 void Propietario::removerPropietario(Inmueble *inmueble)
 {
     if (inmueble == nullptr || this->inmuebles == nullptr)

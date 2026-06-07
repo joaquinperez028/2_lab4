@@ -88,11 +88,12 @@ static void mostrarMenu()
     cout << " 2. Caso de uso 2 - Alta de publicacion" << endl;
     cout << " 3. Caso de uso 3 - Consulta de publicaciones" << endl;
     cout << " 4. Caso de uso 4 - Eliminar inmueble" << endl;
-    cout << " 5. Cargar datos de prueba" << endl;
-    cout << " 6. Listar propietarios" << endl;
-    cout << " 7. Listar inmuebles" << endl;
-    cout << " 8. Listar publicaciones" << endl;
-    cout << " 9. Alta inmueble a propietario existente" << endl;
+    cout << " 5. Caso de uso 5 - Alta de administracion" << endl;
+    cout << " 6. Cargar datos de prueba" << endl;
+    cout << " 7. Listar propietarios" << endl;
+    cout << " 8. Listar inmuebles" << endl;
+    cout << " 9. Listar publicaciones" << endl;
+    cout << "10. Alta inmueble a propietario existente" << endl;
     cout << " 0. Salir" << endl;
     cout << "==========================" << endl;
     cout << "Ingrese una opcion: ";
@@ -645,6 +646,95 @@ static void casoDeUso4(ISistema *sistema)
     delete propiedades;
 }
 
+static void casoDeUso5(ISistema *sistema)
+{
+    cout << "\n--- Caso de uso 5: Alta de administracion ---" << endl;
+
+    ICollection *inmobiliarias = sistema->listarInmobiliarias();
+    IIterator *itInmo = inmobiliarias->getIterator();
+    bool hayInmobiliarias = false;
+
+    cout << "\nInmobiliarias registradas:" << endl;
+    while (itInmo->hasCurrent())
+    {
+        Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(itInmo->getCurrent());
+        if (inmo != nullptr)
+        {
+            cout << "  Nickname: " << inmo->getNickName()
+                 << " | Nombre: " << inmo->getNombre() << endl;
+            hayInmobiliarias = true;
+        }
+        itInmo->next();
+    }
+    delete itInmo;
+
+    if (!hayInmobiliarias)
+    {
+        cout << "  (No hay inmobiliarias registradas)" << endl;
+        delete inmobiliarias;
+        return;
+    }
+
+    string nickInmo = leerTextoValido("Ingrese nickname de la inmobiliaria: ", false);
+
+    ICollection *inmuebles = sistema->listarInmueblesRepresentados(nickInmo);
+    if (inmuebles == nullptr)
+    {
+        cout << "Inmobiliaria no encontrada." << endl;
+        delete inmobiliarias;
+        return;
+    }
+
+    IIterator *itInm = inmuebles->getIterator();
+    bool hayInmuebles = false;
+
+    cout << "\nInmuebles de propietarios representados por la inmobiliaria:" << endl;
+    while (itInm->hasCurrent())
+    {
+        DTPropiedad *dt = dynamic_cast<DTPropiedad *>(itInm->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  " << *dt << endl;
+            hayInmuebles = true;
+        }
+        itInm->next();
+    }
+    delete itInm;
+
+    if (!hayInmuebles)
+    {
+        cout << "  (No hay inmuebles de propietarios representados por esta inmobiliaria)" << endl;
+        IIterator *itClean = inmuebles->getIterator();
+        while (itClean->hasCurrent())
+        {
+            delete itClean->getCurrent();
+            itClean->next();
+        }
+        delete itClean;
+        delete inmuebles;
+        delete inmobiliarias;
+        return;
+    }
+
+    int codigoInmueble = leerEntero("Ingrese codigo del inmueble a administrar: ");
+
+    Status st = sistema->altaAdministracion(codigoInmueble);
+    if (st == Status::OK)
+        cout << "Alta administracion: OK (fecha de comienzo: fecha actual)" << endl;
+    else
+        cout << "Alta administracion: ERROR (inmobiliaria o inmueble invalido, o ya administrado)" << endl;
+
+    IIterator *itClean = inmuebles->getIterator();
+    while (itClean->hasCurrent())
+    {
+        delete itClean->getCurrent();
+        itClean->next();
+    }
+    delete itClean;
+    delete inmuebles;
+    delete inmobiliarias;
+}
+
 static void listarPropietarios(ISistema *sistema)
 {
     cout << "\n--- Listado de propietarios ---" << endl;
@@ -900,12 +990,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     }
 
     cout << "Alta inmueble: OK (codigo " << codigoInmueble << ")" << endl;
-
-    Status stAdm = sistema->altaAdministracion(codigoInmueble);
-    if (stAdm == Status::OK)
-        cout << "Administracion creada: el inmueble queda disponible para alta de publicacion." << endl;
-    else
-        cout << "Alta administracion: ERROR (no se pudo asociar el inmueble a la inmobiliaria)" << endl;
+    cout << "Use el caso de uso 5 para dar de alta la administracion del inmueble." << endl;
 
     IIterator *itClean = propietarios->getIterator();
     while (itClean->hasCurrent())
@@ -958,18 +1043,21 @@ int main()
             casoDeUso4(sistema);
             break;
         case 5:
-            cargarDatosPrueba(sistema);
+            casoDeUso5(sistema);
             break;
         case 6:
-            listarPropietarios(sistema);
+            cargarDatosPrueba(sistema);
             break;
         case 7:
-            listarInmuebles(sistema);
+            listarPropietarios(sistema);
             break;
         case 8:
-            listarPublicaciones(sistema);
+            listarInmuebles(sistema);
             break;
         case 9:
+            listarPublicaciones(sistema);
+            break;
+        case 10:
             altaInmueblePropietarioExistente(sistema);
             break;
         case 0:
