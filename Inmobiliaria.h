@@ -34,6 +34,9 @@ public:
     string getTelefono();
     string getUrl();
     void asociarPropietario(Propietario *propietario);
+    void desasociarPropietario(Propietario *propietario);
+    void limpiarPropietarios();
+    void limpiarAdministraciones();
     Status crearAdministra(Inmueble *inmu, Fecha fechaHoy);
     void removerInmobiliaria(Inmueble *);
     void eliminarAdministracion(int identificador, Inmueble *inmueble);

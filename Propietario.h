@@ -17,6 +17,8 @@ class Inmobiliaria;
 class Casa;
 class Apartamento;
 
+class Sistema;
+
 class Propietario : public Usuario
 {
 protected:
@@ -34,7 +36,9 @@ public:
     string getBanco();
     string getTelefono();
     void asociarInmobiliaria(Inmobiliaria *inmobiliaria);
+    void desasociarInmobiliaria();
     Inmobiliaria *getInmobiliaria();
+    void limpiarInmuebles(Sistema *sistema);
     void removerPropietario(Inmueble *);
     Casa *crearCasa(Direccion, float, Fecha, int, TipoTecho, bool);
     Apartamento *crearApto(Direccion, float, Fecha, int, int, bool, float);

@@ -18,6 +18,7 @@
 #include "Datatypes/DTApartamento.h"
 #include "ICollection/interfaces/IIterator.h"
 #include "Inmobiliaria.h"
+#include "Sistema.h"
 
 using namespace std;
 
@@ -91,6 +92,7 @@ static void mostrarMenu()
     cout << " 6. Listar propietarios" << endl;
     cout << " 7. Listar inmuebles" << endl;
     cout << " 8. Listar publicaciones" << endl;
+    cout << " 9. Alta inmueble a propietario existente" << endl;
     cout << " 0. Salir" << endl;
     cout << "==========================" << endl;
     cout << "Ingrese una opcion: ";
@@ -159,6 +161,78 @@ static bool contieneCaracter(const string &texto, char c)
             return true;
     }
     return false;
+}
+
+static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
+{
+    codigoInmueble = -1;
+
+    int numPuerta = leerEntero("Numero de puerta: ");
+    string calle = leerTextoValido("Calle: ", true);
+    string localidad = leerTextoValido("Localidad: ", true);
+    string departamento = leerTextoValido("Departamento: ", true);
+    Direccion dir(numPuerta, calle, localidad, departamento);
+
+    float superficie = leerFloat("Superficie (m2): ");
+
+    int dia = leerEntero("Dia construccion: ");
+    int mes = leerEntero("Mes construccion: ");
+    int anio = leerEntero("Año construccion: ");
+    Fecha f(dia, mes, anio);
+
+    cout << "Tipo de inmueble: \n1- Casa   \n2- Apartamento \nOpcion: ";
+    int tipoInm = 0;
+    while (true)
+    {
+        if (cin >> tipoInm && (tipoInm == 1 || tipoInm == 2))
+        {
+            consumirSaltoLinea();
+            break;
+        }
+        cout << "Opcion invalida. Elija 1 o 2: ";
+        cin.clear();
+        consumirSaltoLinea();
+    }
+
+    Status stInm = Status::ERROR;
+    if (tipoInm == 1)
+    {
+        bool esPH = leerSiNo("¿Es propiedad horizontal (pH)?");
+
+        cout << "Tipo de techo: \n1- Liviano  \n2- Dos aguas  \n3- Plano \nOpciones: ";
+        int ttec = 0;
+        while (true)
+        {
+            if (cin >> ttec && ttec >= 1 && ttec <= 3)
+            {
+                consumirSaltoLinea();
+                break;
+            }
+            cout << "Opcion invalida. Elija 1, 2 o 3: ";
+            cin.clear();
+            consumirSaltoLinea();
+        }
+        TipoTecho techo = TipoTecho::Liviano;
+        if (ttec == 2)
+            techo = TipoTecho::DosAguas;
+        else if (ttec == 3)
+            techo = TipoTecho::Plano;
+
+        stInm = sistema->altaCasa(dir, superficie, f, techo, esPH);
+    }
+    else
+    {
+        int numPiso = leerEntero("Numero de piso: ");
+        bool ascensor = leerSiNo("¿Posee ascensor?");
+        float gastosComunes = leerFloat("Gastos comunes: ");
+
+        stInm = sistema->altaApto(dir, superficie, f, numPiso, ascensor, gastosComunes);
+    }
+
+    if (stInm == Status::OK)
+        codigoInmueble = sistema->obtenerUltimoCodigoInmueble();
+
+    return stInm;
 }
 
 static void casoDeUso1(ISistema *sistema){
@@ -235,68 +309,8 @@ static void casoDeUso1(ISistema *sistema){
                 while (seguir)
                 {
                     cout << "\n--- Alta inmueble del propietario ---" << endl;
-                    // Direccion
-                    int numPuerta = leerEntero("Numero de puerta: ");
-                    string calle = leerTextoValido("Calle: ", true);
-                    string localidad = leerTextoValido("Localidad: ", true);
-                    string departamento = leerTextoValido("Departamento: ", true);
-                    Direccion dir(numPuerta, calle, localidad, departamento);
-
-                    float superficie = leerFloat("Superficie (m2): ");
-
-                    int dia = leerEntero("Dia construccion: ");
-                    int mes = leerEntero("Mes construccion: ");
-                    int anio = leerEntero("Año construccion: ");
-                    Fecha f(dia, mes, anio);
-
-                    cout << "Tipo de inmueble: \n1- Casa   \n2- Apartamento \nOpcion: ";
-                    int tipoInm = 0;
-                    while (true)
-                    {
-                        if (cin >> tipoInm && (tipoInm == 1 || tipoInm == 2))
-                        {
-                            consumirSaltoLinea();
-                            break;
-                        }
-                        cout << "Opcion invalida. Elija 1 o 2: ";
-                        cin.clear();
-                        consumirSaltoLinea();
-                    }
-
-                    Status stInm = Status::ERROR;
-                    if (tipoInm == 1)
-                    {
-                        bool esPH = leerSiNo("¿Es propiedad horizontal (pH)?");
-
-                        cout << "Tipo de techo: \n1- Liviano  \2- Dos aguas  \n3- Plano \nOpciones: ";
-                        int ttec = 0;
-                        while (true)
-                        {
-                            if (cin >> ttec && ttec >= 1 && ttec <= 3)
-                            {
-                                consumirSaltoLinea();
-                                break;
-                            }
-                            cout << "Opcion invalida. Elija 1, 2 o 3: ";
-                            cin.clear();
-                            consumirSaltoLinea();
-                        }
-                        TipoTecho techo = TipoTecho::Liviano;
-                        if (ttec == 2)
-                            techo = TipoTecho::DosAguas;
-                        else if (ttec == 3)
-                            techo = TipoTecho::Plano;
-
-                        stInm = sistema->altaCasa(dir, superficie, f, techo, esPH);
-                    }
-                    else
-                    {
-                        int numPiso = leerEntero("Numero de piso: ");
-                        bool ascensor = leerSiNo("¿Posee ascensor?");
-                        float gastosComunes = leerFloat("Gastos comunes: ");
-
-                        stInm = sistema->altaApto(dir, superficie, f, numPiso, ascensor, gastosComunes);
-                    }
+                    int codigoInmueble = -1;
+                    Status stInm = registrarInmueble(sistema, codigoInmueble);
 
                     cout << (stInm == Status::OK ? "Alta inmueble: OK" : "Alta inmueble: ERROR (verifique propietario recordado)") << endl;
 
@@ -796,6 +810,128 @@ static void cargarDatosPrueba(ISistema *sistema)
     cout << "Datos de prueba cargados." << endl;
 }
 
+static void altaInmueblePropietarioExistente(ISistema *sistema)
+{
+    cout << "\n--- Alta inmueble a propietario existente ---" << endl;
+
+    ICollection *inmobiliarias = sistema->listarInmobiliarias();
+    IIterator *itInmo = inmobiliarias->getIterator();
+    bool hayInmobiliarias = false;
+
+    cout << "\nInmobiliarias registradas:" << endl;
+    while (itInmo->hasCurrent())
+    {
+        Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(itInmo->getCurrent());
+        if (inmo != nullptr)
+        {
+            cout << "  Nickname: " << inmo->getNickName()
+                 << " | Nombre: " << inmo->getNombre() << endl;
+            hayInmobiliarias = true;
+        }
+        itInmo->next();
+    }
+    delete itInmo;
+
+    if (!hayInmobiliarias)
+    {
+        cout << "  (No hay inmobiliarias registradas)" << endl;
+        delete inmobiliarias;
+        return;
+    }
+
+    string nickInmo = leerTextoValido("Ingrese nickname de la inmobiliaria: ", false);
+
+    ICollection *administrados = sistema->seleccionarInmobiliaria(nickInmo);
+    if (administrados == nullptr)
+    {
+        cout << "Inmobiliaria no encontrada." << endl;
+        delete inmobiliarias;
+        return;
+    }
+    delete administrados;
+
+    ICollection *propietarios = sistema->listarPropietarios();
+    IIterator *itProp = propietarios->getIterator();
+    bool hayPropietarios = false;
+
+    cout << "\nPropietarios registrados:" << endl;
+    while (itProp->hasCurrent())
+    {
+        DTPropietario *dt = dynamic_cast<DTPropietario *>(itProp->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  " << *dt << endl;
+            hayPropietarios = true;
+        }
+        itProp->next();
+    }
+    delete itProp;
+
+    if (!hayPropietarios)
+    {
+        cout << "  (No hay propietarios registrados)" << endl;
+        delete propietarios;
+        delete inmobiliarias;
+        return;
+    }
+
+    string nickProp = leerTextoValido("Ingrese nickname del propietario: ", false);
+
+    if (sistema->seleccionarPropietario(nickProp) != Status::OK)
+    {
+        cout << "Propietario no encontrado." << endl;
+        delete propietarios;
+        delete inmobiliarias;
+        return;
+    }
+
+    sistema->asociarPropietario(nickProp);
+    cout << "Propietario asociado a la inmobiliaria " << nickInmo << "." << endl;
+
+    int codigoInmueble = -1;
+    Status stInm = registrarInmueble(sistema, codigoInmueble);
+
+    if (stInm != Status::OK)
+    {
+        cout << "Alta inmueble: ERROR (verifique propietario seleccionado)" << endl;
+        delete propietarios;
+        delete inmobiliarias;
+        return;
+    }
+
+    cout << "Alta inmueble: OK (codigo " << codigoInmueble << ")" << endl;
+
+    Status stAdm = sistema->altaAdministracion(codigoInmueble);
+    if (stAdm == Status::OK)
+        cout << "Administracion creada: el inmueble queda disponible para alta de publicacion." << endl;
+    else
+        cout << "Alta administracion: ERROR (no se pudo asociar el inmueble a la inmobiliaria)" << endl;
+
+    IIterator *itClean = propietarios->getIterator();
+    while (itClean->hasCurrent())
+    {
+        delete itClean->getCurrent();
+        itClean->next();
+    }
+    delete itClean;
+    delete propietarios;
+    delete inmobiliarias;
+}
+
+static void borrarSistemaCompleto(ISistema *sistema)
+{
+    cout << "\n--- Borrando sistema y todas sus colecciones ---" << endl;
+
+    Sistema *s = dynamic_cast<Sistema *>(sistema);
+    if (s != nullptr)
+    {
+        s->limpiarInmuebles();
+        s->limpiarUsuarios();
+    }
+
+    cout << "Sistema borrado correctamente." << endl;
+}
+
 int main()
 {
     ISistema *sistema = Factory::getSistema();
@@ -833,7 +969,11 @@ int main()
         case 8:
             listarPublicaciones(sistema);
             break;
+        case 9:
+            altaInmueblePropietarioExistente(sistema);
+            break;
         case 0:
+            borrarSistemaCompleto(sistema);
             cout << "Saliendo..." << endl;
             break;
         default:

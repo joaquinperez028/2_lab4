@@ -30,6 +30,8 @@ public:
     virtual Status altaApto(Direccion, float, Fecha, int, bool, float) = 0;
     virtual Status altaInmobiliaria(string, string, string, string, Direccion, string, string) = 0;
     virtual ICollection *listarPropietarios() = 0;
+    virtual Status seleccionarPropietario(string) = 0;
+    virtual int obtenerUltimoCodigoInmueble() = 0;
     virtual void asociarPropietario(string) = 0;
     virtual ICollection *listarInmobiliarias() = 0;
     virtual ICollection *seleccionarInmobiliaria(string) = 0;

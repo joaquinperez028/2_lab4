@@ -22,9 +22,14 @@ Inmobiliaria::Inmobiliaria(string nickname, string nombre, string contrasenia, s
 
 Inmobiliaria::~Inmobiliaria()
 {
+    limpiarPropietarios();
+    limpiarAdministraciones();
     delete propietarios;
     delete inmuebles;
     delete administraciones;
+    propietarios = nullptr;
+    inmuebles = nullptr;
+    administraciones = nullptr;
 }
 
 string Inmobiliaria::getEmail()
@@ -54,6 +59,62 @@ void Inmobiliaria::asociarPropietario(Propietario *propietario)
         return;
     }
     this->propietarios->add(new String(propietario->getNickName().c_str()), propietario);
+}
+
+void Inmobiliaria::desasociarPropietario(Propietario *propietario)
+{
+    if (this->propietarios == nullptr || propietario == nullptr)
+        return;
+
+    String *key = new String(propietario->getNickName().c_str());
+    this->propietarios->remove(key);
+    delete key;
+}
+
+void Inmobiliaria::limpiarPropietarios()
+{
+    if (this->propietarios == nullptr)
+        return;
+
+    delete this->propietarios;
+    this->propietarios = new OrderedDictionary();
+}
+
+void Inmobiliaria::limpiarAdministraciones()
+{
+    if (this->administraciones == nullptr)
+        return;
+
+    ICollection *pendientes = new List();
+    IIterator *it = this->administraciones->getIterator();
+
+    while (it->hasCurrent())
+    {
+        pendientes->add(it->getCurrent());
+        it->next();
+    }
+    delete it;
+
+    IIterator *itA = pendientes->getIterator();
+    while (itA->hasCurrent())
+    {
+        Administra *adm = dynamic_cast<Administra *>(itA->getCurrent());
+        itA->next();
+
+        if (adm != nullptr)
+        {
+            Inmueble *inm = adm->getInmueble();
+            if (inm != nullptr)
+            {
+                Integer *key = new Integer(inm->getIdentificador());
+                this->administraciones->remove(key);
+                delete key;
+            }
+            delete adm;
+        }
+    }
+    delete itA;
+    delete pendientes;
 }
 
 Status Inmobiliaria::crearAdministra(Inmueble *inmu, Fecha fechaHoy)

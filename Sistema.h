@@ -39,6 +39,8 @@ public:
     Status altaApto(Direccion, float, Fecha, int, bool, float) override;                 // MATIAS
     Status altaInmobiliaria(string, string, string, string, Direccion, string, string) override; // TORTU
     ICollection *listarPropietarios() override;                                          // YANI
+    Status seleccionarPropietario(string) override;
+    int obtenerUltimoCodigoInmueble() override;
     void asociarPropietario(string) override;                                            // TORTU
     ICollection *listarInmobiliarias() override;                                         // FRAN
     ICollection *seleccionarInmobiliaria(string) override;                               // DIEGO
@@ -51,6 +53,9 @@ public:
     ICollection *listarInmueblesRepresentados(string) override; // FRAN
     Status altaAdministracion(int identificador) override;
     Fecha obtenerFechaActual(); // DIEGo
+    void limpiarInmuebles();
+    void limpiarPublicaciones();
+    void limpiarUsuarios();
 };
 
 #endif

@@ -28,6 +28,7 @@ public:
     Inmueble *getInmueble();
 
     void agregarPublicacion(Publicacion *pub);
+    void limpiarPublicaciones();
     bool existePubAciva(TipoPublicacion tipo, Fecha fechaHoy);
     Publicacion *crearPublicacion(int codigo, TipoPublicacion tipo, std::string texto, float precio,
                                   Fecha fechaHoy);

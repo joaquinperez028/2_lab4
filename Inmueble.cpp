@@ -21,7 +21,8 @@ Inmueble::Inmueble(Direccion dir, float superficie, Fecha anoConstruc, int ident
 // Destructor virtual — necesario para polimorfismo con punteros
 Inmueble::~Inmueble()
 {
-    this->propietario = nullptr;
+    desasociarPropietario();
+    desasociarAdministra();
 }
 
 // --- Getters ---
@@ -62,6 +63,11 @@ Propietario *Inmueble::getPropietario() const
 void Inmueble::asociarPropietario(Propietario *p)
 {
     this->propietario = p;
+}
+
+void Inmueble::desasociarPropietario()
+{
+    this->propietario = nullptr;
 }
 
 Administra *Inmueble::getAdministra() const

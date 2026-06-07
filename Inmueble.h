@@ -41,6 +41,7 @@ public:
     Propietario *getPropietario() const;
 
     void asociarPropietario(Propietario *p);
+    void desasociarPropietario();
     Administra *getAdministra() const;
     void desasociarAdministra();
     DTInfoInmueble *getDTInfoInmueble();

@@ -32,8 +32,13 @@ Sistema::Sistema()
 
 Sistema::~Sistema()
 {
+    limpiarInmuebles();
+    limpiarPublicaciones();
+    limpiarUsuarios();
+
     delete this->usuarios;
     delete this->inmuebles;
+    delete this->publicaciones;
 }
 
 Sistema *Sistema::getInstance()
@@ -173,21 +178,35 @@ ICollection *Sistema::listarPropietarios()
     return lista;
 }
 
+Status Sistema::seleccionarPropietario(string nickname)
+{
+    Propietario *propietario = dynamic_cast<Propietario *>(this->buscarPorNickname(nickname));
+    if (propietario == nullptr)
+        return Status::ERROR;
+
+    this->propRecordado = propietario;
+    return Status::OK;
+}
+
+int Sistema::obtenerUltimoCodigoInmueble()
+{
+    return this->ultimoCodigoInmueble;
+}
+
 void Sistema::asociarPropietario(string nickname)
 {
-    if (this->inmoRecordada == nullptr)
-    {
+    Inmobiliaria *inmo = this->inmoRecordada;
+    if (inmo == nullptr)
+        inmo = this->inmoSeleccionada;
+    if (inmo == nullptr)
         return;
-    }
 
     Propietario *propietario = dynamic_cast<Propietario *>(this->buscarPorNickname(nickname));
     if (propietario == nullptr)
-    {
         return;
-    }
 
-    this->inmoRecordada->asociarPropietario(propietario);
-    propietario->asociarInmobiliaria(this->inmoRecordada);
+    inmo->asociarPropietario(propietario);
+    propietario->asociarInmobiliaria(inmo);
 }
 
 ICollection *Sistema::listarInmobiliarias()
@@ -450,4 +469,158 @@ ICollection *Sistema ::seleccionarInmobiliaria(string nickname)
     ICollection *resultado = inmo->getAdministras();
 
     return resultado;
+}
+
+void Sistema::limpiarInmuebles()
+{
+    IIterator *it = this->usuarios->getIterator();
+
+    while (it->hasCurrent())
+    {
+        Propietario *p = dynamic_cast<Propietario *>(it->getCurrent());
+        if (p != nullptr)
+            p->limpiarInmuebles(this);
+        it->next();
+    }
+    delete it;
+
+    ICollection *pendientes = new List();
+    IIterator *itInm = this->inmuebles->getIterator();
+
+    while (itInm->hasCurrent())
+    {
+        pendientes->add(itInm->getCurrent());
+        itInm->next();
+    }
+    delete itInm;
+
+    IIterator *itRest = pendientes->getIterator();
+    while (itRest->hasCurrent())
+    {
+        Inmueble *inm = dynamic_cast<Inmueble *>(itRest->getCurrent());
+        if (inm != nullptr)
+            eliminarInmueble(inm->getIdentificador());
+        itRest->next();
+    }
+    delete itRest;
+    delete pendientes;
+}
+
+void Sistema::limpiarPublicaciones()
+{
+    ICollection *pendientes = new List();
+    IIterator *it = this->publicaciones->getIterator();
+
+    while (it->hasCurrent())
+    {
+        pendientes->add(it->getCurrent());
+        it->next();
+    }
+    delete it;
+
+    IIterator *itPub = pendientes->getIterator();
+    while (itPub->hasCurrent())
+    {
+        Publicacion *pub = dynamic_cast<Publicacion *>(itPub->getCurrent());
+        itPub->next();
+
+        if (pub != nullptr)
+        {
+            pub->eliminarAgendas();
+            Integer *key = new Integer(pub->getCodigo());
+            this->publicaciones->remove(key);
+            delete key;
+            delete pub;
+        }
+    }
+    delete itPub;
+    delete pendientes;
+}
+
+void Sistema::limpiarUsuarios()
+{
+    IIterator *it = this->usuarios->getIterator();
+    while (it->hasCurrent())
+    {
+        Propietario *p = dynamic_cast<Propietario *>(it->getCurrent());
+        if (p != nullptr)
+            p->desasociarInmobiliaria();
+        it->next();
+    }
+    delete it;
+
+    Propietario *propietario = nullptr;
+    do
+    {
+        propietario = nullptr;
+        it = this->usuarios->getIterator();
+        while (it->hasCurrent())
+        {
+            propietario = dynamic_cast<Propietario *>(it->getCurrent());
+            if (propietario != nullptr)
+                break;
+            it->next();
+        }
+        delete it;
+
+        if (propietario != nullptr)
+        {
+            String *key = new String(propietario->getNickName().c_str());
+            this->usuarios->remove(key);
+            delete key;
+            delete propietario;
+        }
+    } while (propietario != nullptr);
+
+    Cliente *cliente = nullptr;
+    do
+    {
+        cliente = nullptr;
+        it = this->usuarios->getIterator();
+        while (it->hasCurrent())
+        {
+            cliente = dynamic_cast<Cliente *>(it->getCurrent());
+            if (cliente != nullptr)
+                break;
+            it->next();
+        }
+        delete it;
+
+        if (cliente != nullptr)
+        {
+            String *key = new String(cliente->getNickName().c_str());
+            this->usuarios->remove(key);
+            delete key;
+            delete cliente;
+        }
+    } while (cliente != nullptr);
+
+    Inmobiliaria *inmobiliaria = nullptr;
+    do
+    {
+        inmobiliaria = nullptr;
+        it = this->usuarios->getIterator();
+        while (it->hasCurrent())
+        {
+            inmobiliaria = dynamic_cast<Inmobiliaria *>(it->getCurrent());
+            if (inmobiliaria != nullptr)
+                break;
+            it->next();
+        }
+        delete it;
+
+        if (inmobiliaria != nullptr)
+        {
+            String *key = new String(inmobiliaria->getNickName().c_str());
+            this->usuarios->remove(key);
+            delete key;
+            delete inmobiliaria;
+        }
+    } while (inmobiliaria != nullptr);
+
+    this->propRecordado = nullptr;
+    this->inmoRecordada = nullptr;
+    this->inmoSeleccionada = nullptr;
+    this->ultimoCodigoInmueble = 0;
+    this->ultimoCodigoPub = 0;
 }

@@ -31,9 +31,30 @@ void Administra ::agregarPublicacion(Publicacion *pub)
     publicaciones->add(pub);
 }
 
+void Administra::limpiarPublicaciones()
+{
+    if (this->publicaciones == nullptr)
+        return;
+
+    while (!this->publicaciones->isEmpty())
+    {
+        IIterator *it = this->publicaciones->getIterator();
+        if (it->hasCurrent())
+            this->publicaciones->remove(it->getCurrent());
+        delete it;
+    }
+}
+
 Administra ::~Administra()
 {
+    limpiarPublicaciones();
     delete this->publicaciones;
+    this->publicaciones = nullptr;
+
+    if (this->inmueble != nullptr)
+        this->inmueble->desasociarAdministra();
+    this->inmueble = nullptr;
+    this->inmobiliaria = nullptr;
 }
 
 bool Administra ::existePubAciva(TipoPublicacion tipo, Fecha fechaHoy)

@@ -1,8 +1,11 @@
 #include "Propietario.h"
 #include "Inmobiliaria.h"
+#include "Sistema.h"
+#include "Inmueble.h"
 #include "Casa.h"
 #include "Apartamento.h"
 #include "ICollection/collections/OrderedDictionary.h"
+#include "ICollection/collections/List.h"
 #include "ICollection/Integer.h"
 #include "Datatypes/DTpropietario.h"
 #include "ICollection/interfaces/IIterator.h"
@@ -22,7 +25,10 @@ Propietario::Propietario(string nickname, string nombre, string contrasenia, str
 
 Propietario::~Propietario()
 {
-    // ojo cuando se implemente el destructor, como elimina o desasocia la coleccion de inmuebles...
+    desasociarInmobiliaria();
+    limpiarInmuebles(Sistema::getInstance());
+    delete inmuebles;
+    inmuebles = nullptr;
 }
 
 string Propietario::getNumCuenta()
@@ -45,9 +51,55 @@ void Propietario::asociarInmobiliaria(Inmobiliaria *inmobiliaria)
     this->inmo = inmobiliaria;
 }
 
+void Propietario::desasociarInmobiliaria()
+{
+    if (this->inmo == nullptr)
+        return;
+
+    this->inmo->desasociarPropietario(this);
+    this->inmo = nullptr;
+}
+
 Inmobiliaria *Propietario::getInmobiliaria()
 {
     return this->inmo;
+}
+
+void Propietario::limpiarInmuebles(Sistema *sistema)
+{
+    if (this->inmuebles == nullptr || this->inmuebles->isEmpty() || sistema == nullptr)
+        return;
+
+    ICollection *codigos = new List();
+    IIterator *it = this->inmuebles->getIterator();
+
+    while (it->hasCurrent())
+    {
+        Inmueble *inm = dynamic_cast<Inmueble *>(it->getCurrent());
+        if (inm != nullptr)
+            codigos->add(new Integer(inm->getIdentificador()));
+        it->next();
+    }
+    delete it;
+
+    IIterator *itCod = codigos->getIterator();
+    while (itCod->hasCurrent())
+    {
+        Integer *cod = dynamic_cast<Integer *>(itCod->getCurrent());
+        if (cod != nullptr)
+            sistema->eliminarInmueble(cod->getValue());
+        itCod->next();
+    }
+    delete itCod;
+
+    IIterator *itClean = codigos->getIterator();
+    while (itClean->hasCurrent())
+    {
+        delete itClean->getCurrent();
+        itClean->next();
+    }
+    delete itClean;
+    delete codigos;
 }
 
 void Propietario::removerPropietario(Inmueble *inmueble)
