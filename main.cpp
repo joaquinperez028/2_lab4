@@ -940,11 +940,18 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     }
     delete administrados;
 
-    ICollection *propietarios = sistema->listarPropietarios();
+    ICollection *propietarios = sistema->listarPropietariosRepresentados(nickInmo);
+    if (propietarios == nullptr)
+    {
+        cout << "Inmobiliaria no encontrada." << endl;
+        delete inmobiliarias;
+        return;
+    }
+
     IIterator *itProp = propietarios->getIterator();
     bool hayPropietarios = false;
 
-    cout << "\nPropietarios registrados:" << endl;
+    cout << "\nPropietarios representados por la inmobiliaria:" << endl;
     while (itProp->hasCurrent())
     {
         DTPropietario *dt = dynamic_cast<DTPropietario *>(itProp->getCurrent());
@@ -959,7 +966,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
 
     if (!hayPropietarios)
     {
-        cout << "  (No hay propietarios registrados)" << endl;
+        cout << "  (No hay propietarios representados por esta inmobiliaria)" << endl;
         delete propietarios;
         delete inmobiliarias;
         return;
@@ -967,16 +974,46 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
 
     string nickProp = leerTextoValido("Ingrese nickname del propietario: ", false);
 
-    if (sistema->seleccionarPropietario(nickProp) != Status::OK)
+    bool propietarioValido = false;
+    IIterator *itVal = propietarios->getIterator();
+    while (itVal->hasCurrent())
     {
-        cout << "Propietario no encontrado." << endl;
+        DTPropietario *dt = dynamic_cast<DTPropietario *>(itVal->getCurrent());
+        if (dt != nullptr && dt->getNickname() == nickProp)
+            propietarioValido = true;
+        itVal->next();
+    }
+    delete itVal;
+
+    if (!propietarioValido)
+    {
+        cout << "El propietario no esta representado por la inmobiliaria seleccionada." << endl;
+        IIterator *itClean = propietarios->getIterator();
+        while (itClean->hasCurrent())
+        {
+            delete itClean->getCurrent();
+            itClean->next();
+        }
+        delete itClean;
         delete propietarios;
         delete inmobiliarias;
         return;
     }
 
-    sistema->asociarPropietario(nickProp);
-    cout << "Propietario asociado a la inmobiliaria " << nickInmo << "." << endl;
+    if (sistema->seleccionarPropietario(nickProp) != Status::OK)
+    {
+        cout << "Propietario no encontrado." << endl;
+        IIterator *itClean = propietarios->getIterator();
+        while (itClean->hasCurrent())
+        {
+            delete itClean->getCurrent();
+            itClean->next();
+        }
+        delete itClean;
+        delete propietarios;
+        delete inmobiliarias;
+        return;
+    }
 
     int codigoInmueble = -1;
     Status stInm = registrarInmueble(sistema, codigoInmueble);

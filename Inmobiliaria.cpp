@@ -240,3 +240,23 @@ ICollection *Inmobiliaria::getInmueblesRepresentados()
 
     return resultado;
 }
+
+ICollection *Inmobiliaria::getPropietariosRepresentados()
+{
+    ICollection *resultado = new List();
+
+    if (this->propietarios == nullptr)
+        return resultado;
+
+    IIterator *it = this->propietarios->getIterator();
+    while (it->hasCurrent())
+    {
+        Propietario *prop = dynamic_cast<Propietario *>(it->getCurrent());
+        if (prop != nullptr)
+            resultado->add(prop->getDTPropietario());
+        it->next();
+    }
+    delete it;
+
+    return resultado;
+}

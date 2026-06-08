@@ -42,6 +42,7 @@ public:
     virtual DTInmueble *mostrarDetalle(int) = 0;
     virtual Status eliminarInmueble(int) = 0;
     virtual ICollection *listarInmueblesRepresentados(string) = 0;
+    virtual ICollection *listarPropietariosRepresentados(string) = 0;
     virtual Status altaAdministracion(int) = 0;
 };
 

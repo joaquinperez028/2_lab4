@@ -51,6 +51,7 @@ public:
     DTInmueble *mostrarDetalle(int identificador) override;     // FRAN
     Status eliminarInmueble(int) override;                      // MATIAS
     ICollection *listarInmueblesRepresentados(string) override; // FRAN
+    ICollection *listarPropietariosRepresentados(string) override;
     Status altaAdministracion(int identificador) override;
     Fecha obtenerFechaActual(); // DIEGo
     void limpiarInmuebles();

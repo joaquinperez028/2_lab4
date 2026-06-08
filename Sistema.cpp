@@ -399,6 +399,19 @@ ICollection *Sistema::listarInmueblesRepresentados(string nickname)
     return inmo->getInmueblesRepresentados();
 }
 
+ICollection *Sistema::listarPropietariosRepresentados(string nickname)
+{
+    Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(
+        this->buscarPorNickname(nickname));
+
+    if (inmo == nullptr)
+        return nullptr;
+
+    this->inmoSeleccionada = inmo;
+
+    return inmo->getPropietariosRepresentados();
+}
+
 Status Sistema::altaAdministracion(int identificador)
 {
     if (inmoSeleccionada == nullptr)

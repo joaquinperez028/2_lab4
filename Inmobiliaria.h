@@ -43,6 +43,7 @@ public:
     Administra *findAdministra(int identificador);
     ICollection *getAdministras();
     ICollection *getInmueblesRepresentados();
+    ICollection *getPropietariosRepresentados();
 };
 
 #endif
