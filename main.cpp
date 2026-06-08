@@ -397,7 +397,7 @@ static void casoDeUso1(ISistema *sistema){
 
                     string nickProp = leerTextoValido("Ingrese nickname del propietario a representar: ", false);
                     sistema->asociarPropietario(nickProp);
-                    cout << "\nSe intento asociar el propietario indicado a la inmobiliaria recien creada." << endl;
+                    cout << "\nSe asocio el propietario indicado a la inmobiliaria recien creada." << endl;
 
                     seguir = leerSiNo("Desea agregar otro propietario representado?");
                 }
