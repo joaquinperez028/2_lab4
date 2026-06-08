@@ -7,6 +7,7 @@
 #include "Datatypes/Direccion.h"
 #include "Datatypes/Status.h"
 #include "Datatypes/Fecha.h"
+#include "Datatypes/DTInmobiliaria.h"
 
 using namespace std;
 
@@ -44,6 +45,7 @@ public:
     ICollection *getAdministras();
     ICollection *getInmueblesRepresentados();
     ICollection *getPropietariosRepresentados();
+    DTInmobiliaria *getDTInmobiliaria();
 };
 
 #endif

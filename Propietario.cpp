@@ -155,7 +155,7 @@ Casa *Propietario::crearCasa(Direccion direccion_, float superficie, Fecha anoCo
 
     this->inmuebles->add(new Integer(identificador), casa);
 
-    return casa; // cambiar en diagrama que esta operacion retorne el objeto casa
+    return casa;
 }
 
 Apartamento *Propietario::crearApto(Direccion direccion_, float superficie, Fecha anoConstruc,
@@ -168,7 +168,7 @@ Apartamento *Propietario::crearApto(Direccion direccion_, float superficie, Fech
 
     this->inmuebles->add(new Integer(identificador), apartamento);
 
-    return apartamento; // cambiar en diagrama que esta operacion retorne el objeto apto
+    return apartamento; 
 }
 
 DTPropietario *Propietario::getDTPropietario()

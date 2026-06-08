@@ -260,3 +260,8 @@ ICollection *Inmobiliaria::getPropietariosRepresentados()
 
     return resultado;
 }
+
+DTInmobiliaria *Inmobiliaria::getDTInmobiliaria()
+{
+    return new DTInmobiliaria(this->getNickName(), this->getNombre());
+}

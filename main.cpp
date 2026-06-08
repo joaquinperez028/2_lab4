@@ -14,6 +14,7 @@
 #include "Datatypes/DTPublicacion.h"
 #include "Datatypes/Opciones.h"
 #include "Datatypes/DTAdministrados.h"
+#include "Datatypes/DTInmobiliaria.h"
 #include "Datatypes/TipoPublicacion.h"
 #include "Datatypes/DTEspecifica.h"
 #include "Datatypes/DTCasa.h"
@@ -78,6 +79,21 @@ static void pausarAntesDeContinuar()
     cout << "\nPresione Enter para continuar...";
     cin.get();
     limpiarPantalla();
+}
+
+static void liberarDatatypes(ICollection *coleccion)
+{
+    if (coleccion == nullptr)
+        return;
+
+    IIterator *it = coleccion->getIterator();
+    while (it->hasCurrent())
+    {
+        delete it->getCurrent();
+        it->next();
+    }
+    delete it;
+    delete coleccion;
 }
 
 static string leerTextoValido(const string &mensaje, bool permitirEspacios)
@@ -410,10 +426,10 @@ static void casoDeUso2(ISistema *sistema){
     cout << "\nInmobiliarias registradas:" << endl;
     while (itInmo->hasCurrent())
     {
-        Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(itInmo->getCurrent());
+        DTInmobiliaria *inmo = dynamic_cast<DTInmobiliaria *>(itInmo->getCurrent());
         if (inmo != nullptr)
         {
-            cout << "  Nickname: " << inmo->getNickName()
+            cout << "  Nickname: " << inmo->getNickname()
                  << " | Nombre: " << inmo->getNombre() << endl;
             hayInmobiliarias = true;
         }
@@ -424,7 +440,7 @@ static void casoDeUso2(ISistema *sistema){
     if (!hayInmobiliarias)
     {
         cout << "  (No hay inmobiliarias registradas)" << endl;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -434,7 +450,7 @@ static void casoDeUso2(ISistema *sistema){
     if (administrados == nullptr)
     {
         cout << "Inmobiliaria no encontrada." << endl;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -458,7 +474,7 @@ static void casoDeUso2(ISistema *sistema){
     {
         cout << "  (No hay inmuebles administrados por esta inmobiliaria)" << endl;
         delete administrados;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -500,7 +516,7 @@ static void casoDeUso2(ISistema *sistema){
         cout << "Alta publicacion: ERROR (inmueble no administrado o ya existe publicacion activa del mismo tipo para hoy)" << endl;
 
     delete administrados;
-    delete inmobiliarias;
+    liberarDatatypes(inmobiliarias);
 }
 
 static void casoDeUso3(ISistema *sistema)
@@ -680,10 +696,10 @@ static void casoDeUso5(ISistema *sistema)
     cout << "\nInmobiliarias registradas:" << endl;
     while (itInmo->hasCurrent())
     {
-        Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(itInmo->getCurrent());
+        DTInmobiliaria *inmo = dynamic_cast<DTInmobiliaria *>(itInmo->getCurrent());
         if (inmo != nullptr)
         {
-            cout << "  Nickname: " << inmo->getNickName()
+            cout << "  Nickname: " << inmo->getNickname()
                  << " | Nombre: " << inmo->getNombre() << endl;
             hayInmobiliarias = true;
         }
@@ -694,7 +710,7 @@ static void casoDeUso5(ISistema *sistema)
     if (!hayInmobiliarias)
     {
         cout << "  (No hay inmobiliarias registradas)" << endl;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -704,7 +720,7 @@ static void casoDeUso5(ISistema *sistema)
     if (inmuebles == nullptr)
     {
         cout << "Inmobiliaria no encontrada." << endl;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -735,7 +751,7 @@ static void casoDeUso5(ISistema *sistema)
         }
         delete itClean;
         delete inmuebles;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -755,7 +771,7 @@ static void casoDeUso5(ISistema *sistema)
     }
     delete itClean;
     delete inmuebles;
-    delete inmobiliarias;
+    liberarDatatypes(inmobiliarias);
 }
 
 static void listarPropietarios(ISistema *sistema)
@@ -934,10 +950,10 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     cout << "\nInmobiliarias registradas:" << endl;
     while (itInmo->hasCurrent())
     {
-        Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(itInmo->getCurrent());
+        DTInmobiliaria *inmo = dynamic_cast<DTInmobiliaria *>(itInmo->getCurrent());
         if (inmo != nullptr)
         {
-            cout << "  Nickname: " << inmo->getNickName()
+            cout << "  Nickname: " << inmo->getNickname()
                  << " | Nombre: " << inmo->getNombre() << endl;
             hayInmobiliarias = true;
         }
@@ -948,7 +964,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     if (!hayInmobiliarias)
     {
         cout << "  (No hay inmobiliarias registradas)" << endl;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -958,7 +974,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     if (administrados == nullptr)
     {
         cout << "Inmobiliaria no encontrada." << endl;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
     delete administrados;
@@ -967,7 +983,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     if (propietarios == nullptr)
     {
         cout << "Inmobiliaria no encontrada." << endl;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -991,7 +1007,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     {
         cout << "  (No hay propietarios representados por esta inmobiliaria)" << endl;
         delete propietarios;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -1019,7 +1035,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
         }
         delete itClean;
         delete propietarios;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -1034,7 +1050,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
         }
         delete itClean;
         delete propietarios;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -1045,7 +1061,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     {
         cout << "Alta inmueble: ERROR (verifique propietario seleccionado)" << endl;
         delete propietarios;
-        delete inmobiliarias;
+        liberarDatatypes(inmobiliarias);
         return;
     }
 
@@ -1060,7 +1076,7 @@ static void altaInmueblePropietarioExistente(ISistema *sistema)
     }
     delete itClean;
     delete propietarios;
-    delete inmobiliarias;
+    liberarDatatypes(inmobiliarias);
 }
 
 static void borrarSistemaCompleto(ISistema *sistema)

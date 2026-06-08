@@ -154,7 +154,6 @@ Status Sistema::altaInmobiliaria(string nickname, string nombre, string contrase
                                                   dir, telefono, url);
     this->usuarios->add(new String(nickname.c_str()), inmobiliaria);
 
-    // El sistema recuerda inmo (diagrama altaInmobiliaria)
     this->inmoRecordada = inmobiliaria;
 
     return Status::OK;
@@ -222,7 +221,8 @@ ICollection *Sistema::listarInmobiliarias()
 
         if (inmo != nullptr)
         {
-            resultado->add(inmo);
+            DTInmobiliaria* dt = inmo->getDTInmobiliaria();
+            resultado->add(dt);
         }
 
         it->next();
@@ -383,19 +383,14 @@ Status Sistema::eliminarInmueble(int id)
 ICollection *Sistema::listarInmueblesRepresentados(string nickname)
 {
 
-    // mensaje 1: inmo := find(nickname) — visibilidad <<association>>
-    // usa buscarPorNickname que ya tienen implementado en Sistema
     Inmobiliaria *inmo = dynamic_cast<Inmobiliaria *>(
         this->buscarPorNickname(nickname));
 
     if (inmo == nullptr)
         return nullptr;
 
-    // sistema recuerda inmo segun la nota del diagrama
     this->inmoSeleccionada = inmo;
 
-    // mensaje 2: getInmueblesRepresentados() — visibilidad <<local>>
-    // inmo se obtuvo del find, por eso es local
     return inmo->getInmueblesRepresentados();
 }
 

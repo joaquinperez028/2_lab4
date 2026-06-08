@@ -7,7 +7,6 @@
 #include "Datatypes/Opciones.h"
 #include <string>
 
-// Constructor
 Inmueble::Inmueble(Direccion dir, float superficie, Fecha anoConstruc, int identificador, TipoInmueble tipo)
 {
     this->dir = dir;
@@ -19,14 +18,12 @@ Inmueble::Inmueble(Direccion dir, float superficie, Fecha anoConstruc, int ident
     this->administra = nullptr;
 }
 
-// Destructor virtual — necesario para polimorfismo con punteros
 Inmueble::~Inmueble()
 {
     desasociarPropietario();
     desasociarAdministra();
 }
 
-// --- Getters ---
 
 Direccion Inmueble::getDireccion() const
 {
@@ -58,9 +55,6 @@ Propietario *Inmueble::getPropietario() const
     return this->propietario;
 }
 
-// --- Operaciones ---
-
-// Asocia un propietario a este inmueble
 void Inmueble::asociarPropietario(Propietario *p)
 {
     this->propietario = p;
@@ -81,7 +75,6 @@ void Inmueble::desasociarAdministra()
     this->administra = nullptr;
 }
 
-// Corresponde al mensaje 2* getDetalles() del diagrama de listarPropiedades
 DTInmueble *Inmueble::getDetalles()
 {
     return new DTInmueble(this->identificador, this->dir, this->anoConstruc, this->tipo);
