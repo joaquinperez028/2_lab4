@@ -1,6 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <string>
+#include <cstdlib>
 #include "Factory.h"
 #include "Datatypes/Status.h"
 #include "Datatypes/Direccion.h"
@@ -61,6 +62,22 @@ static bool esTextoValido(const string &texto, bool permitirEspacios)
 static void consumirSaltoLinea()
 {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+static void limpiarPantalla()
+{
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
+static void pausarAntesDeContinuar()
+{
+    cout << "\nPresione Enter para continuar...";
+    cin.get();
+    limpiarPantalla();
 }
 
 static string leerTextoValido(const string &mensaje, bool permitirEspacios)
@@ -179,7 +196,7 @@ static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
 
     int dia = leerEntero("Dia construccion: ");
     int mes = leerEntero("Mes construccion: ");
-    int anio = leerEntero("Año construccion: ");
+    int anio = leerEntero("Anio construccion: ");
     Fecha f(dia, mes, anio);
 
     cout << "Tipo de inmueble: \n1- Casa   \n2- Apartamento \nOpcion: ";
@@ -199,7 +216,7 @@ static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
     Status stInm = Status::ERROR;
     if (tipoInm == 1)
     {
-        bool esPH = leerSiNo("¿Es propiedad horizontal (pH)?");
+        bool esPH = leerSiNo("Es propiedad horizontal (pH)?");
 
         cout << "Tipo de techo: \n1- Liviano  \n2- Dos aguas  \n3- Plano \nOpciones: ";
         int ttec = 0;
@@ -225,7 +242,7 @@ static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
     else
     {
         int numPiso = leerEntero("Numero de piso: ");
-        bool ascensor = leerSiNo("¿Posee ascensor?");
+        bool ascensor = leerSiNo("Posee ascensor?");
         float gastosComunes = leerFloat("Gastos comunes: ");
 
         stInm = sistema->altaApto(dir, superficie, f, numPiso, ascensor, gastosComunes);
@@ -293,7 +310,7 @@ static void casoDeUso1(ISistema *sistema){
             string documento = leerTextoValido("Documento (solo letras y numeros): ", false);
 
             st = sistema->altaCliente(nickname, nombre, contrasenia, email, apellido, documento);
-            cout << (st == Status::OK ? "Alta cliente: OK" : "Alta cliente: ERROR (nickname ya existe)") << endl;
+            cout << "\n" << (st == Status::OK ? "Alta cliente: OK" : "Alta cliente: ERROR (nickname ya existe)") << endl;
         }
         else if (opcion == 2)
         {
@@ -303,20 +320,20 @@ static void casoDeUso1(ISistema *sistema){
             string telefono = leerTextoValido("Telefono: ", false);
 
             st = sistema->altaPropietario(nickname, nombre, contrasenia, email, numCuenta, banco, telefono);
-            cout << (st == Status::OK ? "Alta propietario: OK" : "Alta propietario: ERROR (nickname ya existe)") << endl;
+            cout << "\n" << (st == Status::OK ? "Alta propietario: OK" : "Alta propietario: ERROR (nickname ya existe)") << endl;
 
             if (st == Status::OK)
             {
-                bool seguir = leerSiNo("¿Desea registrar un inmueble para este propietario?");
+                bool seguir = leerSiNo("Desea registrar un inmueble para este propietario?");
                 while (seguir)
                 {
                     cout << "\n--- Alta inmueble del propietario ---" << endl;
                     int codigoInmueble = -1;
                     Status stInm = registrarInmueble(sistema, codigoInmueble);
 
-                    cout << (stInm == Status::OK ? "Alta inmueble: OK" : "Alta inmueble: ERROR (verifique propietario recordado)") << endl;
+                    cout << "\n" << (stInm == Status::OK ? "Alta inmueble: OK" : "Alta inmueble: ERROR (verifique propietario recordado)") << endl;
 
-                    seguir = leerSiNo("¿Desea registrar otro inmueble para este propietario?");
+                    seguir = leerSiNo("Desea registrar otro inmueble para este propietario?");
                 }
             }
         }
@@ -341,11 +358,11 @@ static void casoDeUso1(ISistema *sistema){
             }
 
             st = sistema->altaInmobiliaria(nickname, nombre, contrasenia, email, dir, telefono, url);
-            cout << (st == Status::OK ? "Alta inmobiliaria: OK" : "Alta inmobiliaria: ERROR (nickname ya existe)") << endl;
+            cout << "\n" << (st == Status::OK ? "Alta inmobiliaria: OK" : "Alta inmobiliaria: ERROR (nickname ya existe)") << endl;
 
             if (st == Status::OK)
             {
-                bool seguir = leerSiNo("¿Desea agregar propietarios representados para esta inmobiliaria?");
+                bool seguir = leerSiNo("Desea agregar propietarios representados para esta inmobiliaria?");
                 while (seguir)
                 {
                     cout << "\n--- Propietarios registrados ---" << endl;
@@ -364,9 +381,9 @@ static void casoDeUso1(ISistema *sistema){
 
                     string nickProp = leerTextoValido("Ingrese nickname del propietario a representar: ", false);
                     sistema->asociarPropietario(nickProp);
-                    cout << "Se intento asociar el propietario indicado a la inmobiliaria recien creada." << endl;
+                    cout << "\nSe intento asociar el propietario indicado a la inmobiliaria recien creada." << endl;
 
-                    seguir = leerSiNo("¿Desea agregar otro propietario representado?");
+                    seguir = leerSiNo("Desea agregar otro propietario representado?");
                 }
             }
         }
@@ -375,7 +392,12 @@ static void casoDeUso1(ISistema *sistema){
             cout << "Opcion invalida en Caso de uso 1." << endl;
         }
 
+        if (opcion != 0)
+            pausarAntesDeContinuar();
+
     } while (opcion != 0);
+
+    limpiarPantalla();
 }
 
 static void casoDeUso2(ISistema *sistema){
@@ -557,7 +579,7 @@ static void casoDeUso3(ISistema *sistema)
         return;
     }
 
-    if (leerSiNo("¿Desea ver el detalle completo de una publicacion?"))
+    if (leerSiNo("Desea ver el detalle completo de una publicacion?"))
     {
         int codigoPub = leerEntero("Ingrese el codigo de la publicacion: ");
 
@@ -631,7 +653,7 @@ static void casoDeUso4(ISistema *sistema)
     cout << "  " << *detalle << endl;
     delete detalle;
 
-    if (leerSiNo("¿Desea eliminar este inmueble?"))
+    if (leerSiNo("Desea eliminar este inmueble?"))
     {
         Status st = sistema->eliminarInmueble(codigo);
         if (st == Status::OK)
@@ -1060,10 +1082,19 @@ int main()
     ISistema *sistema = Factory::getSistema();
     int opcion = -1;
 
+    limpiarPantalla();
+
     do
     {
         mostrarMenu();
-        cin >> opcion;
+        if (!(cin >> opcion))
+        {
+            cin.clear();
+            consumirSaltoLinea();
+            cout << "\nOpcion invalida. Intente nuevamente." << endl;
+            pausarAntesDeContinuar();
+            continue;
+        }
         consumirSaltoLinea();
 
         switch (opcion)
@@ -1103,9 +1134,12 @@ int main()
             cout << "Saliendo..." << endl;
             break;
         default:
-            cout << "Opcion invalida. Intente nuevamente." << endl;
+            cout << "\nOpcion invalida. Intente nuevamente." << endl;
             break;
         }
+
+        if (opcion != 0 && opcion != 1)
+            pausarAntesDeContinuar();
 
     } while (opcion != 0);
 
