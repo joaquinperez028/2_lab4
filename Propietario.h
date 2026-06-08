@@ -40,7 +40,7 @@ public:
     Inmobiliaria *getInmobiliaria();
     void limpiarInmuebles(Sistema *sistema);
     void removerPropietario(Inmueble *);
-    ICollection *listarInmueblesPropiedad();
+    ICollection *listarInmueblesRepresentados();
     Casa *crearCasa(Direccion, float, Fecha, int, TipoTecho, bool);
     Apartamento *crearApto(Direccion, float, Fecha, int, int, bool, float);
     DTPropietario *getDTPropietario();

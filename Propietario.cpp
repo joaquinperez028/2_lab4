@@ -102,7 +102,7 @@ void Propietario::limpiarInmuebles(Sistema *sistema)
     delete codigos;
 }
 
-ICollection *Propietario::listarInmueblesPropiedad()
+ICollection *Propietario::listarInmueblesRepresentados()
 {
     ICollection *lista = new List();
 
@@ -114,7 +114,7 @@ ICollection *Propietario::listarInmueblesPropiedad()
     {
         Inmueble *inm = dynamic_cast<Inmueble *>(it->getCurrent());
         if (inm != nullptr)
-            lista->add(inm->getDTPropiedad());
+            lista->add(inm->getDTInmuebleRep());
         it->next();
     }
     delete it;

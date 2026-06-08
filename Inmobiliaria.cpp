@@ -223,7 +223,7 @@ ICollection *Inmobiliaria::getInmueblesRepresentados()
         Propietario *prop = dynamic_cast<Propietario *>(it->getCurrent());
         if (prop != nullptr)
         {
-            ICollection *inmueblesProp = prop->listarInmueblesPropiedad();
+            ICollection *inmueblesProp = prop->listarInmueblesRepresentados();
             IIterator *itInm = inmueblesProp->getIterator();
 
             while (itInm->hasCurrent())

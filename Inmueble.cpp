@@ -1,6 +1,7 @@
 #include "Inmueble.h"
 #include "Propietario.h"
 #include "Datatypes/DTPropiedad.h"
+#include "Datatypes/DTInmuebleRep.h"
 #include "Administra.h"
 #include "Inmobiliaria.h"
 #include "Datatypes/Opciones.h"
@@ -95,6 +96,15 @@ DTPropiedad *Inmueble::getDTPropiedad()
     }
 
     return new DTPropiedad(this->identificador, this->dir, this->anoConstruc, nombre);
+}
+
+DTInmuebleRep *Inmueble::getDTInmuebleRep()
+{
+    string nombre = "";
+    if (this->propietario != nullptr)
+        nombre = this->propietario->getNombre();
+
+    return new DTInmuebleRep(this->identificador, this->dir, nombre);
 }
 
 DTInfoInmueble *Inmueble ::getDTInfoInmueble()

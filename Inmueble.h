@@ -7,6 +7,7 @@
 #include "Datatypes/TipoInmueble.h"
 #include "Datatypes/DTInmueble.h"
 #include "Datatypes/DTPropiedad.h"
+#include "Datatypes/DTInmuebleRep.h"
 #include "Datatypes/DTEspecifica.h"
 #include "Datatypes/DTInfoInmueble.h"
 #include "Datatypes/Opciones.h"
@@ -47,6 +48,7 @@ public:
     DTInfoInmueble *getDTInfoInmueble();
     DTInmueble *getDetalles();
     DTPropiedad *getDTPropiedad();
+    DTInmuebleRep *getDTInmuebleRep();
 
     virtual void mostrarDetalle(int id) = 0;
     virtual DTEspecifica *getInmueble() = 0;

@@ -8,6 +8,7 @@
 #include "Datatypes/TipoTecho.h"
 #include "Datatypes/DTpropietario.h"
 #include "Datatypes/DTPropiedad.h"
+#include "Datatypes/DTInmuebleRep.h"
 #include "Datatypes/DTInmueble.h"
 #include "Datatypes/DTPublicacion.h"
 #include "Datatypes/Opciones.h"
@@ -691,7 +692,7 @@ static void casoDeUso5(ISistema *sistema)
     cout << "\nInmuebles de propietarios representados por la inmobiliaria:" << endl;
     while (itInm->hasCurrent())
     {
-        DTPropiedad *dt = dynamic_cast<DTPropiedad *>(itInm->getCurrent());
+        DTInmuebleRep *dt = dynamic_cast<DTInmuebleRep *>(itInm->getCurrent());
         if (dt != nullptr)
         {
             cout << "  " << *dt << endl;

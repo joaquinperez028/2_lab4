@@ -33,6 +33,7 @@ SRC += \
 	Datatypes/DTApartamento.cpp \
 	Datatypes/DTInmueble.cpp \
 	Datatypes/DTPropiedad.cpp \
+	Datatypes/DTInmuebleRep.cpp \
 	Datatypes/DTInfoInmueble.cpp \
 	Datatypes/DTAdministrados.cpp
 
