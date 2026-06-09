@@ -41,7 +41,8 @@ public:
     ICollection *listarPropietarios() override;                                          
     Status seleccionarPropietario(string) override;
     int obtenerUltimoCodigoInmueble() override;
-    void asociarPropietario(string) override;                                            
+    Status asociarPropietario(string) override;
+    Status asociarPropietarioAInmo(string nickInmo, string nickProp) override;                                            
     ICollection *listarInmobiliarias() override;                                         
     ICollection *seleccionarInmobiliaria(string) override;                               
     Status altaPublicacion(int, TipoPublicacion, string, float) override;                

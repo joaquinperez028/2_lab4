@@ -32,7 +32,8 @@ public:
     virtual ICollection *listarPropietarios() = 0;
     virtual Status seleccionarPropietario(string) = 0;
     virtual int obtenerUltimoCodigoInmueble() = 0;
-    virtual void asociarPropietario(string) = 0;
+    virtual Status asociarPropietario(string) = 0;
+    virtual Status asociarPropietarioAInmo(string nickInmo, string nickProp) = 0;
     virtual ICollection *listarInmobiliarias() = 0;
     virtual ICollection *seleccionarInmobiliaria(string) = 0;
     virtual Status altaPublicacion(int, TipoPublicacion, string, float) = 0;

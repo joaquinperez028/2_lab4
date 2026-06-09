@@ -193,20 +193,36 @@ int Sistema::obtenerUltimoCodigoInmueble()
     return this->ultimoCodigoInmueble;
 }
 
-void Sistema::asociarPropietario(string nickname)
+Status Sistema::asociarPropietario(string nickname)
 {
     Inmobiliaria *inmo = this->inmoRecordada;
     if (inmo == nullptr)
         inmo = this->inmoSeleccionada;
     if (inmo == nullptr)
-        return;
+        return Status::ERROR;
 
     Propietario *propietario = dynamic_cast<Propietario *>(this->buscarPorNickname(nickname));
     if (propietario == nullptr)
-        return;
+        return Status::ERROR;
+
+    if (propietario->getInmobiliaria() != nullptr)
+        return Status::ERROR;
 
     inmo->asociarPropietario(propietario);
     propietario->asociarInmobiliaria(inmo);
+
+    return Status::OK;
+}
+
+Status Sistema::asociarPropietarioAInmo(string nickInmo, string nickProp)
+{
+    ICollection *administrados = seleccionarInmobiliaria(nickInmo);
+    if (administrados == nullptr)
+        return Status::ERROR;
+
+    delete administrados;
+
+    return asociarPropietario(nickProp);
 }
 
 ICollection *Sistema::listarInmobiliarias()

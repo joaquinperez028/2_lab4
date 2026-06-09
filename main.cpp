@@ -173,6 +173,7 @@ static void mostrarMenu()
     cout << " 8. Listar inmuebles" << endl;
     cout << " 9. Listar publicaciones" << endl;
     cout << "10. Alta inmueble a propietario existente" << endl;
+    cout << "11. Asociar propietario a inmobiliaria" << endl;
     cout << " 0. Salir" << endl;
     cout << "==========================" << endl;
     cout << "Ingrese una opcion: ";
@@ -475,8 +476,11 @@ static void casoDeUso1(ISistema *sistema)
                     delete it;
 
                     string nickProp = leerTextoValido("Ingrese nickname del propietario a representar: ", false);
-                    sistema->asociarPropietario(nickProp);
-                    cout << "\nSe asocio el propietario indicado a la inmobiliaria recien creada." << endl;
+                    Status stAsoc = sistema->asociarPropietario(nickProp);
+                    if (stAsoc == Status::OK)
+                        cout << "\nSe asocio el propietario indicado a la inmobiliaria recien creada." << endl;
+                    else
+                        cout << "\nERROR: el propietario no existe o ya tiene una inmobiliaria asociada." << endl;
 
                     seguir = leerSiNo("Desea agregar otro propietario representado?");
                 }
@@ -976,8 +980,8 @@ static void cargarDatosPrueba(ISistema *sistema)
         st = sistema->altaInmobiliaria("inmo_central", "Inmo Central", "passInmo", "contacto@inmocentral.com", dirInmoCentral, "24001234", "http://inmocentral.com");
         cout << (st == Status::OK ? "Alta inmobiliaria (inmo_central): OK" : "Alta inmobiliaria (inmo_central): ERROR") << endl;
 
-        sistema->asociarPropietario("ana_prop");
-        cout << "Asociar ana_prop <-> inmo_central: OK" << endl;
+        st = sistema->asociarPropietario("ana_prop");
+        cout << (st == Status::OK ? "Asociar ana_prop <-> inmo_central: OK" : "Asociar ana_prop <-> inmo_central: ERROR") << endl;
 
         ICollection *admCentral = sistema->seleccionarInmobiliaria("inmo_central");
         delete admCentral;
@@ -1016,8 +1020,8 @@ static void cargarDatosPrueba(ISistema *sistema)
         st = sistema->altaInmobiliaria("inmo_sur", "Inmo del Sur", "passSur", "info@inmosur.com", dirInmoSur, "26005678", "http://inmosur.com");
         cout << (st == Status::OK ? "Alta inmobiliaria (inmo_sur): OK" : "Alta inmobiliaria (inmo_sur): ERROR") << endl;
 
-        sistema->asociarPropietario("luis_prop");
-        cout << "Asociar luis_prop <-> inmo_sur: OK" << endl;
+        st = sistema->asociarPropietario("luis_prop");
+        cout << (st == Status::OK ? "Asociar luis_prop <-> inmo_sur: OK" : "Asociar luis_prop <-> inmo_sur: ERROR") << endl;
 
         ICollection *admSur = sistema->seleccionarInmobiliaria("inmo_sur");
         delete admSur;
@@ -1047,6 +1051,74 @@ static void cargarDatosPrueba(ISistema *sistema)
     {
         cout << "Los datos ya fueron cargados" << endl;
     }
+}
+
+static void asociarPropietarioAInmo(ISistema *sistema)
+{
+    cout << "\n--- Asociar propietario a inmobiliaria ---" << endl;
+
+    ICollection *inmobiliarias = sistema->listarInmobiliarias();
+    IIterator *itInmo = inmobiliarias->getIterator();
+    bool hayInmobiliarias = false;
+
+    cout << "\nInmobiliarias registradas:" << endl;
+    while (itInmo->hasCurrent())
+    {
+        DTInmobiliaria *inmo = dynamic_cast<DTInmobiliaria *>(itInmo->getCurrent());
+        if (inmo != nullptr)
+        {
+            cout << "  Nickname: " << inmo->getNickname()
+                 << " | Nombre: " << inmo->getNombre() << endl;
+            hayInmobiliarias = true;
+        }
+        itInmo->next();
+    }
+    delete itInmo;
+
+    if (!hayInmobiliarias)
+    {
+        cout << "  (No hay inmobiliarias registradas)" << endl;
+        liberarDatatypes(inmobiliarias);
+        return;
+    }
+
+    string nickInmo = leerTextoValido("Ingrese nickname de la inmobiliaria: ", false);
+
+    ICollection *propietarios = sistema->listarPropietarios();
+    IIterator *itProp = propietarios->getIterator();
+    bool hayPropietarios = false;
+
+    cout << "\nPropietarios registrados:" << endl;
+    while (itProp->hasCurrent())
+    {
+        DTPropietario *dt = dynamic_cast<DTPropietario *>(itProp->getCurrent());
+        if (dt != nullptr)
+        {
+            cout << "  " << *dt << endl;
+            hayPropietarios = true;
+        }
+        itProp->next();
+    }
+    delete itProp;
+
+    if (!hayPropietarios)
+    {
+        cout << "  (No hay propietarios registrados)" << endl;
+        delete propietarios;
+        liberarDatatypes(inmobiliarias);
+        return;
+    }
+
+    string nickProp = leerTextoValido("Ingrese nickname del propietario a asociar: ", false);
+
+    Status st = sistema->asociarPropietarioAInmo(nickInmo, nickProp);
+    if (st == Status::OK)
+        cout << "Asociacion propietario-inmobiliaria: OK" << endl;
+    else
+        cout << "Asociacion propietario-inmobiliaria: ERROR (inmobiliaria o propietario invalido, o propietario ya tiene inmobiliaria)" << endl;
+
+    delete propietarios;
+    liberarDatatypes(inmobiliarias);
 }
 
 static void altaInmueblePropietarioExistente(ISistema *sistema)
@@ -1257,6 +1329,9 @@ int main()
                 break;
             case 10:
                 ejecutarCasoDeUsoSeguro(altaInmueblePropietarioExistente, sistema, "Alta inmueble a propietario existente");
+                break;
+            case 11:
+                ejecutarCasoDeUsoSeguro(asociarPropietarioAInmo, sistema, "Asociar propietario a inmobiliaria");
                 break;
             case 0:
                 borrarSistemaCompleto(sistema);
