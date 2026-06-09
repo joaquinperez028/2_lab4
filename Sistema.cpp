@@ -232,23 +232,25 @@ ICollection *Sistema::listarInmobiliarias()
     return resultado;
 }
 
+ICollection *Sistema::listarPublicaciones(string tipo, float precioMin, float precioMax, Opciones interes)
+{
+    ICollection *resultado = new List();
 
-ICollection* Sistema::listarPublicaciones(string tipo, float precioMin, float precioMax, Opciones interes) {
-    ICollection* resultado = new List();
- 
-    IIterator* it = this->publicaciones->getIterator();
- 
-    while (it->hasCurrent()) {
+    IIterator *it = this->publicaciones->getIterator();
 
-        Publicacion* pub = dynamic_cast<Publicacion*>(it->getCurrent());
+    while (it->hasCurrent())
+    {
+
+        Publicacion *pub = dynamic_cast<Publicacion *>(it->getCurrent());
 
         if (pub == nullptr)
         {
             it->next();
             continue;
         }
- 
-        if (pub->esActiva()) {
+
+        if (pub->esActiva())
+        {
 
             if (tipo == "Venta" && !pub->coincideTipo(TipoPublicacion::Venta))
             {
@@ -260,21 +262,22 @@ ICollection* Sistema::listarPublicaciones(string tipo, float precioMin, float pr
                 it->next();
                 continue;
             }
- 
-            if (pub->precioFranja(precioMin, precioMax)) {
- 
 
-                if (pub->compararInteres(interes)) {
- 
-                    DTPublicacion* dt = pub->getPublicacion();
+            if (pub->precioFranja(precioMin, precioMax))
+            {
+
+                if (pub->compararInteres(interes))
+                {
+
+                    DTPublicacion *dt = pub->getPublicacion();
                     resultado->add(dt);
                 }
             }
         }
- 
+
         it->next();
     }
- 
+
     delete it;
     return resultado;
 }
