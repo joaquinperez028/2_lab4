@@ -40,7 +40,6 @@ DTEspecifica *Apartamento::getInmueble()
         getDireccion(),
         getAnoConstruc(),
         TipoInmueble::Apartamento,
-        TipoTecho::Liviano,
         numPiso,
         ascensor,
         gastosComunes);

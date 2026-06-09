@@ -20,6 +20,7 @@ protected:
 
 public:
     DTEspecifica();
+    DTEspecifica(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo);
     DTEspecifica(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo, ::TipoTecho tipoTecho);
     virtual ~DTEspecifica();
     float getSuperficie();

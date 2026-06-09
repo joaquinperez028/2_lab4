@@ -3,6 +3,9 @@
 DTEspecifica::DTEspecifica()
     : Superficie(0), direccion(), anioConstruc(), tipo(TipoInmueble::Casa), tipoTecho(TipoTecho::Liviano) {}
 
+DTEspecifica::DTEspecifica(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo)
+    : Superficie(Superficie), direccion(direccion), anioConstruc(anioConstruc), tipo(tipo), tipoTecho(TipoTecho::Liviano) {}
+
 DTEspecifica::DTEspecifica(float Superficie, ::Direccion direccion, Fecha anioConstruc, TipoInmueble tipo, ::TipoTecho tipoTecho)
     : Superficie(Superficie), direccion(direccion), anioConstruc(anioConstruc), tipo(tipo), tipoTecho(tipoTecho) {}
 
