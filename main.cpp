@@ -2,6 +2,8 @@
 #include <limits>
 #include <string>
 #include <cstdlib>
+#include <exception>
+#include <stdexcept>
 #include "Factory.h"
 #include "Datatypes/Status.h"
 #include "Datatypes/Direccion.h"
@@ -62,7 +64,15 @@ static bool esTextoValido(const string &texto, bool permitirEspacios)
 
 static void consumirSaltoLinea()
 {
+    if (!cin.good())
+        cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+static void recuperarEstadoEntrada()
+{
+    cin.clear();
+    consumirSaltoLinea();
 }
 
 static void limpiarPantalla()
@@ -77,8 +87,37 @@ static void limpiarPantalla()
 static void pausarAntesDeContinuar()
 {
     cout << "\nPresione Enter para continuar...";
+    if (!cin.good())
+        cin.clear();
+
     cin.get();
+
+    if (!cin.good())
+        cin.clear();
+
     limpiarPantalla();
+}
+
+typedef void (*CasoDeUsoFn)(ISistema *);
+
+static void ejecutarCasoDeUsoSeguro(CasoDeUsoFn caso, ISistema *sistema, const string &nombre)
+{
+    try
+    {
+        caso(sistema);
+    }
+    catch (const exception &e)
+    {
+        recuperarEstadoEntrada();
+        cout << "\nError en " << nombre << ": " << e.what() << endl;
+        cout << "Se cancela la operacion y se vuelve al menu." << endl;
+    }
+    catch (...)
+    {
+        recuperarEstadoEntrada();
+        cout << "\nError inesperado en " << nombre << "." << endl;
+        cout << "Se cancela la operacion y se vuelve al menu." << endl;
+    }
 }
 
 static void liberarDatatypes(ICollection *coleccion)
@@ -104,6 +143,12 @@ static string leerTextoValido(const string &mensaje, bool permitirEspacios)
     {
         cout << mensaje;
         getline(cin, entrada);
+
+        if (!cin.good())
+        {
+            recuperarEstadoEntrada();
+            continue;
+        }
 
         if (esTextoValido(entrada, permitirEspacios))
             return entrada;
@@ -145,8 +190,7 @@ static int leerEntero(const string &mensaje)
             return valor;
         }
         cout << "Entrada invalida. Debe ser un numero entero." << endl;
-        cin.clear();
-        consumirSaltoLinea();
+        recuperarEstadoEntrada();
     }
 }
 
@@ -162,8 +206,7 @@ static float leerFloat(const string &mensaje)
             return valor;
         }
         cout << "Entrada invalida. Debe ser un numero real." << endl;
-        cin.clear();
-        consumirSaltoLinea();
+        recuperarEstadoEntrada();
     }
 }
 
@@ -175,8 +218,7 @@ static bool leerSiNo(const string &mensaje)
         char c;
         if (!(cin >> c))
         {
-            cin.clear();
-            consumirSaltoLinea();
+            recuperarEstadoEntrada();
             continue;
         }
         consumirSaltoLinea();
@@ -198,6 +240,39 @@ static bool contieneCaracter(const string &texto, char c)
     return false;
 }
 
+static int leerDiaConstruccion()
+{
+    while (true)
+    {
+        int dia = leerEntero("Dia construccion: ");
+        if (dia >= 0 && dia <= 31)
+            return dia;
+        cout << "Dia invalido. Debe estar entre 0 y 31." << endl;
+    }
+}
+
+static int leerMesConstruccion()
+{
+    while (true)
+    {
+        int mes = leerEntero("Mes construccion: ");
+        if (mes >= 0 && mes <= 12)
+            return mes;
+        cout << "Mes invalido. Debe estar entre 0 y 12." << endl;
+    }
+}
+
+static int leerAnioConstruccion()
+{
+    while (true)
+    {
+        int anio = leerEntero("Anio construccion: ");
+        if (anio >= 1000 && anio <= 2026)
+            return anio;
+        cout << "Anio invalido. Debe estar entre 1000 y 2026." << endl;
+    }
+}
+
 static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
 {
     codigoInmueble = -1;
@@ -210,9 +285,9 @@ static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
 
     float superficie = leerFloat("Superficie (m2): ");
 
-    int dia = leerEntero("Dia construccion: ");
-    int mes = leerEntero("Mes construccion: ");
-    int anio = leerEntero("Anio construccion: ");
+    int dia = leerDiaConstruccion();
+    int mes = leerMesConstruccion();
+    int anio = leerAnioConstruccion();
     Fecha f(dia, mes, anio);
 
     cout << "Tipo de inmueble: \n1- Casa   \n2- Apartamento \nOpcion: ";
@@ -225,8 +300,7 @@ static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
             break;
         }
         cout << "Opcion invalida. Elija 1 o 2: ";
-        cin.clear();
-        consumirSaltoLinea();
+        recuperarEstadoEntrada();
     }
 
     Status stInm = Status::ERROR;
@@ -244,8 +318,7 @@ static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
                 break;
             }
             cout << "Opcion invalida. Elija 1, 2 o 3: ";
-            cin.clear();
-            consumirSaltoLinea();
+            recuperarEstadoEntrada();
         }
         TipoTecho techo = TipoTecho::Liviano;
         if (ttec == 2)
@@ -285,8 +358,8 @@ static void casoDeUso1(ISistema *sistema)
 
         if (!(cin >> opcion))
         {
-            cin.clear();
-            consumirSaltoLinea();
+            opcion = -1;
+            recuperarEstadoEntrada();
             cout << "Opcion invalida." << endl;
             continue;
         }
@@ -295,7 +368,8 @@ static void casoDeUso1(ISistema *sistema)
         if (opcion == 0)
             break;
 
-        // Datos comunes
+        try
+        {
         string nickname = leerTextoValido("Nickname (sin espacios): ", false);
         string contrasenia;
         while (true)
@@ -415,6 +489,23 @@ static void casoDeUso1(ISistema *sistema)
 
         if (opcion != 0)
             pausarAntesDeContinuar();
+        }
+        catch (const exception &e)
+        {
+            recuperarEstadoEntrada();
+            cout << "\nError en Caso de uso 1: " << e.what() << endl;
+            cout << "Se cancela la operacion y se vuelve al menu." << endl;
+            pausarAntesDeContinuar();
+            break;
+        }
+        catch (...)
+        {
+            recuperarEstadoEntrada();
+            cout << "\nError inesperado en Caso de uso 1." << endl;
+            cout << "Se cancela la operacion y se vuelve al menu." << endl;
+            pausarAntesDeContinuar();
+            break;
+        }
 
     } while (opcion != 0);
 
@@ -496,8 +587,7 @@ static void casoDeUso2(ISistema *sistema)
             break;
         }
         cout << "Opcion invalida. Elija 1 o 2: ";
-        cin.clear();
-        consumirSaltoLinea();
+        recuperarEstadoEntrada();
     }
 
     TipoPublicacion tipoPub = (tipoOpcion == 1) ? TipoPublicacion::Venta : TipoPublicacion::Alquiler;
@@ -539,8 +629,7 @@ static void casoDeUso3(ISistema *sistema)
             break;
         }
         cout << "Opcion invalida. Elija 1 o 2: ";
-        cin.clear();
-        consumirSaltoLinea();
+        recuperarEstadoEntrada();
     }
 
     string tipoPub = (tipoOpcion == 1) ? "Venta" : "Alquiler";
@@ -563,8 +652,7 @@ static void casoDeUso3(ISistema *sistema)
             break;
         }
         cout << "Opcion invalida. Elija 1, 2 o 3: ";
-        cin.clear();
-        consumirSaltoLinea();
+        recuperarEstadoEntrada();
     }
 
     Opciones interes = Opciones::Todos;
@@ -1119,60 +1207,77 @@ int main()
 
     do
     {
-        mostrarMenu();
-        if (!(cin >> opcion))
+        try
         {
-            cin.clear();
+            mostrarMenu();
+            if (!(cin >> opcion))
+            {
+                opcion = -1;
+                recuperarEstadoEntrada();
+                cout << "\nOpcion invalida. Intente nuevamente." << endl;
+                pausarAntesDeContinuar();
+                continue;
+            }
             consumirSaltoLinea();
-            cout << "\nOpcion invalida. Intente nuevamente." << endl;
-            pausarAntesDeContinuar();
-            continue;
-        }
-        consumirSaltoLinea();
 
-        switch (opcion)
+            switch (opcion)
+            {
+            case 1:
+                ejecutarCasoDeUsoSeguro(casoDeUso1, sistema, "Caso de uso 1");
+                break;
+            case 2:
+                ejecutarCasoDeUsoSeguro(casoDeUso2, sistema, "Caso de uso 2");
+                break;
+            case 3:
+                ejecutarCasoDeUsoSeguro(casoDeUso3, sistema, "Caso de uso 3");
+                break;
+            case 4:
+                ejecutarCasoDeUsoSeguro(casoDeUso4, sistema, "Caso de uso 4");
+                break;
+            case 5:
+                ejecutarCasoDeUsoSeguro(casoDeUso5, sistema, "Caso de uso 5");
+                break;
+            case 6:
+                ejecutarCasoDeUsoSeguro(cargarDatosPrueba, sistema, "Cargar datos de prueba");
+                break;
+            case 7:
+                ejecutarCasoDeUsoSeguro(listarPropietarios, sistema, "Listar propietarios");
+                break;
+            case 8:
+                ejecutarCasoDeUsoSeguro(listarInmuebles, sistema, "Listar inmuebles");
+                break;
+            case 9:
+                ejecutarCasoDeUsoSeguro(listarPublicaciones, sistema, "Listar publicaciones");
+                break;
+            case 10:
+                ejecutarCasoDeUsoSeguro(altaInmueblePropietarioExistente, sistema, "Alta inmueble a propietario existente");
+                break;
+            case 0:
+                borrarSistemaCompleto(sistema);
+                cout << "Saliendo..." << endl;
+                break;
+            default:
+                cout << "\nOpcion invalida. Intente nuevamente." << endl;
+                break;
+            }
+
+            if (opcion != 0 && opcion != 1)
+                pausarAntesDeContinuar();
+        }
+        catch (const exception &e)
         {
-        case 1:
-            casoDeUso1(sistema);
-            break;
-        case 2:
-            casoDeUso2(sistema);
-            break;
-        case 3:
-            casoDeUso3(sistema);
-            break;
-        case 4:
-            casoDeUso4(sistema);
-            break;
-        case 5:
-            casoDeUso5(sistema);
-            break;
-        case 6:
-            cargarDatosPrueba(sistema);
-            break;
-        case 7:
-            listarPropietarios(sistema);
-            break;
-        case 8:
-            listarInmuebles(sistema);
-            break;
-        case 9:
-            listarPublicaciones(sistema);
-            break;
-        case 10:
-            altaInmueblePropietarioExistente(sistema);
-            break;
-        case 0:
-            borrarSistemaCompleto(sistema);
-            cout << "Saliendo..." << endl;
-            break;
-        default:
-            cout << "\nOpcion invalida. Intente nuevamente." << endl;
-            break;
-        }
-
-        if (opcion != 0 && opcion != 1)
+            recuperarEstadoEntrada();
+            cout << "\nError en el menu: " << e.what() << endl;
+            cout << "Se continua con el menu principal." << endl;
             pausarAntesDeContinuar();
+        }
+        catch (...)
+        {
+            recuperarEstadoEntrada();
+            cout << "\nError inesperado en el menu." << endl;
+            cout << "Se continua con el menu principal." << endl;
+            pausarAntesDeContinuar();
+        }
 
     } while (opcion != 0);
 

@@ -38,7 +38,10 @@ ostream &operator<<(ostream &os, const DTEspecifica &dt)
     os << "Superficie: " << dt.Superficie
        << " | Direccion: " << dt.direccion
        << " | Construccion: " << dt.anioConstruc
-       << " | Tipo: " << dt.tipo
-       << " | Techo: " << dt.tipoTecho;
+       << " | Tipo: " << dt.tipo;
+
+    if (dt.tipo == TipoInmueble::Casa)
+        os << " | Techo: " << dt.tipoTecho;
+
     return os;
 }
