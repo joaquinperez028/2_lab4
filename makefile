@@ -36,7 +36,8 @@ SRC += \
 	Datatypes/DTPropiedad.cpp \
 	Datatypes/DTInmuebleRep.cpp \
 	Datatypes/DTInfoInmueble.cpp \
-	Datatypes/DTAdministrados.cpp
+	Datatypes/DTAdministrados.cpp \
+	Datatypes/DTAgendaVisita.cpp
 
 SRC += \
 	ICollection/collections/List.cpp \

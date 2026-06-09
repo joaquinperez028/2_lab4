@@ -7,6 +7,7 @@
 #include "ICollection/collections/List.h"
 #include "ICollection/interfaces/IIterator.h"
 #include "Datatypes/DTPublicacion.h"
+#include "Datatypes/DTAgendaVisita.h"
 
 using namespace std;
 
@@ -101,6 +102,29 @@ void Publicacion::agregarAgenda(AgendaVisita *agenda)
     {
         this->agendas->add(agenda);
     }
+}
+
+ICollection *Publicacion::listarAgendas()
+{
+    ICollection *resultado = new List();
+
+    if (this->agendas == nullptr)
+        return resultado;
+
+    IIterator *it = this->agendas->getIterator();
+
+    while (it->hasCurrent())
+    {
+        AgendaVisita *agenda = dynamic_cast<AgendaVisita *>(it->getCurrent());
+
+        if (agenda != nullptr)
+            resultado->add(agenda->getDTAgendaVisita());
+
+        it->next();
+    }
+
+    delete it;
+    return resultado;
 }
 
 void Publicacion::eliminarAgendas()

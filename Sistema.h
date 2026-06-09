@@ -53,6 +53,7 @@ public:
     ICollection *listarInmueblesRepresentados(string) override; 
     ICollection *listarPropietariosRepresentados(string) override;
     Status altaAdministracion(int identificador) override;
+    Status altaAgendaVisita(string nicknameCliente, int codigoPublicacion, Fecha fecha, string formaContacto) override;
     Fecha obtenerFechaActual(); 
     void limpiarInmuebles();
     void limpiarPublicaciones();

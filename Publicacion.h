@@ -46,6 +46,7 @@ public:
 
     void agregarAgenda(AgendaVisita *agenda);
     void eliminarAgendas();
+    ICollection *listarAgendas();
     string getNickInmo();
     DTPublicacion *getPublicacion();
 };

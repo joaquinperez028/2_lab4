@@ -13,6 +13,7 @@
 #include "Datatypes/TipoTecho.h"
 #include "Datatypes/TipoPublicacion.h"
 #include "Publicacion.h"
+#include "AgendaVisita.h"
 #include <ctime>
 #include "Datatypes/DTPublicacion.h"
 
@@ -433,6 +434,25 @@ Status Sistema::altaAdministracion(int identificador)
     Fecha fechaActual = obtenerFechaActual();
 
     return inmoSeleccionada->crearAdministra(inm, fechaActual);
+}
+
+Status Sistema::altaAgendaVisita(string nicknameCliente, int codigoPublicacion, Fecha fecha, string formaContacto)
+{
+    Cliente *cliente = dynamic_cast<Cliente *>(buscarPorNickname(nicknameCliente));
+    if (cliente == nullptr)
+        return Status::ERROR;
+
+    Integer *key = new Integer(codigoPublicacion);
+    Publicacion *pub = dynamic_cast<Publicacion *>(publicaciones->find(key));
+    delete key;
+
+    if (pub == nullptr || !pub->esActiva())
+        return Status::ERROR;
+
+    AgendaVisita *agenda = new AgendaVisita(fecha, formaContacto, cliente, pub);
+    pub->agregarAgenda(agenda);
+
+    return Status::OK;
 }
 
 Fecha Sistema ::obtenerFechaActual()

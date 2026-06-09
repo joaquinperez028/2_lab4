@@ -9,6 +9,7 @@ using namespace std;
 
 class Cliente;
 class Publicacion;
+class DTAgendaVisita;
 
 class AgendaVisita : public ICollectible
 {
@@ -26,6 +27,7 @@ public:
     string getFormaContacto();
     Cliente *getCliente();
     Publicacion *getPublicacion();
+    DTAgendaVisita *getDTAgendaVisita();
 };
 
 #endif

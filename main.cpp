@@ -994,6 +994,10 @@ static void cargarDatosPrueba(ISistema *sistema)
         st = sistema->altaPublicacion(2, TipoPublicacion::Alquiler, "Apartamento centrico 18 de Julio", 35000);
         cout << (st == Status::OK ? "Alta publicacion alquiler apto id 2: OK" : "Alta publicacion alquiler apto id 2: ERROR") << endl;
 
+        Fecha fechaVisita(15, 6, 2026);
+        st = sistema->altaAgendaVisita("juan123", 1, fechaVisita, "Telefono");
+        cout << (st == Status::OK ? "Alta agenda visita juan123 (pub id 1): OK" : "Alta agenda visita juan123 (pub id 1): ERROR") << endl;
+
         // --- Inmobiliaria 2: Inmo del Sur + propietario Luis ---
         st = sistema->altaPropietario("luis_prop", "Luis", "pass456", "luis@mail.com", "99887766", "BBVA", "098333444");
         cout << (st == Status::OK ? "Alta propietario (luis_prop): OK" : "Alta propietario (luis_prop): ERROR") << endl;
@@ -1035,6 +1039,7 @@ static void cargarDatosPrueba(ISistema *sistema)
         cout << "  Inmobiliaria inmo_central -> propietaria ana_prop -> inmuebles 1 (casa) y 2 (apto)" << endl;
         cout << "  Inmobiliaria inmo_sur     -> propietario luis_prop -> inmuebles 3 (casa) y 4 (apto)" << endl;
         cout << "  Publicaciones: venta id1, alquiler id2, venta id3, alquiler id4" << endl;
+        cout << "  Agenda visita: juan123 -> publicacion id 1 (15/6/2026, Telefono)" << endl;
         cout << "Datos de prueba cargados." << endl;
         ok = true;
     }
@@ -1192,6 +1197,7 @@ static void borrarSistemaCompleto(ISistema *sistema)
     if (s != nullptr)
     {
         s->limpiarInmuebles();
+        s->limpiarPublicaciones();
         s->limpiarUsuarios();
     }
 

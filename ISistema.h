@@ -44,6 +44,7 @@ public:
     virtual ICollection *listarInmueblesRepresentados(string) = 0;
     virtual ICollection *listarPropietariosRepresentados(string) = 0;
     virtual Status altaAdministracion(int) = 0;
+    virtual Status altaAgendaVisita(string nicknameCliente, int codigoPublicacion, Fecha fecha, string formaContacto) = 0;
 };
 
 #endif
