@@ -270,7 +270,8 @@ static Status registrarInmueble(ISistema *sistema, int &codigoInmueble)
     return stInm;
 }
 
-static void casoDeUso1(ISistema *sistema){
+static void casoDeUso1(ISistema *sistema)
+{
     int opcion = -1;
 
     do
@@ -326,7 +327,8 @@ static void casoDeUso1(ISistema *sistema){
             string documento = leerTextoValido("Documento (solo letras y numeros): ", false);
 
             st = sistema->altaCliente(nickname, nombre, contrasenia, email, apellido, documento);
-            cout << "\n" << (st == Status::OK ? "Alta cliente: OK" : "Alta cliente: ERROR (nickname ya existe)") << endl;
+            cout << "\n"
+                 << (st == Status::OK ? "Alta cliente: OK" : "Alta cliente: ERROR (nickname ya existe)") << endl;
         }
         else if (opcion == 2)
         {
@@ -336,7 +338,8 @@ static void casoDeUso1(ISistema *sistema){
             string telefono = leerTextoValido("Telefono: ", false);
 
             st = sistema->altaPropietario(nickname, nombre, contrasenia, email, numCuenta, banco, telefono);
-            cout << "\n" << (st == Status::OK ? "Alta propietario: OK" : "Alta propietario: ERROR (nickname ya existe)") << endl;
+            cout << "\n"
+                 << (st == Status::OK ? "Alta propietario: OK" : "Alta propietario: ERROR (nickname ya existe)") << endl;
 
             if (st == Status::OK)
             {
@@ -347,7 +350,8 @@ static void casoDeUso1(ISistema *sistema){
                     int codigoInmueble = -1;
                     Status stInm = registrarInmueble(sistema, codigoInmueble);
 
-                    cout << "\n" << (stInm == Status::OK ? "Alta inmueble: OK" : "Alta inmueble: ERROR (verifique propietario recordado)") << endl;
+                    cout << "\n"
+                         << (stInm == Status::OK ? "Alta inmueble: OK" : "Alta inmueble: ERROR (verifique propietario recordado)") << endl;
 
                     seguir = leerSiNo("Desea registrar otro inmueble para este propietario?");
                 }
@@ -374,7 +378,8 @@ static void casoDeUso1(ISistema *sistema){
             }
 
             st = sistema->altaInmobiliaria(nickname, nombre, contrasenia, email, dir, telefono, url);
-            cout << "\n" << (st == Status::OK ? "Alta inmobiliaria: OK" : "Alta inmobiliaria: ERROR (nickname ya existe)") << endl;
+            cout << "\n"
+                 << (st == Status::OK ? "Alta inmobiliaria: OK" : "Alta inmobiliaria: ERROR (nickname ya existe)") << endl;
 
             if (st == Status::OK)
             {
@@ -416,7 +421,8 @@ static void casoDeUso1(ISistema *sistema){
     limpiarPantalla();
 }
 
-static void casoDeUso2(ISistema *sistema){
+static void casoDeUso2(ISistema *sistema)
+{
     cout << "\n--- Caso de uso 2: Alta de publicacion ---" << endl;
 
     ICollection *inmobiliarias = sistema->listarInmobiliarias();
@@ -852,91 +858,102 @@ static void listarPublicaciones(ISistema *sistema)
     delete publicaciones;
 }
 
+bool ok = false;
+
 static void cargarDatosPrueba(ISistema *sistema)
 {
-    cout << "\n--- Cargando datos de prueba ---" << endl;
 
-    Status st = sistema->altaCliente("juan123", "Juan", "pass123", "juan@mail.com", "Perez", "12345678");
-    cout << (st == Status::OK ? "Alta cliente: OK" : "Alta cliente: ERROR") << endl;
+    if (ok == false)
+    {
+        cout << "\n--- Cargando datos de prueba ---" << endl;
 
-    // --- Inmobiliaria 1: Inmo Central + propietaria Ana ---
-    st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander", "099111222");
-    cout << (st == Status::OK ? "Alta propietario (ana_prop): OK" : "Alta propietario (ana_prop): ERROR") << endl;
+        Status st = sistema->altaCliente("juan123", "Juan", "pass123", "juan@mail.com", "Perez", "12345678");
+        cout << (st == Status::OK ? "Alta cliente: OK" : "Alta cliente: ERROR") << endl;
 
-    Fecha fechaCasaAna(1, 1, 2005);
-    Direccion dirCasaAna(123, "Av. Brasil", "Montevideo", "Montevideo");
-    st = sistema->altaCasa(dirCasaAna, 120.5, fechaCasaAna, TipoTecho::Liviano, false);
-    cout << (st == Status::OK ? "Alta casa Ana (id 1): OK" : "Alta casa Ana: ERROR") << endl;
+        // --- Inmobiliaria 1: Inmo Central + propietaria Ana ---
+        st = sistema->altaPropietario("ana_prop", "Ana", "pass789", "ana@mail.com", "00112233", "Santander", "099111222");
+        cout << (st == Status::OK ? "Alta propietario (ana_prop): OK" : "Alta propietario (ana_prop): ERROR") << endl;
 
-    Fecha fechaAptoAna(1, 6, 2015);
-    Direccion dirAptoAna(456, "18 de Julio", "Montevideo", "Montevideo");
-    st = sistema->altaApto(dirAptoAna, 65.0, fechaAptoAna, 4, true, 8500);
-    cout << (st == Status::OK ? "Alta apartamento Ana (id 2): OK" : "Alta apartamento Ana: ERROR") << endl;
+        Fecha fechaCasaAna(1, 1, 2005);
+        Direccion dirCasaAna(123, "Av. Brasil", "Montevideo", "Montevideo");
+        st = sistema->altaCasa(dirCasaAna, 120.5, fechaCasaAna, TipoTecho::Liviano, false);
+        cout << (st == Status::OK ? "Alta casa Ana (id 1): OK" : "Alta casa Ana: ERROR") << endl;
 
-    Direccion dirInmoCentral(100, "Av. Italia", "Montevideo", "Montevideo");
-    st = sistema->altaInmobiliaria("inmo_central", "Inmo Central", "passInmo", "contacto@inmocentral.com", dirInmoCentral, "24001234", "http://inmocentral.com");
-    cout << (st == Status::OK ? "Alta inmobiliaria (inmo_central): OK" : "Alta inmobiliaria (inmo_central): ERROR") << endl;
+        Fecha fechaAptoAna(1, 6, 2015);
+        Direccion dirAptoAna(456, "18 de Julio", "Montevideo", "Montevideo");
+        st = sistema->altaApto(dirAptoAna, 65.0, fechaAptoAna, 4, true, 8500);
+        cout << (st == Status::OK ? "Alta apartamento Ana (id 2): OK" : "Alta apartamento Ana: ERROR") << endl;
 
-    sistema->asociarPropietario("ana_prop");
-    cout << "Asociar ana_prop <-> inmo_central: OK" << endl;
+        Direccion dirInmoCentral(100, "Av. Italia", "Montevideo", "Montevideo");
+        st = sistema->altaInmobiliaria("inmo_central", "Inmo Central", "passInmo", "contacto@inmocentral.com", dirInmoCentral, "24001234", "http://inmocentral.com");
+        cout << (st == Status::OK ? "Alta inmobiliaria (inmo_central): OK" : "Alta inmobiliaria (inmo_central): ERROR") << endl;
 
-    ICollection *admCentral = sistema->seleccionarInmobiliaria("inmo_central");
-    delete admCentral;
+        sistema->asociarPropietario("ana_prop");
+        cout << "Asociar ana_prop <-> inmo_central: OK" << endl;
 
-    st = sistema->altaAdministracion(1);
-    cout << (st == Status::OK ? "Alta administracion inmo_central (casa id 1): OK" : "Alta administracion inmo_central (casa id 1): ERROR") << endl;
+        ICollection *admCentral = sistema->seleccionarInmobiliaria("inmo_central");
+        delete admCentral;
 
-    st = sistema->altaAdministracion(2);
-    cout << (st == Status::OK ? "Alta administracion inmo_central (apto id 2): OK" : "Alta administracion inmo_central (apto id 2): ERROR") << endl;
+        st = sistema->altaAdministracion(1);
+        cout << (st == Status::OK ? "Alta administracion inmo_central (casa id 1): OK" : "Alta administracion inmo_central (casa id 1): ERROR") << endl;
 
-    st = sistema->altaPublicacion(1, TipoPublicacion::Venta, "Casa amplia en Av Brasil", 250000);
-    cout << (st == Status::OK ? "Alta publicacion venta casa id 1: OK" : "Alta publicacion venta casa id 1: ERROR") << endl;
+        st = sistema->altaAdministracion(2);
+        cout << (st == Status::OK ? "Alta administracion inmo_central (apto id 2): OK" : "Alta administracion inmo_central (apto id 2): ERROR") << endl;
 
-    st = sistema->altaPublicacion(2, TipoPublicacion::Alquiler, "Apartamento centrico 18 de Julio", 35000);
-    cout << (st == Status::OK ? "Alta publicacion alquiler apto id 2: OK" : "Alta publicacion alquiler apto id 2: ERROR") << endl;
+        st = sistema->altaPublicacion(1, TipoPublicacion::Venta, "Casa amplia en Av Brasil", 250000);
+        cout << (st == Status::OK ? "Alta publicacion venta casa id 1: OK" : "Alta publicacion venta casa id 1: ERROR") << endl;
 
-    // --- Inmobiliaria 2: Inmo del Sur + propietario Luis ---
-    st = sistema->altaPropietario("luis_prop", "Luis", "pass456", "luis@mail.com", "99887766", "BBVA", "098333444");
-    cout << (st == Status::OK ? "Alta propietario (luis_prop): OK" : "Alta propietario (luis_prop): ERROR") << endl;
+        st = sistema->altaPublicacion(2, TipoPublicacion::Alquiler, "Apartamento centrico 18 de Julio", 35000);
+        cout << (st == Status::OK ? "Alta publicacion alquiler apto id 2: OK" : "Alta publicacion alquiler apto id 2: ERROR") << endl;
 
-    Fecha fechaCasaLuis(15, 3, 1998);
-    Direccion dirCasaLuis(890, "Bvar. Artigas", "Montevideo", "Montevideo");
-    st = sistema->altaCasa(dirCasaLuis, 95.0, fechaCasaLuis, TipoTecho::DosAguas, true);
-    cout << (st == Status::OK ? "Alta casa Luis (id 3): OK" : "Alta casa Luis: ERROR") << endl;
+        // --- Inmobiliaria 2: Inmo del Sur + propietario Luis ---
+        st = sistema->altaPropietario("luis_prop", "Luis", "pass456", "luis@mail.com", "99887766", "BBVA", "098333444");
+        cout << (st == Status::OK ? "Alta propietario (luis_prop): OK" : "Alta propietario (luis_prop): ERROR") << endl;
 
-    Fecha fechaAptoLuis(10, 9, 2020);
-    Direccion dirAptoLuis(2100, "Rambla Republica", "Montevideo", "Montevideo");
-    st = sistema->altaApto(dirAptoLuis, 48.5, fechaAptoLuis, 8, false, 6200);
-    cout << (st == Status::OK ? "Alta apartamento Luis (id 4): OK" : "Alta apartamento Luis: ERROR") << endl;
+        Fecha fechaCasaLuis(15, 3, 1998);
+        Direccion dirCasaLuis(890, "Bvar. Artigas", "Montevideo", "Montevideo");
+        st = sistema->altaCasa(dirCasaLuis, 95.0, fechaCasaLuis, TipoTecho::DosAguas, true);
+        cout << (st == Status::OK ? "Alta casa Luis (id 3): OK" : "Alta casa Luis: ERROR") << endl;
 
-    Direccion dirInmoSur(550, "Av. Giannattasio", "Montevideo", "Canelones");
-    st = sistema->altaInmobiliaria("inmo_sur", "Inmo del Sur", "passSur", "info@inmosur.com", dirInmoSur, "26005678", "http://inmosur.com");
-    cout << (st == Status::OK ? "Alta inmobiliaria (inmo_sur): OK" : "Alta inmobiliaria (inmo_sur): ERROR") << endl;
+        Fecha fechaAptoLuis(10, 9, 2020);
+        Direccion dirAptoLuis(2100, "Rambla Republica", "Montevideo", "Montevideo");
+        st = sistema->altaApto(dirAptoLuis, 48.5, fechaAptoLuis, 8, false, 6200);
+        cout << (st == Status::OK ? "Alta apartamento Luis (id 4): OK" : "Alta apartamento Luis: ERROR") << endl;
 
-    sistema->asociarPropietario("luis_prop");
-    cout << "Asociar luis_prop <-> inmo_sur: OK" << endl;
+        Direccion dirInmoSur(550, "Av. Giannattasio", "Montevideo", "Canelones");
+        st = sistema->altaInmobiliaria("inmo_sur", "Inmo del Sur", "passSur", "info@inmosur.com", dirInmoSur, "26005678", "http://inmosur.com");
+        cout << (st == Status::OK ? "Alta inmobiliaria (inmo_sur): OK" : "Alta inmobiliaria (inmo_sur): ERROR") << endl;
 
-    ICollection *admSur = sistema->seleccionarInmobiliaria("inmo_sur");
-    delete admSur;
+        sistema->asociarPropietario("luis_prop");
+        cout << "Asociar luis_prop <-> inmo_sur: OK" << endl;
 
-    st = sistema->altaAdministracion(3);
-    cout << (st == Status::OK ? "Alta administracion inmo_sur (casa id 3): OK" : "Alta administracion inmo_sur (casa id 3): ERROR") << endl;
+        ICollection *admSur = sistema->seleccionarInmobiliaria("inmo_sur");
+        delete admSur;
 
-    st = sistema->altaAdministracion(4);
-    cout << (st == Status::OK ? "Alta administracion inmo_sur (apto id 4): OK" : "Alta administracion inmo_sur (apto id 4): ERROR") << endl;
+        st = sistema->altaAdministracion(3);
+        cout << (st == Status::OK ? "Alta administracion inmo_sur (casa id 3): OK" : "Alta administracion inmo_sur (casa id 3): ERROR") << endl;
 
-    st = sistema->altaPublicacion(3, TipoPublicacion::Venta, "Casa con pH en Bvar Artigas", 180000);
-    cout << (st == Status::OK ? "Alta publicacion venta casa id 3: OK" : "Alta publicacion venta casa id 3: ERROR") << endl;
+        st = sistema->altaAdministracion(4);
+        cout << (st == Status::OK ? "Alta administracion inmo_sur (apto id 4): OK" : "Alta administracion inmo_sur (apto id 4): ERROR") << endl;
 
-    st = sistema->altaPublicacion(4, TipoPublicacion::Alquiler, "Apto con vista a la rambla", 28000);
-    cout << (st == Status::OK ? "Alta publicacion alquiler apto id 4: OK" : "Alta publicacion alquiler apto id 4: ERROR") << endl;
+        st = sistema->altaPublicacion(3, TipoPublicacion::Venta, "Casa con pH en Bvar Artigas", 180000);
+        cout << (st == Status::OK ? "Alta publicacion venta casa id 3: OK" : "Alta publicacion venta casa id 3: ERROR") << endl;
 
-    cout << "\nResumen datos de prueba:" << endl;
-    cout << "  Clientes: juan123" << endl;
-    cout << "  Inmobiliaria inmo_central -> propietaria ana_prop -> inmuebles 1 (casa) y 2 (apto)" << endl;
-    cout << "  Inmobiliaria inmo_sur     -> propietario luis_prop -> inmuebles 3 (casa) y 4 (apto)" << endl;
-    cout << "  Publicaciones: venta id1, alquiler id2, venta id3, alquiler id4" << endl;
-    cout << "Datos de prueba cargados." << endl;
+        st = sistema->altaPublicacion(4, TipoPublicacion::Alquiler, "Apto con vista a la rambla", 28000);
+        cout << (st == Status::OK ? "Alta publicacion alquiler apto id 4: OK" : "Alta publicacion alquiler apto id 4: ERROR") << endl;
+
+        cout << "\nResumen datos de prueba:" << endl;
+        cout << "  Clientes: juan123" << endl;
+        cout << "  Inmobiliaria inmo_central -> propietaria ana_prop -> inmuebles 1 (casa) y 2 (apto)" << endl;
+        cout << "  Inmobiliaria inmo_sur     -> propietario luis_prop -> inmuebles 3 (casa) y 4 (apto)" << endl;
+        cout << "  Publicaciones: venta id1, alquiler id2, venta id3, alquiler id4" << endl;
+        cout << "Datos de prueba cargados." << endl;
+        ok = true;
+    }
+    else
+    {
+        cout << "Los datos ya fueron cargados" << endl;
+    }
 }
 
 static void altaInmueblePropietarioExistente(ISistema *sistema)
